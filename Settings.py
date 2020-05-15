@@ -1549,8 +1549,6 @@ class SettingsMenu(QDialog):
             self.tab1.setEnabled(True)
         self.buttonColors_on.toggled.connect(self.tab1.setEnabled)
     def createEighthTab(self):
-        import difflib
-        import re
         begin = self.begin
         end = self.end
         images = self.images
@@ -1584,6 +1582,18 @@ class SettingsMenu(QDialog):
         """
         changeLog_text = """
         <style> li {margin: 10px 0px}</style>
+        <div class="None">
+          <b>2020/5/15</b>
+          <ol>
+            <li>Now it designs review buttons that other add-ons add (like rememorize).<br>
+            it treats them like other bottombar button so their color and style will be like other bottombar buttons.<br>
+            styling these buttons is automatic and you don't need to do anything to activate it.</li>
+            <li> you can style other bottombar buttons that are added by other add-on (like deferer button).<br>
+            you'll need to change their code a bit. if you want to style them leave a comment on add-on's page or on github page.</li>
+            <li>Finally created a github page :/ -> <a href="https://github.com/noobj2/Anki-Advanced-Review-Bottombar">Here it is</a></li><br>
+            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
+          </ol>
+        </div>
         <div class="None">
           <b>2020/5/9</b>
           <ol>
@@ -1856,6 +1866,10 @@ class SettingsMenu(QDialog):
           </ul>
         </div>
         """
+        about = QLabel()
+        about.setText(about_text)
+        about_scroll = QScrollArea()
+        about_scroll.setWidget(about)
         changeLog = QLabel()
         changeLog.setText(changeLog_text)
         changeLog_scroll = QScrollArea()

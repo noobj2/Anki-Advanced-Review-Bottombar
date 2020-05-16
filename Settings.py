@@ -1867,15 +1867,16 @@ class SettingsMenu(QDialog):
         </div>
         """
         about = QLabel()
+        about.setOpenExternalLinks(True)
         about.setText(about_text)
         about_scroll = QScrollArea()
         about_scroll.setWidget(about)
         changeLog = QLabel()
+        changeLog.setOpenExternalLinks(True)
         changeLog.setText(changeLog_text)
         changeLog_scroll = QScrollArea()
         changeLog_scroll.setWidget(changeLog)
         changeLog_label = QLabel("<div style='color: dodgerblue; font-size: 14px;'>Changelog:</div>")
-        # TODO: set about
         layout = QVBoxLayout()
         layout.addWidget(about_scroll)
         layout.addWidget(changeLog_label)

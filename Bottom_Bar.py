@@ -34,8 +34,9 @@ undo_shortcut = config['Button_ Shortcut_ Undo Button'].lower()
 info_position = config['Button_ Position_ Info Button'].lower()
 skip_position = config['Button_ Position_ Skip Button'].lower()
 undo_position = config['Button_ Position_ Undo Button'].lower()
+custom_bottombarButtonBorderColor = config['Color_ Custom Bottombar Button Border Color']
+bottombarButtonBorder_color = config['Color_ Bottombar Button Border Color']
 showAnswerBorderColor_style = config['ShowAnswer_ Border Color Style']
-bottombarButtonText_color = config['Color_ Bottombar Button Text Color']
 showAnswerEase1 = config['ShowAnswer_ Ease1']
 showAnswerEase2 = config['ShowAnswer_ Ease2']
 showAnswerEase3 = config['ShowAnswer_ Ease3']
@@ -159,7 +160,6 @@ if speedFocus_addOn:
 var autoAnswerTimeout = 0;
 var autoAgainTimeout = 0;
 var autoAlertTimeout = 0;
-
 var setAutoAnswer = function(ms) {
     clearTimeout(autoAnswerTimeout);
     autoAnswerTimeout = setTimeout(function () { pycmd('ans') }, ms);
@@ -208,6 +208,10 @@ else:
 
 #// Review Screen Bottombar HTML
 def _bottomHTML(self):
+    time_color = ""
+    if custom_bottombarButtonBorderColor:
+        time_color = bottombarButtonBorder_color
+
     return """%(bottomHTML_style)s
 %(min_buttonSize)s
 <center id=outer>
@@ -224,7 +228,7 @@ def _bottomHTML(self):
 %(right_side1)s
 %(right_side2)s
 %(right_side3)s
-<td width=50 align=right valign=top class=stat><span id=time class=stattxt style='color: %(color)s'>
+<td width=50 align=right valign=top class=stat style='color: %(time_color)s'><span id=time class=stattxt>
 </span><br>
 <button onclick="pycmd('more');" %(more_style)s>More %(downArrow)s</button>
 </td>
@@ -237,13 +241,13 @@ time = %(time)d;
 </script>
 """ % dict(bottomHTML_style=bottomHTML_style, min_buttonSize=min_buttonSize, rem=self._remaining(), downArrow=downArrow(), time=self.card.timeTaken() // 1000,
     edit_style=edit_style, left_side1=left_side1, left_side2=left_side2, left_side3=left_side3, right_side1=right_side1,
-    right_side2=right_side2, right_side3=right_side3, more_style=more_style, SF_bottomHTML=SF_bottomHTML, color=bottombarButtonText_color)
+    right_side2=right_side2, right_side3=right_side3, more_style=more_style, SF_bottomHTML=SF_bottomHTML, time_color=time_color)
 
 #// Show Answer Button
 def _showAnswerButton(self):
     showAnswer_text = "Show Answer"
     highEase_tooltip = ""
-    if self.card.type not in [0, 1] and showAnswerBorderColor_style == 1:
+    if self.card.type not in [0, 1] and showAnswerBorderColor_style in [1, 3]:
         if self.card.factor // 10 < showAnswerEase1:
             showAnswerBorder_color = showAnswerEase1_color
         elif (showAnswerEase1 - 1) < self.card.factor // 10 < showAnswerEase2:
@@ -293,7 +297,9 @@ def _showAnswerButton(self):
 def _drawButtons(self):
     buf = "{}".format(bottomHTML_style)
     if style_mainScreenButtons:
-        mainScreen_style = "id=main"
+        #// style='height: px' -> to prevent changing main screen buttons heights
+        # based on height defined in #main {}
+        mainScreen_style = """id=main style='height: px' """
     else:
         mainScreen_style = ""
     drawLinks = deepcopy(self.drawLinks)
@@ -329,7 +335,9 @@ def _renderBottom(self):
         links.append(["U", "unbury", _("Unbury")])
     buf = "{}".format(bottomHTML_style)
     if style_mainScreenButtons:
-        mainScreen_style = "id=main"
+        #// style='height: px' -> to prevent changing main screen buttons heights
+        # based on height defined in #main {}
+        mainScreen_style = """id=main style='height: px' """
     else:
         mainScreen_style = ""
     for b in links:
@@ -349,43 +357,129 @@ def _renderBottom(self):
         self.bottom.web.onBridgeCmd = self._linkHandler
 
 
-#// Deck Overview Study Now Button
+#// Deck Overview Study Now Button | code from more overview stats to add more overview stats, OBVIOUSLY
 def _table(self):
-    counts = list(self.mw.col.sched.counts())
-    finished = not sum(counts)
-    if self.mw.col.schedVer() == 1:
-        for n in range(len(counts)):
-            if counts[n] >= 1000:
-                counts[n] = "1000+"
+    """Returns html table with more statistics than before."""
+    sched = self.mw.col.sched
+    deck = self.mw.col.decks.current()
+    dconf = self.mw.col.decks.confForDid(deck.get('id'))
     but = self.mw.button
-    if style_mainScreenButtons:
-        studyButton_id = "main"
-    else:
-        studyButton_id = "study"
+
+    # Get default counts
+    # 0 = new, 1 = learn, 2 = review
+    counts = list(sched.counts())
+    finished = not sum(counts)
+    counts = _limit(counts)
+
+    totals = [
+        #new
+        sched.col.db.scalar("""
+            select count() from (select id from cards where did = %s
+            and queue = 0)""" % deck.get('id')),
+        # learn
+        sched.col.db.scalar("""
+            select count() from (select id from cards where did = %s
+            and queue in (1,3))""" % deck.get('id')),
+        # review
+        sched.col.db.scalar("""
+            select count() from (select id from cards where did = %s
+            and queue = 2)""" % deck.get('id')),
+         # suspended
+        sched.col.db.scalar("""
+            select count() from (select id from cards where did = %s
+            and queue = -1)""" % deck.get('id')),
+        # buried
+        sched.col.db.scalar("""
+            select count() from (select id from cards where did = %s
+            and queue = -2)""" % deck.get('id')),
+    ]
+
+    if (dconf.get('new')):
+        dueTomorrow = _limit([
+            # new
+            min(dconf.get('new').get('perDay'), totals[0]),
+            # review
+            sched.col.db.scalar("""
+                select count() from cards where did = %s and queue = 3
+                and due = ?""" % deck.get('id'), sched.today + 1),
+            sched.col.db.scalar("""
+                select count() from cards where did = %s and queue = 2
+                and due = ?""" % deck.get('id'), sched.today + 1)
+        ])
+
+    html = ''
+
+    # Style if less than 2.1.20
+    if (int(version.replace('.', '')) < 2120):
+        html += '''
+            <style>
+                .new-count {color: #00a}
+                .learn-count {color: #C35617}
+                .review-count {color: #0a0}
+            </style>'''
+
+    # No need to show due if we have finished collection today
     if finished:
-        return '<div style="white-space: pre-wrap;">%s</div>' % (
-            self.mw.col.sched.finishedMsg()
-        )
+        mssg = sched.finishedMsg()
+        html +=  '''
+            <div style="white-space: pre-wrap;">%s</div>
+            <table cellspacing=5>''' % mssg
     else:
-        return """%s
-<table width=400 cellpadding=5>
-<tr><td align=center valign=top>
-<table cellspacing=5>
-<tr><td>%s:</td><td><b><span class=new-count>%s</span></b></td></tr>
-<tr><td>%s:</td><td><b><span class=learn-count>%s</span></b></td></tr>
-<tr><td>%s:</td><td><b><span class=review-count>%s</span></b></td></tr>
-</table>
-</td><td align=center>
-%s</td></tr></table>""" % (
-            bottomHTML_style,
-            _("New"),
-            counts[0],
-            _("Learning"),
-            counts[1],
-            _("To Review"),
-            counts[2],
-            but("study", _("Study Now"), id="{}".format(studyButton_id), extra=" autofocus"),
-        )
+        html +='''%s
+            <table cellpadding=5>
+            <tr><td align=center valign=top nowrap="nowrap">
+            <table cellspacing=5>
+            <tr><td nowrap="nowrap">%s:</td><td align=right>
+                <span title="new" class="new-count">%s</span>
+                <span title="learn" class="learn-count">%s</span>
+                <span title="review" class="review-count">%s</span>
+            </td></tr>''' % (bottomHTML_style, _("Due today"), counts[0], counts[1], counts[2])
+
+    if (dconf.get('new')):
+        html += '''
+            <tr><td nowrap="nowrap">%s:</td><td align=right>
+                <span title="new" class="new-count">%s</span>
+                <span title="learn" class="learn-count">%s</span>
+                <span title="review" class="review-count">%s</span>
+            </td></tr>''' % (_("Due tomorrow"), dueTomorrow[0],
+            dueTomorrow[1], dueTomorrow[2])
+
+    html += '''
+        <tr>
+            <td nowrap="nowrap">%s:</td>
+            <td align=right nowrap="nowrap">
+                <span title="new" class="new-count">%s</span>
+                <span title="learn" class="learn-count">%s</span>
+                <span title="review" class="review-count">%s</span>
+                <span title="buried" style="color:#ffa500">%s</span>
+                <span title="suspended" style="color:#adb300">%s</span>
+            </td>
+        </tr>
+    </table>''' % (_("Total Cards"), totals[0], totals[1], totals[2], totals[4],
+    totals[3])
+
+    if not finished:
+        if style_mainScreenButtons:
+            #// style='height: px' -> to prevent changing main screen buttons heights
+            # based on height defined in #main {}
+            mainScreen_style = """id=main style='height: px' """
+        else:
+            mainScreen_style = ""
+        if style_mainScreenButtons:
+            studyButton_id = "main"
+        else:
+            studyButton_id = "study"
+        html += '''</td>
+            <td align=center nowrap="nowrap">%s</td>
+        </tr></table>''' % (but("study", _("Study Now"), id="{}".format(studyButton_id)))
+
+    return html
+
+def _limit(counts):
+    for i, count in enumerate(counts):
+        if count >= 1000:
+	        counts[i] = "1000+"
+    return counts
 
 
 #// replacing/wraping functions

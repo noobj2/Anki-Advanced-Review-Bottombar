@@ -361,7 +361,7 @@ def _renderBottom(self):
         self.bottom.web.onBridgeCmd = self._linkHandler
 
 
-more_overViewStats = False
+more_overViewStats = True #// change to False if you don't want more overview stats
 
 #// Deck Overview Study Now Button | code from more overview stats to add more overview stats, OBVIOUSLY
 if more_overViewStats:

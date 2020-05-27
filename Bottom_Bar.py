@@ -62,11 +62,7 @@ def _shortcutKeys_wrap(self, _old):
     original.extend([
     (info_shortcut, lambda: Card_Info._cs.toggle()),
     (skip_shortcut, lambda: self.nextCard()),
-    (undo_shortcut, lambda: mw.onUndo()),
-    ("0", lambda: self._answerCard(1)),
-    ("9", lambda: self._answerCard(2)),
-    ("8", lambda: self._answerCard(3)),
-    ("7", lambda: self._answerCard(4)),
+    (undo_shortcut, lambda: mw.onUndo())
     ])
     return original
 
@@ -365,7 +361,7 @@ def _renderBottom(self):
         self.bottom.web.onBridgeCmd = self._linkHandler
 
 
-more_overViewStats = True #// change to False if you don't want more overview stats
+more_overViewStats = False
 
 #// Deck Overview Study Now Button | code from more overview stats to add more overview stats, OBVIOUSLY
 if more_overViewStats:

@@ -543,6 +543,8 @@ def myTooltip(self, ease):  #\\ should i store text, color and position all in t
     if tooltip_style == 1:
         x_offset = tooltip_position[0]
         y_offset = -tooltip_position[1]
+        button_width = 72
+        button_height = 29
     background_color = button[1]
 
     # if self.state == "answer": #// don't show tooltip if user hasn't pressed show answer button (you're really cool for a bug, so, I'm fucking keeping you :D)

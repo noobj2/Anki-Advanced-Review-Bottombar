@@ -1578,6 +1578,7 @@ class SettingsMenu(QDialog):
         about_scroll = QScrollArea()
         about_scroll.setWidget(about)
         changeLog_text = """
+        <style> li {margin: 10px 0px}</style>
         <div class="None">
           <b>2020/5/30</b>
           <ul>
@@ -1585,6 +1586,28 @@ class SettingsMenu(QDialog):
             Now it's size won't be as size of the buttons when it's position is fixed.<br></li>
             <font color=dodgerblue>pressed button count STILL at 90%<br></font>
           </ul>
+        </div>
+        <div class="None">
+          <b>2020/5/18</b>
+          <ul>
+            <li>Minor code changes/improvements.<br></li>
+            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
+          </ul>
+        </div>
+        <div class="None">
+          <b>2020/5/15</b>
+          <ol>
+            <li>Now it designs review buttons that other add-ons add (like rememorize).<br>
+            it treats them like other bottombar button so their color and style<br>
+            will be like other bottombar buttons</li>
+            <li>you can style other bottombar buttons that are added by other add-on (like deferer button).<br>
+            you'll need to change their code a bit. if you want to style them leave a comment here or on github page.<br>
+            (the last picture is how the extra buttons the those add-on add look after styling them using this add-on)</li>
+            <li>finally a github page :\ <a href="https://github.com/noobj2/Anki-Advanced-Review-Bottombar">Here it is</a></li>
+            <li>Changed color of timer text in bottombar.<br>
+            now it uses the same color you have set for other bottombar buttons text color. (not a big deal though, right?)<br></li>
+            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
+          </ol>
         </div>
         <div class="None">
           <b>2020/5/9</b>

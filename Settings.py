@@ -936,7 +936,6 @@ class SettingsMenu(QDialog):
         ski, show answer, undo review, more and review buttons.".format(begin, end))
         buttonsHeight_label.setFixedWidth(180)
         self.buttons_height = QSpinBox()
-        # self.buttons_height.setSuffix("px")
         self.buttons_height.setFixedWidth(120)
         self.buttons_height.setMinimum(20)
         self.buttons_height.setMaximum(200)
@@ -950,7 +949,6 @@ class SettingsMenu(QDialog):
         (again, hard, good and easy buttons).{1}".format(begin, end))
         reviewButtonsWidth_label.setFixedWidth(180)
         self.reviewButtons_width = QSpinBox()
-        # self.reviewButtons_width.setSuffix("px")
         self.reviewButtons_width.setFixedWidth(120)
         self.reviewButtons_width.setMinimum(40)
         self.reviewButtons_width.setMaximum(400)
@@ -963,7 +961,6 @@ class SettingsMenu(QDialog):
         editWidth_label.setToolTip("{0} Sets width for edit button.{1}".format(begin, end))
         editWidth_label.setFixedWidth(180)
         self.edit_width = QSpinBox()
-        # self.edit_width.setSuffix("px")
         self.edit_width.setFixedWidth(120)
         self.edit_width.setMinimum(40)
         self.edit_width.setMaximum(400)
@@ -976,7 +973,6 @@ class SettingsMenu(QDialog):
         answerWidth_label.setToolTip("{0} Sets width for show answer button.{1}".format(begin, end))
         answerWidth_label.setFixedWidth(180)
         self.answer_width = QSpinBox()
-        # self.answer_width.setSuffix("px")
         self.answer_width.setFixedWidth(120)
         self.answer_width.setMinimum(40)
         self.answer_width.setMaximum(400)
@@ -989,7 +985,6 @@ class SettingsMenu(QDialog):
         moreWidth_label.setToolTip("{0} Sets width for more button.{1}".format(begin, end))
         moreWidth_label.setFixedWidth(180)
         self.more_width = QSpinBox()
-        # self.more_width.setSuffix("px")
         self.more_width.setFixedWidth(120)
         self.more_width.setMinimum(40)
         self.more_width.setMaximum(400)
@@ -1002,7 +997,6 @@ class SettingsMenu(QDialog):
         infoWidth_label.setToolTip("{0} Sets width for info button.{1}".format(begin, end))
         infoWidth_label.setFixedWidth(180)
         self.info_width = QSpinBox()
-        # self.info_width.setSuffix("px")
         self.info_width.setFixedWidth(120)
         self.info_width.setMinimum(40)
         self.info_width.setMaximum(400)
@@ -1015,7 +1009,6 @@ class SettingsMenu(QDialog):
         skipWidth_label.setToolTip("{0} Sets width for skip button.{1}".format(begin, end))
         skipWidth_label.setFixedWidth(180)
         self.skip_width = QSpinBox()
-        # self.skip_width.setSuffix("px")
         self.skip_width.setFixedWidth(120)
         self.skip_width.setMinimum(40)
         self.skip_width.setMaximum(400)
@@ -1028,7 +1021,6 @@ class SettingsMenu(QDialog):
         undoWidth_label.setToolTip("{0} Sets width for undo button.{1}".format(begin, end))
         undoWidth_label.setFixedWidth(180)
         self.undo_width = QSpinBox()
-        # self.undo_width.setSuffix("px")
         self.undo_width.setFixedWidth(120)
         self.undo_width.setMinimum(40)
         self.undo_width.setMaximum(400)
@@ -1580,19 +1572,19 @@ class SettingsMenu(QDialog):
           Give it a like on <a href="https://ankiweb.net/shared/review/1136455830">Add-on's Page</a>
         </div>
         """
+        about = QLabel()
+        about.setText(about_text)
+        about.setOpenExternalLinks(True)
+        about_scroll = QScrollArea()
+        about_scroll.setWidget(about)
         changeLog_text = """
-        <style> li {margin: 10px 0px}</style>
         <div class="None">
-          <b>2020/5/15</b>
-          <ol>
-            <li>Now it designs review buttons that other add-ons add (like rememorize).<br>
-            it treats them like other bottombar button so their color and style will be like other bottombar buttons.<br>
-            styling these buttons is automatic and you don't need to do anything to activate it.</li>
-            <li> you can style other bottombar buttons that are added by other add-on (like deferer button).<br>
-            you'll need to change their code a bit. if you want to style them leave a comment on add-on's page or on github page.</li>
-            <li>Finally created a github page :/ -> <a href="https://github.com/noobj2/Anki-Advanced-Review-Bottombar">Here it is</a></li><br>
+          <b>2020/5/9</b>
+          <ul>
+            <li>Changed tooltip behavior.<br>
+            Now it's size won't be as size of the buttons when it's position is fixed.<br></li>
             <font color=dodgerblue>pressed button count STILL at 90%<br></font>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/5/9</b>
@@ -1866,17 +1858,12 @@ class SettingsMenu(QDialog):
           </ul>
         </div>
         """
-        about = QLabel()
-        about.setOpenExternalLinks(True)
-        about.setText(about_text)
-        about_scroll = QScrollArea()
-        about_scroll.setWidget(about)
         changeLog = QLabel()
-        changeLog.setOpenExternalLinks(True)
         changeLog.setText(changeLog_text)
         changeLog_scroll = QScrollArea()
         changeLog_scroll.setWidget(changeLog)
         changeLog_label = QLabel("<div style='color: dodgerblue; font-size: 14px;'>Changelog:</div>")
+        # TODO: set about
         layout = QVBoxLayout()
         layout.addWidget(about_scroll)
         layout.addWidget(changeLog_label)
@@ -2362,7 +2349,6 @@ def open_settings():
 
 def setupMenu():
     settings = QAction('&Advanced Review Bottombar Settings', mw)
-    settings.setShortcut(QKeySequence("Shift+A"))
     if C_settingsMenu_palce == 1:
         mw.form.menuTools.addAction(settings)
     else:
@@ -2370,5 +2356,6 @@ def setupMenu():
         mw.ARBB_menu.addAction(settings)
         mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.ARBB_menu)
     settings.triggered.connect(open_settings)
+    settings.setShortcut(QKeySequence('Shift+A'))
 setupMenu()
 mw.addonManager.setConfigAction(__name__, open_settings)

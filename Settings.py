@@ -1579,7 +1579,7 @@ class SettingsMenu(QDialog):
         about_scroll.setWidget(about)
         changeLog_text = """
         <div class="None">
-          <b>2020/5/9</b>
+          <b>2020/5/30</b>
           <ul>
             <li>Changed tooltip behavior.<br>
             Now it's size won't be as size of the buttons when it's position is fixed.<br></li>

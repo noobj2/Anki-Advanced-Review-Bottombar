@@ -11,7 +11,7 @@ import os
 
 
 def refreshConfig():
-    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_colored_intervals, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_undo, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_undo_width, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_settingsMenu_palce
+    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_colored_intervals, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_undo, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_undo_width, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_moreOverviewStats, C_settingsMenu_palce
 
     config = mw.addonManager.getConfig(__name__)
 
@@ -110,6 +110,7 @@ def refreshConfig():
 
     C_button_colors = config['  Button Colors']
     C_speedFocus = config['  Speed Focus Add-on']
+    C_moreOverviewStats = config['  More Overview Stats']
     C_settingsMenu_palce = config['  Settings Menu Place']
 
 
@@ -1495,8 +1496,8 @@ class SettingsMenu(QDialog):
         buttonColors_holder.addWidget(self.buttonColors_on)
         buttonColors_holder.addWidget(self.buttonColors_off)
         buttonColors_holder.addStretch()
-        tab7box1 = QGroupBox()
-        tab7box1.setLayout(buttonColors_holder)
+        buttonColors_box = QGroupBox()
+        buttonColors_box.setLayout(buttonColors_holder)
         speedFocus_label = QLabel("Speed Focus Add-on:")
         speedFocus_label.setToolTip("{0} Removes the conflict with speed focus add-on so you can\
         use this add-on on speed focus add-on at the same time without having issues.<hr>\
@@ -1514,8 +1515,24 @@ class SettingsMenu(QDialog):
         speedFocus_holder.addWidget(self.speedFocus_on)
         speedFocus_holder.addWidget(self.speedFocus_off)
         speedFocus_holder.addStretch()
-        tab7box2 = QGroupBox()
-        tab7box2.setLayout(speedFocus_holder)
+        speedFocus_box = QGroupBox()
+        speedFocus_box.setLayout(speedFocus_holder)
+        moreOverviewStats_label = QLabel("More Overview Stats:")
+        moreOverviewStats_label.setToolTip("{0}Shows number of new, learn and review cards for today and\
+        tomorrow and show total number of new, review, learn, buried and suspended cards on deck overview\
+        if enabled.{1}".format(begin, end))
+        moreOverviewStats_label.setFixedWidth(180)
+        self.moreOverviewStats_on = QRadioButton("On")
+        self.moreOverviewStats_on.setFixedWidth(90)
+        self.moreOverviewStats_off = QRadioButton("Off")
+        self.moreOverviewStats_off.setFixedWidth(90)
+        moreOverviewStats_holder = QHBoxLayout()
+        moreOverviewStats_holder.addWidget(moreOverviewStats_label)
+        moreOverviewStats_holder.addWidget(self.moreOverviewStats_on)
+        moreOverviewStats_holder.addWidget(self.moreOverviewStats_off)
+        moreOverviewStats_holder.addStretch()
+        moreOverviewStats_box = QGroupBox()
+        moreOverviewStats_box.setLayout(moreOverviewStats_holder)
         settingsMenuPlace_label = QLabel("Settings Menu Placement:")
         settingsMenuPlace_label.setToolTip("{0}Changes the position of settings menu.{1}".format(begin, end))
         settingsMenuPlace_label.setFixedWidth(180)
@@ -1526,12 +1543,13 @@ class SettingsMenu(QDialog):
         settingsMenuPlace_holder.addWidget(settingsMenuPlace_label)
         settingsMenuPlace_holder.addWidget(self.settingsMenu_place)
         settingsMenuPlace_holder.addStretch()
-        tab7box3 = QGroupBox()
-        tab7box3.setLayout(settingsMenuPlace_holder)
+        settingsMenuPlace_box = QGroupBox()
+        settingsMenuPlace_box.setLayout(settingsMenuPlace_holder)
         layout = QVBoxLayout()
-        layout.addWidget(tab7box1)
-        layout.addWidget(tab7box2)
-        layout.addWidget(tab7box3)
+        layout.addWidget(buttonColors_box)
+        layout.addWidget(speedFocus_box)
+        layout.addWidget(moreOverviewStats_box)
+        layout.addWidget(settingsMenuPlace_box)
         layout.addStretch()
         self.tab7 = QWidget()
         self.tab7.setLayout(layout)
@@ -1579,6 +1597,14 @@ class SettingsMenu(QDialog):
         about_scroll.setWidget(about)
         changeLog_text = """
         <style> li {margin: 10px 0px}</style>
+        <div class="None">
+          <b>2020/6/9</b>
+          <ul>
+            <li>Added an option to turn off more overview stats.<br></li>
+            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
+          </ul>
+        </div>
+        <div class="None">
         <div class="None">
           <b>2020/5/30</b>
           <ul>
@@ -2054,6 +2080,10 @@ class SettingsMenu(QDialog):
             self.speedFocus_on.setChecked(True)
         else:
             self.speedFocus_off.setChecked(True)
+        if C_moreOverviewStats:
+            self.moreOverviewStats_on.setChecked(True)
+        else:
+            self.moreOverviewStats_off.setChecked(True)
         self.settingsMenu_place.setCurrentIndex(C_settingsMenu_palce)
 
     def onApply(self):
@@ -2091,6 +2121,7 @@ class SettingsMenu(QDialog):
         conf = {
         "  Button Colors": self.buttonColors_on.isChecked(),
         "  Speed Focus Add-on": self.speedFocus_on.isChecked(),
+        "  More Overview Stats": self.moreOverviewStats_on.isChecked(),
         "  Settings Menu Place": self.settingsMenu_place.currentIndex(),
         "  Style Main Screen Buttons": self.style_mainScreenButtons.isChecked(),
         " Review_ Active Button Indicator": self.active_indicator.currentIndex(),
@@ -2189,6 +2220,7 @@ class SettingsMenu(QDialog):
         conf = {
     	"  Button Colors": True,
     	"  Speed Focus Add-on": False,
+        "  More Overview Stats": False,
     	"  Settings Menu Place": 0,
     	"  Style Main Screen Buttons": True,
         " Review_ Active Button Indicator": 1,

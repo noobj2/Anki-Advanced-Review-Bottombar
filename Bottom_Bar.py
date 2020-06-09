@@ -23,6 +23,7 @@ from . import styles
 #// getting config information
 config = mw.addonManager.getConfig(__name__)
 speedFocus_addOn = config['  Speed Focus Add-on']
+more_overviewStats = config['  More Overview Stats']
 bottombarButtons_style = config[' Review_ Bottombar Buttons Style']
 style_mainScreenButtons = config['  Style Main Screen Buttons']
 skip = config['Button_   Skip Button']
@@ -170,7 +171,7 @@ var setAutoAnswer = function(ms) {
 }
 var setAutoAgain = function(ms) {
     clearTimeout(autoAgainTimeout);
-    autoAgainTimeout = setTimeout(function () { pycmd("ease1"); }, ms);
+    autoAgainTimeout = setTimeout(function () { pycmd("defease"); }, ms);
 }
 var setAutoAlert = function(ms) {
     clearTimeout(autoAlertTimeout);
@@ -361,10 +362,8 @@ def _renderBottom(self):
         self.bottom.web.onBridgeCmd = self._linkHandler
 
 
-more_overViewStats = True #// change to False if you don't want more overview stats
-
 #// Deck Overview Study Now Button | code from more overview stats to add more overview stats, OBVIOUSLY
-if more_overViewStats:
+if more_overviewStats:
     def _table(self):
         """Returns html table with more statistics than before."""
         sched = self.mw.col.sched

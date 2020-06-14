@@ -151,12 +151,12 @@ All changes of the Advanced Review Bottombar will be listed here
 - adjusted review button text colors for new in-app night mode
 - adjusted wide button widths
 
-## 2020/2/8:
+## 2020/2/8
 - added an option for you to choose the shortcut key for skip and info buttons (in add-on config)
 - added an option to choose the sidebar theme (in add-on config)
 
-## 2020/1/2:
+## 2020/1/2
 - fix for old scheduler
 
-## 2019/12/14:
+## 2019/12/14
 - Release

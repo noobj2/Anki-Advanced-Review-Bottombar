@@ -248,10 +248,28 @@ class StatsSidebar(object):
                     self.addLine("Interval", fmt(c.ivl * 86400))
             if infobar_ease:
                 self.addLine("Ease", "%d%%" % (c.factor/10.0))
-            if infobar_reviews:
-                self.addLine("Reviews", "%d" % c.reps)
             if infobar_lapses:
                 self.addLine("Lapses", "%d" % c.lapses)
+            if self.col.schedVer() == 1:
+                pressed_again = mw.col.db.scalar("select sum(case when ease = 1 then 1 else 0 end) from revlog where cid = ?", c.id)
+                pressed_good = mw.col.db.scalar("select sum(case when ease = 2 then 1 else 0 end) from revlog where cid = ?", c.id)
+                pressed_easy = mw.col.db.scalar("select sum(case when ease = 3 then 1 else 0 end) from revlog where cid = ?", c.id)
+                pressed_all = pressed_again + pressed_good + pressed_easy
+                self.addLine("Again", "{} | {:.0f}%".format(pressed_again, float(pressed_again/pressed_all)*100))
+                self.addLine("Good", "{} | {:.0f}%".format(pressed_good, float(pressed_good/pressed_all)*100))
+                self.addLine("Easy", "{} | {:.0f}%".format(pressed_easy, float(pressed_easy/pressed_all)*100))
+            elif self.col.schedVer() == 2:
+                pressed_again = mw.col.db.scalar("select sum(case when ease = 1 then 1 else 0 end) from revlog where cid = ?", c.id)
+                pressed_hard = mw.col.db.scalar("select sum(case when ease = 2 then 1 else 0 end) from revlog where cid = ?", c.id)
+                pressed_good = mw.col.db.scalar("select sum(case when ease = 3 then 1 else 0 end) from revlog where cid = ?", c.id)
+                pressed_easy = mw.col.db.scalar("select sum(case when ease = 4 then 1 else 0 end) from revlog where cid = ?", c.id)
+                pressed_all = pressed_again + pressed_hard + pressed_good + pressed_easy
+                self.addLine("Again", "{} | {:.0f}%".format(pressed_again, float(pressed_again/pressed_all)*100))
+                self.addLine("Hard", "{} | {:.0f}%".format(pressed_hard, float(pressed_hard/pressed_all)*100))
+                self.addLine("Good", "{} | {:.0f}%".format(pressed_good, float(pressed_good/pressed_all)*100))
+                self.addLine("Easy", "{} | {:.0f}%".format(pressed_easy, float(pressed_easy/pressed_all)*100))
+            if infobar_reviews:
+                self.addLine("Reviews", "%d" % c.reps)
             (cnt, total) = self.col.db.first("select count(), sum(time)/1000 from revlog where cid = ?", c.id)
             if infobar_correctPercent and c.reps > 0:
                 self.addLine("Correct Percentage", "{:.0f}%".format(float((c.reps-c.lapses)/c.reps)*100))

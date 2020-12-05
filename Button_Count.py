@@ -1,5 +1,4 @@
 #// auth_ Mohamad Janati
-#// AmirHassan Asvadi ;)
 #// Copyright (c) 2019-2020 Mohamad Janati (freaking stupid, right? :|)
 
 #// settings -> auto open after review cleanup
@@ -16,7 +15,7 @@ import time
 from anki.utils import ids2str
 
 def refreshConfig():
-    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_colored_intervals, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_undo, C_right_info, C_info_position, C_skip_position, C_undo_position, C_skip_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_undo_width, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_moreOverviewStats, C_settingsMenu_palce, C_buttonCount_type, C_buttonCount_scope, C_buttonCount_timeSpinbox, C_buttonCount_period
+    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_colored_intervals, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_undo, C_right_info, C_info_position, C_skip_position, C_undo_position, C_skip_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_undo_width, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_overViewStats, C_settingsMenu_palce, C_buttonCount_type, C_buttonCount_scope, C_buttonCount_timeSpinbox, C_buttonCount_period
 
     config = mw.addonManager.getConfig(__name__)
 
@@ -115,7 +114,7 @@ def refreshConfig():
 
     C_button_colors = config['  Button Colors']
     C_speedFocus = config['  Speed Focus Add-on']
-    C_moreOverviewStats = config['  More Overview Stats']
+    C_overViewStats = config['  More Overview Stats']
     C_settingsMenu_palce = config['  Settings Menu Place']
 
     C_buttonCount_type = config['ButtonCount_ Type']
@@ -325,7 +324,7 @@ class StatsWindow(QDialog):
         conf = {
         "  Button Colors": C_button_colors,
         "  Speed Focus Add-on": C_speedFocus,
-        "  More Overview Stats": C_moreOverviewStats,
+        "  More Overview Stats": C_overViewStats,
         "  Settings Menu Place": C_settingsMenu_palce,
         "  Style Main Screen Buttons": C_style_mainScreenButtons,
         " Review_ Active Button Indicator": C_active_indicator,

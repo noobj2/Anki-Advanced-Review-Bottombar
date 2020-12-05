@@ -1,5 +1,4 @@
 #// auth_ Mohamad Janati
-#// AmirHassan Asvadi ;)
 #// Copyright (c) 2019-2020 Mohamad Janati (freaking stupid, right? :|)
 
 from aqt.reviewer import Reviewer
@@ -13,7 +12,6 @@ button_style = config[' Review_ Buttons Style']
 custom_colors = config[' Review_ Custom Colors']
 custom_buttonSize = config['Button_  Custom Button Sizes']
 color_dues = config[' Review_ Colored Dues']
-bottombarButtonText_color = config['Color_ Bottombar Button Text Color']
 if custom_buttonSize:
     buttons_height = config['Button_ Height_ All Bottombar Buttons']
     reviewButtons_width = config['Button_ Width_ Review Buttons']
@@ -68,7 +66,7 @@ def _answerButtons(self):
             elif i == 2:
                 button_id = "good"
             else:
-                button_id = "main"
+                button_id = ""
         elif cnt == 3:
             if i == 1:
                 button_id = "again"
@@ -77,7 +75,7 @@ def _answerButtons(self):
             elif i == 3:
                 button_id = "easy"
             else:
-                button_id = "main"
+                button_id = ""
         elif cnt == 4:
             if i == 1:
                 button_id = "again"
@@ -88,7 +86,7 @@ def _answerButtons(self):
             elif i == 4:
                 button_id = "easy"
             else:
-                button_id = "main"
+                button_id = ""
         else:
             if i == 1:
                 button_id = "again"
@@ -99,7 +97,7 @@ def _answerButtons(self):
             elif i == 4:
                 button_id = "easy"
             else:
-                button_id = "main"
+                button_id = ""
         due_plain = self._buttonTime(i)
         if color_dues:
             if button_id == "again":
@@ -112,7 +110,7 @@ def _answerButtons(self):
                 due = "<font color={}>{}</font>".format(easy_color, due_plain)
             else:
                 if due_plain:
-                    due = due = "<font color={}>{}</font>".format(bottombarButtonText_color, due_plain)
+                    due = due_plain
                 else:
                     return
         else:

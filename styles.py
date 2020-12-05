@@ -1,5 +1,4 @@
 #// auth_ Mohamad Janati
-#// AmirHassan Asvadi ;)
 #// Copyright (c) 2019-2020 Mohamad Janati (freaking stupid, right? :|)
 
 from aqt import mw
@@ -42,7 +41,6 @@ info_width = config['Button_ Width_ Info Button']
 skip_width = config['Button_ Width_ Skip Button']
 undo_width = config['Button_ Width_ Undo Button']
 more_width = config['Button_ Width_ More Button']
-#// changing answer buttons (again, hard etc.) happens in button_color in extra styling part of buttons
 custom_activeIndicatorColor = config[" Review_ Custom Active Indicator Color"]
 custom_reviewButtonTextColor = config[" Review_ Custom Review Button Text Color"]
 cursor_style = config[' Review_ Cursor Style']
@@ -113,12 +111,9 @@ if not custom_colors:
     good_color = "#33FF2D"
     easy_color = "#21C0FF"
 
-if not custom_buttonSize:
-    buttons_height = ''
-
 ######//////__END__ EXTRAS __END__ //////######
 
-######//////__BEGIN__ GENERAL_BUTTON_DESIGNS __BEGIN__ //////######
+######//////__BEGIN__ GENERAL BUTTON DESIGNS __BEGIN__ //////######
 #// changing height and width of bottombar buttons based on button design or sizes that user has given
 #// bottomHTML_style makes us able to add classes ids or edit bottombar buttons altogether
 #// edit_stle, info_style, etc. make us able to define classes, ids or add styles to each button
@@ -126,7 +121,6 @@ if not custom_buttonSize:
 if is_nightMode:
     bottombar_neon1 = """<style>
     #main {
-      height: %(buttons_height)spx;
       padding: 5px 20px;
       color: %(text)s;
       border: 1px solid %(border_color)s;
@@ -141,10 +135,9 @@ if is_nightMode:
       color: black;
       box-shadow: 0 2px 10px 0 %(text)s;
     }
-    </style>""" % dict (buttons_height=buttons_height, text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
     bottombar_neon2 = """<style>
     #main {
-      height: %(buttons_height)spx;
       padding: 5px 20px;
       color: black;
       border: 1px solid %(border_color)s;
@@ -160,10 +153,9 @@ if is_nightMode:
       color: %(text)s;
       box-shadow: none;
     }
-    </style>""" % dict (buttons_height=buttons_height, text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
     bottombar_fill1 = """<style>
     #main {
-      height: %(buttons_height)spx;
       padding: 5px 20px;
       border: 1px solid %(border_color)s;
       background: none;
@@ -192,10 +184,9 @@ if is_nightMode:
     #main:hover::before {
       height: 180%%;
     }
-    </style>""" % dict(buttons_height=buttons_height, text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
     bottombar_fill2 = """<style>
         #main {
-          height: %(buttons_height)spx;
           padding: 5px 20px;
           border: 1px solid %(border_color)s;
           background: none;
@@ -224,11 +215,10 @@ if is_nightMode:
         #main:hover::before {
           height: 0%%;
         }
-        </style>""" % dict(buttons_height=buttons_height, text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+        </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
 else:
     bottombar_neon1 = """<style>
     #main {
-      height: %(buttons_height)spx;
       padding: 5px 20px;
       color: %(text)s;
       border: 1px solid %(border_color)s;
@@ -243,10 +233,9 @@ else:
       color: #f0f0f0;
       box-shadow: 0 2px 10px 0 %(text)s;
     }
-    </style>""" % dict (buttons_height=buttons_height, text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
     bottombar_neon2 = """<style>
     #main {
-      height: %(buttons_height)spx;
       padding: 5px 20px;
       color: white;
       border: 1px solid %(border_color)s;
@@ -263,10 +252,9 @@ else:
       color: %(text)s;
       box-shadow: none;
     }
-    </style>""" % dict (buttons_height=buttons_height, text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
     bottombar_fill1 = """<style>
     #main {
-      height: %(buttons_height)spx;
       padding: 5px 20px;
       border: 1px solid %(border_color)s;
       background: none;
@@ -295,10 +283,9 @@ else:
     #main:hover::before {
       height: 180%%;
     }
-    </style>""" % dict(buttons_height=buttons_height, text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
     bottombar_fill2 = """<style>
         #main {
-          height: %(buttons_height)spx;
           padding: 5px 20px;
           border: 1px solid %(border_color)s;
           background: none;
@@ -327,7 +314,7 @@ else:
         #main:hover::before {
           height: 0%%;
         }
-        </style>""" % dict(buttons_height=buttons_height, text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+        </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
 
 if custom_buttonSize:
     if bottombarButtons_style == 0:
@@ -339,12 +326,12 @@ if custom_buttonSize:
         more_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, more_width)
         min_buttonSize = "<style> button {min-width: 5px} </style>"
     else:
-        edit_style = 'style="width: {}px;" id=main'.format(edit_width)
-        info_style = 'style="width: {}px;" id=main'.format(info_width)
-        skip_style = 'style="width: {}px;" id=main'.format(skip_width)
-        undo_style = 'style="width: {}px;" id=main'.format(undo_width)
-        showAnswer_style = 'style="width: {}px;" id=main'.format(answer_width)
-        more_style = 'style="width: {}px;" id=main'.format(more_width)
+        edit_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, edit_width)
+        info_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, info_width)
+        skip_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, skip_width)
+        undo_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, undo_width)
+        showAnswer_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, answer_width)
+        more_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, more_width)
         min_buttonSize = "<style> button {min-width: 5px} </style>"
 else:
     if bottombarButtons_style == 0:
@@ -363,9 +350,9 @@ else:
         showAnswer_style = "id=main"
         more_style = "id=main"
         min_buttonSize = ""
-######//////__END__ GENERAL_BUTTON_DESIGNS __END__//////######
+######//////__END__ GENERAL BUTTON DESIGNS __END__//////######
 
-######//////__BEGIN__ ACTIVE_BUTTON_INDOCATORS __BEGIN__//////######
+######//////__BEGIN__ ACtIVE BUTTON INDOCATORS __BEGIN__//////######
 #// active button indicator
 if activeIndicator_color == "default":
     activeIndicator_color = "#21BFFF"
@@ -375,10 +362,10 @@ else:
     active_extra = "border: solid 1px; border-color: {}".format(activeIndicator_color)
 if active_indicator == 0 or button_style in [4, 5, 6, 7]:
     active_extra = ""
-######//////__END__ ACTIVE_BUTTON_INDOCATORS __END__//////######
+######//////__END__ ACtIVE BUTTON INDOCATORS __END__//////######
 
 
-######//////__BEGIN__ HOVER_EFFECTS __BEGIN__//////######
+######//////__BEGIN__ HOVER EFFECTS __BEGIN__//////######
 if not custom_colors:
     again_shadow = "box-shadow: 0 0 5px #BA0C0C, 0 0 20px #BA0C0C, 0 0 40px #BA0C0C;"
     hard_shadow = "box-shadow: 0 0 5px #BF720F, 0 0 20px #BF720F, 0 0 40px #BF720F;"
@@ -471,9 +458,9 @@ else:
             hard_hover = "background: {}; {}".format(hard_hover_color, hard_shadow)
             good_hover = "background: {}; {}".format(good_hover_color, good_shadow)
             easy_hover = "background: {}; {}".format(easy_hover_color, easy_shadow)
-######//////__END__ HOVER_EFFECTS __END__//////######
+######//////__END__ HOVER EFFECTS __END__//////######
 
-######//////__BEGIN__ REVIEW_BUTTONS_DESIGNS __BEGIN__//////######
+######//////__BEGIN__ REVIEW BUTTON DESIGNS __BEGIN__//////######
 fill2 = """<style>
     #again {
       padding: 5px 20px;
@@ -1073,9 +1060,9 @@ button_styles = """<style>
       font-size: 12px;
     }
     </style>"""
-######//////__END__ REVIEW_BUTTONS_DESIGNS __END__//////######
+######//////__END__ REVIEW BUTTONS DESIGNS __END__//////######
 
-######//////__BEGIN__ CARD_INFO_STYLING __BEGIN//////######
+######//////__BEGIN__ CARD INFO STYLING __BEGIN//////######
 light = """
 body {
     margin: 8px;
@@ -1164,4 +1151,4 @@ a:link {
 .critical_color_lower {color:  #ff0000;}
 .critical_color_upper {color:  #00aaff;}
 """
-######//////__END__ CARD_INFO_STYLING __END__//////######
+######//////__END__ CARD INFO __END__//////######

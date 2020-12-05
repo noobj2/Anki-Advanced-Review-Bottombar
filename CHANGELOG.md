@@ -2,6 +2,10 @@
 
 All changes of the Advanced Review Bottombar will be listed here
 
+## 2020/12/6
+- Added another mode to overview stats (taken from "More Overview Stats 2.1")
+- Fixed conflict with speedfocus add-on (If you use speedfocus you need to enable "Speed focus" option in ARBb settings -> Misc)
+
 ## 2020/6/9
 - Added an option to turn off more overview stats
 

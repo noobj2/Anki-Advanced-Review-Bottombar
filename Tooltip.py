@@ -1,5 +1,4 @@
 #// auth_ Mohamad Janati
-#// AmirHassan Asvadi ;)
 #// Copyright (c) 2019-2020 Mohamad Janati (freaking stupid, right? :|)
 
 
@@ -548,7 +547,7 @@ def myTooltip(self, ease):  #\\ should i store text, color and position all in t
     background_color = button[1]
 
     # if self.state == "answer": #// don't show tooltip if user hasn't pressed show answer button (you're really cool for a bug, so, I'm fucking keeping you :D)
-    mytooltip(text, background_color, tooltip_textColor, button_width, button_height, x_offset, y_offset, period=tooltip_timer)
+    showTooltip(text, background_color, tooltip_textColor, button_width, button_height, x_offset, y_offset, period=tooltip_timer)
 if anki_version > 2119:
     _tooltipTimer: Optional[QTimer] = None
     _tooltipLabel: Optional[QLabel] = None
@@ -556,7 +555,7 @@ else:
     _tooltipTimer = None
     _tooltipLabel = None
 
-def mytooltip(text, background_color, tooltip_textColor, button_width, button_height, x_offset, y_offset, period=3000, parent=None):
+def showTooltip(text, background_color, tooltip_textColor, button_width, button_height, x_offset, y_offset, period=3000, parent=None):
     global _tooltipTimer, _tooltipLabel
 
     class CustomLabel(QLabel):

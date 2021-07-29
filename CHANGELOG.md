@@ -2,6 +2,12 @@
 
 All changes of the Advanced Review Bottombar will be listed here
 
+## 2021/7/30
+- Added an option to set your custom text as button labels. replace again, hard, good, easy, etc. text with your custom text or emoji. To change button labels and use your own custom text, go to "Button label" tab in the settings. To the person asking me how to change button labels -_- you can use this from now on. No need to change the code.
+- Added an option to hide hard, good, easy buttons (Requested) and (no I haven't forgotten to put again in the list -_- you can't hide again button). To use this option, go to "Bottombar Buttons" and look for "Hide Buttons" part there.
+- Added an option to change the roundness of the buttons. To use this option, go to "Styles" tab and look for "Button Border Radius" there.
+- Removed pressed button stats from the add-on. For those who used it, I'll be publishing it as a separate add on named "Pressed Button Stats"</li>
+
 ## 2020/12/6
 - Added another mode to overview stats (taken from "More Overview Stats 2.1")
 - Fixed conflict with speedfocus add-on (If you use speedfocus you need to enable "Speed focus" option in ARBb settings -> Misc)

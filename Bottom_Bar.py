@@ -1,5 +1,5 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2020 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
 from anki import version
 anki_version = int(version.replace('.', ''))
 import json
@@ -36,6 +36,15 @@ undo_shortcut = config['Button_ Shortcut_ Undo Button'].lower()
 info_position = config['Button_ Position_ Info Button'].lower()
 skip_position = config['Button_ Position_ Skip Button'].lower()
 undo_position = config['Button_ Position_ Undo Button'].lower()
+
+studyNow_label = config['Button Label_ Study Now']
+edit_label = config['Button Label_ Edit']
+showAnswer_label = config['Button Label_ Show Answer']
+more_label = config['Button Label_ More']
+info_label = config['Button Label_ Info']
+skip_label = config['Button Label_ Skip']
+undo_label = config['Button Label_ Undo']
+
 custom_bottombarButtonBorderColor = config['Color_ Custom Bottombar Button Border Color']
 bottombarButtonBorder_color = config['Color_ Bottombar Button Border Color']
 showAnswerBorderColor_style = config['ShowAnswer_ Border Color Style']
@@ -98,7 +107,7 @@ elif bottombarButtons_style == 4:
 #// info button | written in a separate functions to preserve the original bottombar
 def info_button():
     if info:
-        return """<button title="Shortcut key: {}" onclick="pycmd('card_info');" {}>Info</button>""".format(info_shortcut.upper(), info_style)
+        return """<button title="Shortcut key: {}" onclick="pycmd('card_info');" {}>{}</button>""".format(info_shortcut.upper(), info_style, info_label)
     else:
         return ""
 
@@ -106,7 +115,7 @@ def info_button():
 #// skip button | written in a separate functions to preserve the original bottombar
 def skip_button():
     if skip:
-        return """<button title="Shortcut key: {}" onclick="pycmd('skip');" {}>Skip</button>""".format(skip_shortcut.upper(), skip_style)
+        return """<button title="Shortcut key: {}" onclick="pycmd('skip');" {}>{}</button>""".format(skip_shortcut.upper(), skip_style, skip_label)
     else:
         return ""
 
@@ -114,7 +123,7 @@ def skip_button():
 #// undo button
 def undo_button():
     if undo:
-        return """<button title="Shortcut key: {}" onclick="pycmd('undo');" {}>Undo Review</button>""".format(undo_shortcut, undo_style)
+        return """<button title="Shortcut key: {}" onclick="pycmd('undo');" {}>{}</button>""".format(undo_shortcut, undo_style, undo_label)
     else:
         return ""
 
@@ -226,7 +235,7 @@ def _bottomHTML(self):
 <tr>
 <td align=left width=50 valign=top class=stat>
 <br>
-<button title="Shortcut key: E" onclick="pycmd('edit');" %(edit_style)s>Edit</button></td>
+<button title="Shortcut key: E" onclick="pycmd('edit');" %(edit_style)s>%(edit_label)s</button></td>
 %(left_side1)s
 %(left_side2)s
 %(left_side3)s
@@ -237,7 +246,7 @@ def _bottomHTML(self):
 %(right_side3)s
 <td width=50 align=right valign=top class=stat style='color: %(time_color)s'><span id=time class=stattxt>
 </span><br>
-<button onclick="pycmd('more');" %(more_style)s>More %(downArrow)s</button>
+<button onclick="pycmd('more');" %(more_style)s>%(more_label)s %(downArrow)s</button>
 </td>
 </tr>
 </table>
@@ -247,12 +256,12 @@ time = %(time)d;
 %(SF_bottomHTML)s
 </script>
 """ % dict(bottomHTML_style=bottomHTML_style, min_buttonSize=min_buttonSize, rem=self._remaining(), downArrow=downArrow(), time=self.card.timeTaken() // 1000,
-    edit_style=edit_style, left_side1=left_side1, left_side2=left_side2, left_side3=left_side3, right_side1=right_side1,
-    right_side2=right_side2, right_side3=right_side3, more_style=more_style, SF_bottomHTML=SF_bottomHTML, time_color=time_color)
+    edit_style=edit_style, edit_label=edit_label, left_side1=left_side1, left_side2=left_side2, left_side3=left_side3, right_side1=right_side1,
+    right_side2=right_side2, right_side3=right_side3, more_style=more_style, more_label=more_label, SF_bottomHTML=SF_bottomHTML, time_color=time_color)
 
 #// Show Answer Button
 def _showAnswerButton(self):
-    showAnswer_text = "Show Answer"
+    showAnswer_text = showAnswer_label
     highEase_tooltip = ""
     if self.card.type not in [0, 1] and showAnswerBorderColor_style in [1, 3]:
         if self.card.factor // 10 < showAnswerEase1:
@@ -479,7 +488,7 @@ if more_overviewStats == 1:
                 studyButton_id = "study"
             html += '''</td>
                 <td align=center nowrap="nowrap">%s</td>
-            </tr></table>''' % (but("study", _("Study Now"), id="{}".format(studyButton_id), extra="autofocus"))
+            </tr></table>''' % (but("study", _("{}".format(studyNow_label)), id="{}".format(studyButton_id), extra="autofocus"))
 
         return html
 

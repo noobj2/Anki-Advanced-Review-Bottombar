@@ -1,5 +1,5 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2020 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
 
 from aqt.reviewer import Reviewer
 from aqt import mw
@@ -10,6 +10,9 @@ from . import styles
 config = mw.addonManager.getConfig(__name__)
 button_style = config[' Review_ Buttons Style']
 custom_colors = config[' Review_ Custom Colors']
+hide_hard = config['Button_   Hide Hard']
+hide_good = config['Button_   Hide Good']
+hide_easy = config['Button_   Hide Easy']
 custom_buttonSize = config['Button_  Custom Button Sizes']
 color_dues = config[' Review_ Colored Dues']
 if custom_buttonSize:
@@ -18,6 +21,10 @@ if custom_buttonSize:
 else:
     buttons_height = ""
     reviewButtons_width = ""
+again_label = config['Button Label_ Again']
+hard_label = config['Button Label_ Hard']
+good_label = config['Button Label_ Good']
+easy_label = config['Button Label_ Easy']
 
 #// getting styles from styles.py
 text_color = styles.text_color
@@ -39,20 +46,36 @@ def _answerButtonList(self):
     cnt = self.mw.col.sched.answerButtons(self.card)
     if cnt == 2:
         #// button = ((ease, "Label"),)
-        again = ((1, " Again "),)
-        good = ((2, " Good "),)
-        return again + good
+        again = ((1, " {} ".format(again_label)),)
+        good = ((2, " {} ".format(good_label)),)
+        buttons = again
+        #// don't add button "good" to returned buttons if it's disabled
+        if not hide_good:
+            buttons += good
+        return buttons
     elif cnt == 3:
-        again = ((1, " Again "),)
-        good = ((2, " Good "),)
-        easy = ((3, " Easy "),)
-        return again + good + easy
+        again = ((1, " {} ".format(again)),)
+        good = ((2, " {} ".format(good_label)),)
+        easy = ((3, " {} ".format(easy_label)),)
+        buttons = again
+        if not hide_good:
+            buttons += good
+        if not hide_easy:
+            buttons += easy
+        return buttons
     else:
-        again = ((1, " Again "),)
-        hard = ((2, " Hard "),)
-        good = ((3, " Good "),)
-        easy = ((4, " Easy "),)
-        return again + hard + good + easy
+        again = ((1, " {} ".format(again_label)),)
+        hard = ((2, " {} ".format(hard_label)),)
+        good = ((3, " {} ".format(good_label)),)
+        easy = ((4, " {} ".format(easy_label)),)
+        buttons = again
+        if not hide_hard:
+            buttons += hard
+        if not hide_good:
+            buttons += good
+        if not hide_easy:
+            buttons += easy
+        return buttons
 
 
 def _answerButtons(self):

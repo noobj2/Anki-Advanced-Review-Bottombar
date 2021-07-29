@@ -1,5 +1,5 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2020 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
 
 from aqt import mw
 from anki import version
@@ -45,6 +45,7 @@ custom_activeIndicatorColor = config[" Review_ Custom Active Indicator Color"]
 custom_reviewButtonTextColor = config[" Review_ Custom Review Button Text Color"]
 cursor_style = config[' Review_ Cursor Style']
 transition = "{}s".format(float(config[' Review_ Button Transition Time']/1000))
+border_radius = "{}px".format(config[' Review_ Button Border Radius'])
 
 ######//////__BEGIN__ EXTRAS __BEGIN__//////######
 #// rplacing textColor with "default" if custom review button text color is disabled
@@ -124,24 +125,24 @@ if is_nightMode:
       padding: 5px 20px;
       color: %(text)s;
       border: 1px solid %(border_color)s;
-      border-radius: 7px;
+      border-radius: %(border_radius)s;
       background: none;
       cursor: %(cursor)s;
       transition: %(transition)s;
     }
     #main:hover {
       background: %(text)s;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: black;
       box-shadow: 0 2px 10px 0 %(text)s;
     }
-    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
     bottombar_neon2 = """<style>
     #main {
       padding: 5px 20px;
       color: black;
       border: 1px solid %(border_color)s;
-      border-radius: 7px;
+      border-radius: %(border_radius)s;
       background: %(text)s;
       cursor: %(cursor)s;
       transition: %(transition)s;
@@ -149,11 +150,11 @@ if is_nightMode:
     }
     #main:hover {
       background: none;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(text)s;
       box-shadow: none;
     }
-    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
     bottombar_fill1 = """<style>
     #main {
       padding: 5px 20px;
@@ -163,7 +164,7 @@ if is_nightMode:
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(text)s;
     }
     #main:hover {
@@ -184,7 +185,7 @@ if is_nightMode:
     #main:hover::before {
       height: 180%%;
     }
-    </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
     bottombar_fill2 = """<style>
         #main {
           padding: 5px 20px;
@@ -194,7 +195,7 @@ if is_nightMode:
           transition: %(transition)s;
           position: relative;
           overflow: hidden;
-          border-radius: 5px;
+          border-radius: %(border_radius)s;
           color: black;
         }
         #main:hover {
@@ -215,31 +216,31 @@ if is_nightMode:
         #main:hover::before {
           height: 0%%;
         }
-        </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+        </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
 else:
     bottombar_neon1 = """<style>
     #main {
       padding: 5px 20px;
       color: %(text)s;
       border: 1px solid %(border_color)s;
-      border-radius: 7px;
+      border-radius: %(border_radius)s;
       background: none;
       cursor: %(cursor)s;
       transition: %(transition)s;
     }
     #main:hover {
       background: %(text)s;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: #f0f0f0;
       box-shadow: 0 2px 10px 0 %(text)s;
     }
-    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
     bottombar_neon2 = """<style>
     #main {
       padding: 5px 20px;
       color: white;
       border: 1px solid %(border_color)s;
-      border-radius: 7px;
+      border-radius: %(border_radius)s;
       background: %(text)s;
       cursor: %(cursor)s;
       transition: %(transition)s;
@@ -248,11 +249,11 @@ else:
     #main:hover {
       border: 1px solid %(text)s;
       background: none;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(text)s;
       box-shadow: none;
     }
-    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
     bottombar_fill1 = """<style>
     #main {
       padding: 5px 20px;
@@ -262,7 +263,7 @@ else:
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(text)s;
     }
     #main:hover {
@@ -283,7 +284,7 @@ else:
     #main:hover::before {
       height: 180%%;
     }
-    </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+    </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
     bottombar_fill2 = """<style>
         #main {
           padding: 5px 20px;
@@ -293,7 +294,7 @@ else:
           transition: %(transition)s;
           position: relative;
           overflow: hidden;
-          border-radius: 5px;
+          border-radius: %(border_radius)s;
           color: white;
         }
         #main:hover {
@@ -314,7 +315,7 @@ else:
         #main:hover::before {
           height: 0%%;
         }
-        </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition)
+        </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
 
 if custom_buttonSize:
     if bottombarButtons_style == 0:
@@ -470,7 +471,7 @@ fill2 = """<style>
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(text)s;
     }
     #again:hover {
@@ -499,7 +500,7 @@ fill2 = """<style>
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(text)s;
     }
     #hard:hover {
@@ -528,7 +529,7 @@ fill2 = """<style>
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(text)s;
     }
     #good:hover {
@@ -557,7 +558,7 @@ fill2 = """<style>
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(text)s;
     }
     #easy:hover {
@@ -579,7 +580,7 @@ fill2 = """<style>
       height: 0%%;
     }
     </style>""" % dict(text=textColor, again_color=again_color,hard_color=hard_color, good_color=good_color,
-    easy_color=easy_color,cursor=cursor, transition=transition)
+    easy_color=easy_color,cursor=cursor, transition=transition, border_radius=border_radius)
 
 fill1 = """<style>
     #again {
@@ -590,7 +591,7 @@ fill1 = """<style>
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(again_color)s;
     }
     #again:hover {
@@ -619,7 +620,7 @@ fill1 = """<style>
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(hard_color)s;
     }
     #hard:hover {
@@ -648,7 +649,7 @@ fill1 = """<style>
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(good_color)s;
     }
     #good:hover {
@@ -677,7 +678,7 @@ fill1 = """<style>
       transition: %(transition)s;
       position: relative;
       overflow: hidden;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       color: %(easy_color)s;
     }
     #easy:hover {
@@ -699,13 +700,13 @@ fill1 = """<style>
       height: 180%%;
     }
     </style>""" % dict(text=textColor, again_color=again_color, hard_color=hard_color, good_color=good_color,
-    easy_color=easy_color, cursor=cursor, transition=transition)
+    easy_color=easy_color, cursor=cursor, transition=transition, border_radius=border_radius)
 neon2 = """<style>
     #again {
       color: %(text)s;
       border: 1px solid %(again_color)s;
       padding: 5px 20px;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       background: %(again_color)s;
       cursor: %(cursor)s;
       transition: %(transition)s;
@@ -713,7 +714,7 @@ neon2 = """<style>
     }
     #again:hover {
       background: none;
-      border-radius: 7px;
+      border-radius: %(border_radius)s;
       color: %(again_color)s;
       box-shadow: none;
     }
@@ -721,7 +722,7 @@ neon2 = """<style>
       color: %(text)s;
       border: 1px solid %(hard_color)s;
       padding: 5px 20px;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       background: %(hard_color)s;
       cursor: %(cursor)s;
       transition: %(transition)s;
@@ -729,7 +730,7 @@ neon2 = """<style>
     }
     #hard:hover {
       background: none;
-      border-radius: 7px;
+      border-radius: %(border_radius)s;
       color: %(hard_color)s;
       box-shadow: none;
     }
@@ -737,7 +738,7 @@ neon2 = """<style>
       color: %(text)s;
       border: 1px solid %(good_color)s;
       padding: 5px 20px;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       background: %(good_color)s;
       cursor: %(cursor)s;
       transition: %(transition)s;
@@ -745,7 +746,7 @@ neon2 = """<style>
     }
     #good:hover {
       background: none;
-      border-radius: 7px;
+      border-radius: %(border_radius)s;
       color: %(good_color)s;
       box-shadow: none;
     }
@@ -753,7 +754,7 @@ neon2 = """<style>
       color: %(text)s;
       border: 1px solid %(easy_color)s;
       padding: 5px 20px;
-      border-radius: 5px;
+      border-radius: %(border_radius)s;
       background: %(easy_color)s;
       cursor: %(cursor)s;
       transition: %(transition)s;
@@ -761,19 +762,19 @@ neon2 = """<style>
     }
     #easy:hover {
       background: none;
-      border-radius: 7px;
+      border-radius: %(border_radius)s;
       color: %(easy_color)s;
       box-shadow: none;
     }
     </style>""" % dict(text=textColor, again_color=again_color,hard_color=hard_color,
-    good_color=good_color, easy_color=easy_color, cursor=cursor, transition=transition)
+    good_color=good_color, easy_color=easy_color, cursor=cursor, transition=transition, border_radius=border_radius)
 neon1 = """<style>
     #again {
     background: none;
     color: %(again_color)s;
     border: 1px solid %(again_color)s;
     padding: 5px 20px;
-    border-radius: 7px;
+    border-radius: %(border_radius)s;
     cursor: %(cursor)s;
     transition: %(transition)s;
     box-shadow: none;
@@ -781,7 +782,7 @@ neon1 = """<style>
     #again:hover {
     background: %(again_color)s;
     color: %(text)s;
-    border-radius: 5px;
+    border-radius: %(border_radius)s;
     box-shadow: 0 2px 20px 0 %(again_color)s inset, 0 2px 20px 0 %(again_color)s;
     }
     #hard {
@@ -789,7 +790,7 @@ neon1 = """<style>
     color: %(hard_color)s;
     border: 1px solid %(hard_color)s;
     padding: 5px 20px;
-    border-radius: 7px;
+    border-radius: %(border_radius)s;
     cursor: %(cursor)s;
     transition: %(transition)s;
     box-shadow: none;
@@ -797,7 +798,7 @@ neon1 = """<style>
     #hard:hover {
     background: %(hard_color)s;
     color: %(text)s;
-    border-radius: 5px;
+    border-radius: %(border_radius)s;
     box-shadow: 0 2px 20px 0 %(hard_color)s inset, 0 2px 20px 0 %(hard_color)s;
     }
     #good {
@@ -805,7 +806,7 @@ neon1 = """<style>
     color: %(good_color)s;
     border: 1px solid %(good_color)s;
     padding: 5px 20px;
-    border-radius: 7px;
+    border-radius: %(border_radius)s;
     cursor: %(cursor)s;
     transition: %(transition)s;
     box-shadow: none;
@@ -813,7 +814,7 @@ neon1 = """<style>
     #good:hover {
     background: %(good_color)s;
     color: %(text)s;
-    border-radius: 5px;
+    border-radius: %(border_radius)s;
     box-shadow: 0 2px 20px 0 %(good_color)s inset, 0 2px 20px 0 %(good_color)s;
     }
     #easy {
@@ -821,7 +822,7 @@ neon1 = """<style>
     color: %(easy_color)s;
     border: 1px solid %(easy_color)s;
     padding: 5px 20px;
-    border-radius: 7px;
+    border-radius: %(border_radius)s;
     cursor: %(cursor)s;
     transition: %(transition)s;
     box-shadow: none;
@@ -829,11 +830,11 @@ neon1 = """<style>
     #easy:hover {
     background: %(easy_color)s;
     color: %(text)s;
-    border-radius: 5px;
+    border-radius: %(border_radius)s;
     box-shadow: 0 2px 20px 0 %(easy_color)s inset, 0 2px 20px 0 %(easy_color)s;
     }
     </style>""" % dict(text=textColor, again_color=again_color, hard_color=hard_color,
-    good_color=good_color, easy_color=easy_color, cursor=cursor, transition=transition)
+    good_color=good_color, easy_color=easy_color, cursor=cursor, transition=transition, border_radius=border_radius)
 #// styling for text color change method
 text_color = """<style>
     #again {

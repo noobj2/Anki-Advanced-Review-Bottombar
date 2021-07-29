@@ -1,5 +1,5 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2020 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
 
 from aqt import mw
 from anki import version
@@ -11,7 +11,6 @@ reviewTooltip = config['Tooltip']
 anki_version = int(version.replace('.', ''))
 from . import Bottom_Bar
 from . import Settings
-from . import Button_Count
 if reviewTooltip:
     from . import Tooltip
 

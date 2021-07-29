@@ -1,5 +1,5 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2020 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
 
 from os.path import  join, dirname
 from aqt import mw
@@ -10,10 +10,13 @@ import os
 
 
 def refreshConfig():
-    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_colored_intervals, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_undo, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_undo_width, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_overViewStats, C_settingsMenu_palce
+    #// Makes the information that it gets fron "config" global so I can use them for loading the current settings in "loadCurrent(self)" function
+    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_colored_intervals, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_overViewStats, C_settingsMenu_palce
 
     config = mw.addonManager.getConfig(__name__)
 
+    #// Gets the information from the config and assigns them to the "C_" variables so I can make them global | "C_" is added to the name of the parts of the settings variables to avoid confusion :D
+    #// Just delete the "C_" from the name to find related parts of the settings (C_style_mainScreenButtons -> style_mainScreenButtons)
     C_style_mainScreenButtons = config['  Style Main Screen Buttons']
 
     C_button_style = config[' Review_ Buttons Style']
@@ -22,6 +25,8 @@ def refreshConfig():
     C_bottombarButtons_style = config[' Review_ Bottombar Buttons Style']
     C_cursor_style = config[' Review_ Cursor Style']
     C_buttonTransition_time = config[' Review_ Button Transition Time']
+    # Button Border Radius is used for all buttons, not just the review buttons
+    C_buttonBorderRadius = config[' Review_ Button Border Radius']
     C_colored_intervals = config[' Review_ Colored Dues']
 
     C_reviewTooltip = config['Tooltip']
@@ -33,6 +38,9 @@ def refreshConfig():
     C_info = config['Button_   Info Button']
     C_skip = config['Button_   Skip Button']
     C_undo = config['Button_   Undo Button']
+    C_hideHard = config['Button_   Hide Hard']
+    C_hideGood = config['Button_   Hide Good']
+    C_hideEasy = config['Button_   Hide Easy']
     C_info_position = config['Button_ Position_ Info Button']
     C_skip_position = config['Button_ Position_ Skip Button']
     C_undo_position = config['Button_ Position_ Undo Button']
@@ -49,6 +57,18 @@ def refreshConfig():
     C_info_width = config['Button_ Width_ Info Button']
     C_skip_width = config['Button_ Width_ Skip Button']
     C_undo_width = config['Button_ Width_ Undo Button']
+
+    C_buttonLabel_studyNow = config['Button Label_ Study Now']
+    C_buttonLabel_edit = config['Button Label_ Edit']
+    C_buttonLabel_showAnswer = config['Button Label_ Show Answer']
+    C_buttonLabel_more = config['Button Label_ More']
+    C_buttonLabel_info = config['Button Label_ Info']
+    C_buttonLabel_skip = config['Button Label_ Skip']
+    C_buttonLabel_undo = config['Button Label_ Undo']
+    C_buttonLabel_again = config['Button Label_ Again']
+    C_buttonLabel_hard = config['Button Label_ Hard']
+    C_buttonLabel_good = config['Button Label_ Good']
+    C_buttonLabel_easy = config['Button Label_ Easy']
 
     C_sidebar_theme = config['Card Info sidebar_ theme']
     C_sidebar_font = config['Card Info sidebar_ Font']
@@ -112,7 +132,8 @@ def refreshConfig():
     C_overViewStats = config['  More Overview Stats']
     C_settingsMenu_palce = config['  Settings Menu Place']
 
-
+    #// it's easier to store extra button positions as text in config | but here in the settings, I hate to turn it into true/false as each checkbox is diabled/enabled like that :|
+    #// Every checkbox is disabled by default
     C_right_info = False
     C_middleRight_info = False
     C_middleLeft_info = False
@@ -126,6 +147,8 @@ def refreshConfig():
     C_middleLeft_undo = False
     C_left_undo = False
 
+    #// here we enable (make it "True") the correct checkbox based on the config value
+    #// All of this is for loading the current settings in "loadCurrent(self)" function
     if C_info_position == "right":
         C_right_info = True
     elif C_info_position == "middle right":
@@ -150,12 +173,15 @@ def refreshConfig():
         C_middleLeft_undo = True
     else:
         C_left_undo = True
+
 class GetShortcut(QDialog):
     def __init__(self, parent, button_variable):
         QDialog.__init__(self, parent=parent)
         self.parent = parent
         self.button_variable = button_variable
+        #// when recording a shortcut, there is 0 active (pushed) key at first | by pressing each key, this increases by +1
         self.active = 0
+        #// and the state of all the accepted keys on the keyboard is "False" | by pressing each key, the state for that button changes to "True"
         self.ctrl = False
         self.alt = False
         self.shift = False
@@ -176,6 +202,7 @@ class GetShortcut(QDialog):
         self.getShortcutWindow()
 
     def getShortcutWindow(self):
+        #// Sets up the screen that asks you to press the shortcut you want to assign
         text = QLabel('<div style="font-size: 15px">Press the new shortcut key...</div>')
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(text)
@@ -183,9 +210,12 @@ class GetShortcut(QDialog):
         self.setWindowTitle('Set Shortcut')
 
     def keyPressEvent(self, evt):
+        #// increases the active keys count upon pressing each key
         self.active += 1
+        #// limits the allowed keys to keyboard keys
         if evt.key() > 30 and evt.key() < 127:
             self.extra = chr(evt.key())
+        #// stores the pressed key in a variable so we could later add it in a list and use it as a key combination
         elif evt.key() == Qt.Key_Control:
             self.ctrl = True
         elif evt.key() == Qt.Key_Alt:
@@ -218,7 +248,9 @@ class GetShortcut(QDialog):
             self.f12 = True
 
     def keyReleaseEvent(self, evt):
+        #// reduces the number of held keys upon releasing each key
         self.active -= 1
+        #// I was having fun -_- don't blame me
         shiftList = ["Who uses \"Shift\" alone as a shortcut key?", "You wanna use \"Shift\" without any other key as your shortcut??\n\n SERIOUSLY?!?!", "You must have forgotten to press another key...\n\n I don't wanna believe that there is someone who uses \"Shift\" without another key as a shortcut", "Dude, you can't just use \"Shift\"\n\n You should combine it with another key", "Are you really trying to use \"Shift\" as your shortcut?!!\n\n C'mon...", "What's so special about \"Shift\" that you wanna use it alone as a shortcut??", "\"Shift\" is scared of being used alone, you should use it with another key :)"]
         if os.name == "nt":
             altList = ["Who uses \"Alt\" alone as a shortcut key?", "You wanna use \"Alt\" without any other key as your shortcut??\n\n SERIOUSLY?!?!", "You must have forgotten to press another key...\n\n I don't wanna believe that there is someone who uses \"Alt\" without another key as a shortcut", "Dude, you can't just use \"Alt\"\n\n You should combine it with another key", "Are you really trying to use \"Alt\" as your shortcut?!!\n\n C'mon...", "What's so special about \"Alt\" that you wanna use it alone as a shortcut??", "\"Alt\" is scared of being used alone, you should use it with another key :)"]
@@ -231,12 +263,14 @@ class GetShortcut(QDialog):
         ctrlAlone = random.choice(ctrlList)
         if not (self.f1 or self.f2 or self.f3 or self.f4 or self.f5 or self.f6 or self.f7 or self.f8 or self.f9 or self.f10 or self.f11 or self.f12):
             if not self.extra:
+                #// special treats for buttons that everyone knows can't be used as a shortcut on their own -_-
                 if self.alt:
                     showInfo("{}".format(altAlone), title="Advanced Review Bottombar")
                 elif self.shift:
                     showInfo("{}".format(shiftAlone), title="Advanced Review Bottombar")
                 elif self.ctrl:
                     showInfo("{}".format(ctrlAlone), title="Advanced Review Bottombar")
+                #// lets the users that the pressed key is not allowed to be used in a shortcut
                 elif evt.key() == Qt.Key_Escape:
                     showInfo("You can't use \"Escape\" as shortcut, try something else", title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Tab:
@@ -282,6 +316,7 @@ class GetShortcut(QDialog):
                 combination = []
                 return
 
+        #// the (empty) list for storing keys and then turning them into a shortcut
         combination = []
         if self.ctrl:
             combination.append("Ctrl")
@@ -316,6 +351,7 @@ class GetShortcut(QDialog):
         if self.extra:
             combination.append(self.extra)
         combination = "+".join(combination)
+        #// preventing users from assigning a defauls Anki shortcut to something else | to avoid conflicts and stuff :|
         if combination in ["E", " ", "F5", "Ctrl+1", "Ctrl+2", "Ctrl+3", "Ctrl+4", "Shift+*", "=", "-", "Shift+!", "Shift+@", "Ctrl+Delete", "V", "Shift+V", "O", "1", "2", "3", "4", "5", "6", "7", "T", "Y", "A", "S", "D", "F", "B", "/", "F1", "Ctrl+Q", "Ctrl+E", "Ctrl+P", "Ctrl+Shift+I", "Ctrl+Shift+P", "Ctrl+Shift+A", "Ctrl+Shift+:", "Ctrl+Shif+N", "Ctrl+Z"]:
             if combination == "E":
                 showInfo("\"E\" is default Anki shortcut for \"Edit Current Card\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
@@ -452,6 +488,7 @@ class SettingsMenu(QDialog):
         self.createSixthTab()
         self.createSeventhTab()
         self.createEighthTab()
+        self.createNinthTab()
         self.loadCurrent()
         buttonbox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         restoreDefaults = buttonbox.addButton("Restore Defaults", QDialogButtonBox.ResetRole)
@@ -460,15 +497,17 @@ class SettingsMenu(QDialog):
         buttonbox.rejected.connect(lambda: tooltip("Changes Discarded."))
         restoreDefaults.clicked.connect(self.onRestoreDefaults)
 
+        #// create tabs widget and adds each tab
         tabs = QTabWidget()
         tabs.addTab(self.tab1, "Styles")
         tabs.addTab(self.tab2, "Answer Tooltip")
         tabs.addTab(self.tab3, "Bottombar Buttons")
         tabs.addTab(self.tab4, "Button Sizes")
-        tabs.addTab(self.tab5, "Sidebar")
-        tabs.addTab(self.tab6, "Colors")
-        tabs.addTab(self.tab7, "Misc")
-        tabs.addTab(self.tab8, "About")
+        tabs.addTab(self.tab5, "Button Label")
+        tabs.addTab(self.tab6, "Sidebar")
+        tabs.addTab(self.tab7, "Colors")
+        tabs.addTab(self.tab8, "Misc")
+        tabs.addTab(self.tab9, "About")
 
         vbox = QVBoxLayout()
         vbox.addWidget(tabs)
@@ -581,6 +620,7 @@ class SettingsMenu(QDialog):
         activeIndicator_holder.addWidget(self.active_indicator)
         activeIndicator_holder.addStretch()
         cursorStyle_label = QLabel("Cursor Style:")
+        cursorStyle_label.setToolTip("{0}Changes the cursor style when hovered over buttons.{1}".format(begin, end))
         cursorStyle_label.setFixedWidth(180)
         self.cursor_style = QComboBox()
         self.cursor_style.addItems(["Normal", "Pointer"])
@@ -605,19 +645,32 @@ class SettingsMenu(QDialog):
         showAnswerBorderType_holder.addStretch()
 
         buttonTransitionTime_label = QLabel("Button Transition Time:")
+        buttonTransitionTime_label.setToolTip("{0}Changes button animation time for fill and neon styles.{1}".format(begin, end))
         buttonTransitionTime_label.setFixedWidth(180)
         self.buttonTransition_time = QSpinBox()
-        self.buttonTransition_time.setToolTip("Changes button animation time for fill and neon styles.")
-        buttonTransitionTime_ms = QLabel("ms")
         self.buttonTransition_time.setMinimum(0)
         self.buttonTransition_time.setMaximum(10000)
         self.buttonTransition_time.setSingleStep(20)
         self.buttonTransition_time.setFixedWidth(180)
+        buttonTransitionTime_ms = QLabel("ms")
         buttonTransitionTime_holder = QHBoxLayout()
         buttonTransitionTime_holder.addWidget(buttonTransitionTime_label)
         buttonTransitionTime_holder.addWidget(self.buttonTransition_time)
         buttonTransitionTime_holder.addWidget(buttonTransitionTime_ms)
         buttonTransitionTime_holder.addStretch()
+        buttonBorderRadius_label = QLabel("Button Border Radius:")
+        buttonBorderRadius_label.setToolTip("{0}Changer the roundness of the buttons.{1}".format(begin, end))
+        buttonBorderRadius_label.setFixedWidth(180)
+        self.buttonBorderRadius = QSpinBox()
+        self.buttonBorderRadius.setMinimum(0)
+        self.buttonBorderRadius.setMaximum(50)
+        self.buttonBorderRadius.setSingleStep(1)
+        self.buttonBorderRadius.setFixedWidth(180)
+        buttonBorderRadius_px = QLabel("px")
+        buttonBorderRadius_holder = QHBoxLayout()
+        buttonBorderRadius_holder.addWidget(buttonBorderRadius_label)
+        buttonBorderRadius_holder.addWidget(self.buttonBorderRadius)
+        buttonBorderRadius_holder.addWidget(buttonBorderRadius_px)
         def buttonStyle_signal():
             buttonStyle_index = self.button_style.currentIndex()
             self.hover_effect.setDisabled(True)
@@ -655,6 +708,7 @@ class SettingsMenu(QDialog):
         layout.addLayout(cursorStyle_holder)
         layout.addLayout(showAnswerBorderType_holder)
         layout.addLayout(buttonTransitionTime_holder)
+        layout.addLayout(buttonBorderRadius_holder)
         layout.addLayout(tab1line5)
         layout.addStretch()
         self.tab1 = QWidget()
@@ -778,12 +832,24 @@ class SettingsMenu(QDialog):
         self.skip.setToolTip("{0} If enabled adds skip card button to review bottombar. {1}".format(begin, end))
         self.undo = QCheckBox("Undo Button")
         self.undo.setToolTip("{0} If enabled adds undo review button to review bottombar. {1}".format(begin, end))
-        tab3line1 = QHBoxLayout()
-        tab3line1.addWidget(self.info)
-        tab3line1.addWidget(self.skip)
-        tab3line1.addWidget(self.undo)
-        tab3box1 = QGroupBox("Extra Buttons")
-        tab3box1.setLayout(tab3line1)
+        extraButtonsPart = QHBoxLayout()
+        extraButtonsPart.addWidget(self.info)
+        extraButtonsPart.addWidget(self.skip)
+        extraButtonsPart.addWidget(self.undo)
+        extraButtonsBox = QGroupBox("Extra Buttons")
+        extraButtonsBox.setLayout(extraButtonsPart)
+        self.hideHard = QCheckBox("Hide Hard")
+        self.hideHard.setToolTip("{0}Hides the Hard button.{1}".format(begin, end))
+        self.hideGood = QCheckBox("Hide Good")
+        self.hideGood.setToolTip("{0}Hides the Good button.{1}".format(begin, end))
+        self.hideEasy = QCheckBox("Hide Easy")
+        self.hideEasy.setToolTip("{0}Hides the Easy button.{1}".format(begin, end))
+        hideButtonsPart = QHBoxLayout()
+        hideButtonsPart.addWidget(self.hideHard)
+        hideButtonsPart.addWidget(self.hideGood)
+        hideButtonsPart.addWidget(self.hideEasy)
+        hideButtonsBox = QGroupBox("Hide Buttons")
+        hideButtonsBox.setLayout(hideButtonsPart)
         infoPosition_label = QLabel("Info Button Position:")
         infoPosition_label.setToolTip("{0} Changes info button position in bottombar. {1}".format(begin, end))
         self.left_info = QRadioButton("Left")
@@ -796,12 +862,12 @@ class SettingsMenu(QDialog):
         infoPosition_holder.addWidget(self.middleLeft_info)
         infoPosition_holder.addWidget(self.middleRight_info)
         infoPosition_holder.addWidget(self.right_info)
-        tab3subBox1 = QGroupBox()
-        tab3subBox1.setDisabled(True)
+        infoButtonPositionBox = QGroupBox()
+        infoButtonPositionBox.setDisabled(True)
         if self.info.isChecked():
-            self.tab3subBox1.setEnabled(True)
-        self.info.toggled.connect(tab3subBox1.setEnabled)
-        tab3subBox1.setLayout(infoPosition_holder)
+            self.infoButtonPositionBox.setEnabled(True)
+        self.info.toggled.connect(infoButtonPositionBox.setEnabled)
+        infoButtonPositionBox.setLayout(infoPosition_holder)
         skipPosition_label = QLabel("Skip Button Position:")
         skipPosition_label.setToolTip("{0} Changes skip button position in bottombar. {1}".format(begin, end))
         self.left_skip = QRadioButton("Left")
@@ -814,12 +880,12 @@ class SettingsMenu(QDialog):
         skipPosition_holder.addWidget(self.middleLeft_skip)
         skipPosition_holder.addWidget(self.middleRight_skip)
         skipPosition_holder.addWidget(self.right_skip)
-        tab3subBox2 = QGroupBox()
-        tab3subBox2.setDisabled(True)
+        skipButtonPositionBox = QGroupBox()
+        skipButtonPositionBox.setDisabled(True)
         if self.info.isChecked():
-            tab3subBox2.setEnabled(True)
-        self.skip.toggled.connect(tab3subBox2.setEnabled)
-        tab3subBox2.setLayout(skipPosition_holder)
+            skipButtonPositionBox.setEnabled(True)
+        self.skip.toggled.connect(skipButtonPositionBox.setEnabled)
+        skipButtonPositionBox.setLayout(skipPosition_holder)
         undoPosition_label = QLabel("Undo Button Position:")
         undoPosition_label.setToolTip("{0} Changes undo review button position in bottombar. {1}".format(begin, end))
         self.left_undo = QRadioButton("Left")
@@ -832,18 +898,18 @@ class SettingsMenu(QDialog):
         undoPosition_holder.addWidget(self.middleLeft_undo)
         undoPosition_holder.addWidget(self.middleRight_undo)
         undoPosition_holder.addWidget(self.right_undo)
-        tab3subBox3 = QGroupBox()
-        tab3subBox3.setDisabled(True)
+        undoButtonPositionBox = QGroupBox()
+        undoButtonPositionBox.setDisabled(True)
         if self.undo.isChecked():
-            tab3subBox3.setEnabled(True)
-        self.undo.toggled.connect(tab3subBox3.setEnabled)
-        tab3subBox3.setLayout(undoPosition_holder)
-        tab3line2 = QVBoxLayout()
-        tab3line2.addWidget(tab3subBox1)
-        tab3line2.addWidget(tab3subBox2)
-        tab3line2.addWidget(tab3subBox3)
-        tab3box2 = QGroupBox("Button Positions")
-        tab3box2.setLayout(tab3line2)
+            undoButtonPositionBox.setEnabled(True)
+        self.undo.toggled.connect(undoButtonPositionBox.setEnabled)
+        undoButtonPositionBox.setLayout(undoPosition_holder)
+        buttonPositionsPart = QVBoxLayout()
+        buttonPositionsPart.addWidget(infoButtonPositionBox)
+        buttonPositionsPart.addWidget(skipButtonPositionBox)
+        buttonPositionsPart.addWidget(undoButtonPositionBox)
+        buttonPositionsBox = QGroupBox("Button Positions")
+        buttonPositionsBox.setLayout(buttonPositionsPart)
         infoShortcut_label = QLabel("Info Button Shortcut:")
         infoShortcut_label.setToolTip("{0} Changes show card info shortcut.<hr> Shortcut will work even if\
         you disable the skip button.<hr> skip button can be a sngle key\
@@ -890,16 +956,17 @@ class SettingsMenu(QDialog):
         undoShortcut_holder.addWidget(undoShortcut_label)
         undoShortcut_holder.addStretch()
         undoShortcut_holder.addWidget(self.undoShortcut_button)
-        tab3line3 = QVBoxLayout()
-        tab3line3.addLayout(infoShortcut_holder)
-        tab3line3.addLayout(skipShortcut_holder)
-        tab3line3.addLayout(undoShortcut_holder)
-        tab3box3 = QGroupBox("Button Shortcuts")
-        tab3box3.setLayout(tab3line3)
+        buttonShortcutsPart = QVBoxLayout()
+        buttonShortcutsPart.addLayout(infoShortcut_holder)
+        buttonShortcutsPart.addLayout(skipShortcut_holder)
+        buttonShortcutsPart.addLayout(undoShortcut_holder)
+        buttonShortcutsBox = QGroupBox("Button Shortcuts")
+        buttonShortcutsBox.setLayout(buttonShortcutsPart)
         layout = QVBoxLayout()
-        layout.addWidget(tab3box1)
-        layout.addWidget(tab3box2)
-        layout.addWidget(tab3box3)
+        layout.addWidget(extraButtonsBox)
+        layout.addWidget(hideButtonsBox)
+        layout.addWidget(buttonPositionsBox)
+        layout.addWidget(buttonShortcutsBox)
         layout.addStretch()
         self.tab3 = QWidget()
         self.tab3.setLayout(layout)
@@ -1052,6 +1119,144 @@ class SettingsMenu(QDialog):
         self.tab4.setLayout(layout)
 
     def createFifthTab(self):
+        begin = self.begin
+        end = self.end
+        images = self.images
+        buttonLabel_studyNow_label = QLabel("Study Now:")
+        buttonLabel_studyNow_label.setToolTip("{0}Replaces the text for \"Study Now\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_studyNow_label.setFixedWidth(90)
+        self.buttonLabel_studyNow = QLineEdit()
+        buttonlabel_studyNow_holder = QHBoxLayout()
+        buttonlabel_studyNow_holder.addWidget(buttonLabel_studyNow_label)
+        buttonlabel_studyNow_holder.addWidget(self.buttonLabel_studyNow)
+        buttonLabel_studyNow_box = QGroupBox()
+        buttonLabel_studyNow_box.setLayout(buttonlabel_studyNow_holder)
+        buttonLabel_edit_label = QLabel("Edit:")
+        buttonLabel_edit_label.setToolTip("{0}Replaces the text for \"Edit\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_edit_label.setFixedWidth(90)
+        self.buttonLabel_edit = QLineEdit()
+        buttonlabel_edit_holder = QHBoxLayout()
+        buttonlabel_edit_holder.addWidget(buttonLabel_edit_label)
+        buttonlabel_edit_holder.addWidget(self.buttonLabel_edit)
+        buttonLabel_edit_box = QGroupBox()
+        buttonLabel_edit_box.setLayout(buttonlabel_edit_holder)
+        firstLine = QHBoxLayout()
+        firstLine.addWidget(buttonLabel_studyNow_box)
+        firstLine.addWidget(buttonLabel_edit_box)
+        buttonLabel_showAnswer_label = QLabel("Show Answer:")
+        buttonLabel_showAnswer_label.setToolTip("{0}Replaces the text for \"Show Answer\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_showAnswer_label.setFixedWidth(90)
+        self.buttonLabel_showAnswer = QLineEdit()
+        buttonlabel_showAnswer_holder = QHBoxLayout()
+        buttonlabel_showAnswer_holder.addWidget(buttonLabel_showAnswer_label)
+        buttonlabel_showAnswer_holder.addWidget(self.buttonLabel_showAnswer)
+        buttonLabel_showAnswer_box = QGroupBox()
+        buttonLabel_showAnswer_box.setLayout(buttonlabel_showAnswer_holder)
+        buttonLabel_more_label = QLabel("More:")
+        buttonLabel_more_label.setToolTip("{0}Replaces the text for \"More\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_more_label.setFixedWidth(90)
+        self.buttonLabel_more = QLineEdit()
+        buttonlabel_more_holder = QHBoxLayout()
+        buttonlabel_more_holder.addWidget(buttonLabel_more_label)
+        buttonlabel_more_holder.addWidget(self.buttonLabel_more)
+        buttonLabel_more_box = QGroupBox()
+        buttonLabel_more_box.setLayout(buttonlabel_more_holder)
+        secondLine = QHBoxLayout()
+        secondLine.addWidget(buttonLabel_showAnswer_box)
+        secondLine.addWidget(buttonLabel_more_box)
+        buttonLabel_info_label = QLabel("Info:")
+        buttonLabel_info_label.setToolTip("{0}Replaces the text for \"Info\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_info_label.setFixedWidth(90)
+        self.buttonLabel_info = QLineEdit()
+        buttonlabel_info_holder = QHBoxLayout()
+        buttonlabel_info_holder.addWidget(buttonLabel_info_label)
+        buttonlabel_info_holder.addWidget(self.buttonLabel_info)
+        buttonLabel_info_box = QGroupBox()
+        buttonLabel_info_box.setLayout(buttonlabel_info_holder)
+        buttonLabel_skip_label = QLabel("Skip:")
+        buttonLabel_skip_label.setToolTip("{0}Replaces the text for \"Skip\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_skip_label.setFixedWidth(90)
+        self.buttonLabel_skip = QLineEdit()
+        buttonlabel_skip_holder = QHBoxLayout()
+        buttonlabel_skip_holder.addWidget(buttonLabel_skip_label)
+        buttonlabel_skip_holder.addWidget(self.buttonLabel_skip)
+        buttonLabel_skip_box = QGroupBox()
+        buttonLabel_skip_box.setLayout(buttonlabel_skip_holder)
+        thirdLine = QHBoxLayout()
+        thirdLine.addWidget(buttonLabel_info_box)
+        thirdLine.addWidget(buttonLabel_skip_box)
+
+        buttonLabel_undo_label = QLabel("Undo:")
+        buttonLabel_undo_label.setToolTip("{0}Replaces the text for \"Undo\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_undo_label.setFixedWidth(90)
+        self.buttonLabel_undo = QLineEdit()
+        self.buttonLabel_undo.setFixedWidth(190)
+        buttonlabel_undo_holder = QHBoxLayout()
+        buttonlabel_undo_holder.addWidget(buttonLabel_undo_label)
+        buttonlabel_undo_holder.addWidget(self.buttonLabel_undo)
+        buttonlabel_undo_holder.addStretch()
+        buttonLabel_undo_box = QGroupBox()
+        buttonLabel_undo_box.setLayout(buttonlabel_undo_holder)
+
+        buttonLabel_again_label = QLabel("Again:")
+        buttonLabel_again_label.setToolTip("{0}Replaces the text for \"Again\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_again_label.setFixedWidth(90)
+        self.buttonLabel_again = QLineEdit()
+        buttonlabel_again_holder = QHBoxLayout()
+        buttonlabel_again_holder.addWidget(buttonLabel_again_label)
+        buttonlabel_again_holder.addWidget(self.buttonLabel_again)
+        buttonLabel_again_box = QGroupBox()
+        buttonLabel_again_box.setLayout(buttonlabel_again_holder)
+        buttonLabel_hard_label = QLabel("Hard:")
+        buttonLabel_hard_label.setToolTip("{0}Replaces the text for \"Hard\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_hard_label.setFixedWidth(90)
+        self.buttonLabel_hard = QLineEdit()
+        buttonlabel_hard_holder = QHBoxLayout()
+        buttonlabel_hard_holder.addWidget(buttonLabel_hard_label)
+        buttonlabel_hard_holder.addWidget(self.buttonLabel_hard)
+        buttonLabel_hard_box = QGroupBox()
+        buttonLabel_hard_box.setLayout(buttonlabel_hard_holder)
+        fourthLine = QHBoxLayout()
+        fourthLine.addWidget(buttonLabel_again_box)
+        fourthLine.addWidget(buttonLabel_hard_box)
+        buttonLabel_good_label = QLabel("Good:")
+        buttonLabel_good_label.setToolTip("{0}Replaces the text for \"Good\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_good_label.setFixedWidth(90)
+        self.buttonLabel_good = QLineEdit()
+        buttonlabel_good_holder = QHBoxLayout()
+        buttonlabel_good_holder.addWidget(buttonLabel_good_label)
+        buttonlabel_good_holder.addWidget(self.buttonLabel_good)
+        buttonLabel_good_box = QGroupBox()
+        buttonLabel_good_box.setLayout(buttonlabel_good_holder)
+        buttonLabel_easy_label = QLabel("Easy:")
+        buttonLabel_easy_label.setToolTip("{0}Replaces the text for \"Easy\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_easy_label.setFixedWidth(90)
+        self.buttonLabel_easy = QLineEdit()
+        buttonlabel_easy_holder = QHBoxLayout()
+        buttonlabel_easy_holder.addWidget(buttonLabel_easy_label)
+        buttonlabel_easy_holder.addWidget(self.buttonLabel_easy)
+        buttonLabel_easy_box = QGroupBox()
+        buttonLabel_easy_box.setLayout(buttonlabel_easy_holder)
+        fifthLine = QHBoxLayout()
+        fifthLine.addWidget(buttonLabel_good_box)
+        fifthLine.addWidget(buttonLabel_easy_box)
+        layout = QVBoxLayout()
+        layout.addLayout(firstLine)
+        layout.addLayout(secondLine)
+        layout.addLayout(thirdLine)
+        layout.addWidget(buttonLabel_undo_box)
+        layout.addLayout(fourthLine)
+        layout.addLayout(fifthLine)
+        layout.addStretch()
+        layout_holder = QWidget()
+        layout_holder.setLayout(layout)
+        self.tab5 = QScrollArea()
+        self.tab5.setFixedWidth(640)
+        self.tab5.setAlignment(Qt.AlignHCenter)
+        self.tab5.setWidgetResizable(True)
+        self.tab5.setWidget(layout_holder)
+
+    def createSixthTab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -1212,10 +1417,10 @@ class SettingsMenu(QDialog):
         layout.addWidget(tab5box1)
         layout.addWidget(tab5box2)
         layout.addStretch()
-        self.tab5 = QWidget()
-        self.tab5.setLayout(layout)
+        self.tab6 = QWidget()
+        self.tab6.setLayout(layout)
 
-    def createSixthTab(self):
+    def createSeventhTab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -1463,13 +1668,13 @@ class SettingsMenu(QDialog):
         layout.addStretch()
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
-        self.tab6 = QScrollArea()
-        self.tab6.setFixedWidth(620)
-        self.tab6.setAlignment(Qt.AlignHCenter)
-        self.tab6.setWidgetResizable(True)
-        self.tab6.setWidget(layout_holder)
+        self.tab7 = QScrollArea()
+        self.tab7.setFixedWidth(640)
+        self.tab7.setAlignment(Qt.AlignHCenter)
+        self.tab7.setWidgetResizable(True)
+        self.tab7.setWidget(layout_holder)
 
-    def createSeventhTab(self):
+    def createEighthTab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -1548,14 +1753,14 @@ class SettingsMenu(QDialog):
         layout.addWidget(overViewStats_box)
         layout.addWidget(settingsMenuPlace_box)
         layout.addStretch()
-        self.tab7 = QWidget()
-        self.tab7.setLayout(layout)
-
+        self.tab8 = QWidget()
+        self.tab8.setLayout(layout)
         self.tab1.setDisabled(True)
         if self.buttonColors_on.isChecked():
             self.tab1.setEnabled(True)
         self.buttonColors_on.toggled.connect(self.tab1.setEnabled)
-    def createEighthTab(self):
+
+    def createNinthTab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -1595,9 +1800,31 @@ class SettingsMenu(QDialog):
         changeLog_text = """
         <style> li {margin: 10px 0px}</style>
         <div class="None">
-          <b>2020/12/5</b>
+          <b>2021/7/30</b>
           <ul>
-            <li>Added another mode to overview stats (taken from "More Overview Stats 2.1")<br></li>
+            <li>Added an option to set your custom text as button labels.<br>
+            replace again, hard, good, easy, etc. text with your custom text or emoji.<br>
+            To change button labels and use your own custom text, go to "Button label" tab in the settings.<br>
+            To the person asking me how to change button labels -_- you can use this from now on. No need to change the code.</li>
+            <li>Added an option to hide hard, good, easy buttons. (Requested)<br>
+            (no I haven't forgotten to put again in the list -_- you can't hide again button).<br>
+            To use this option, go to "Bottombar Buttons" and look for "Hide Buttons" part there.</li>
+            <li>Added an option to change the roundness of the buttons.<br>
+            To use this option, go to "Styles" tab and look for "Button Border Radius" there.</li>
+            <li><font color=red>Removed</font> pressed button stats from the add-on.<br>
+            For those who used it, I'll be publishing it as a separate add on named "Pressed Button Stats"</li>
+          </ul>
+        </div><div class="None">
+          <b>2020/6/9</b>
+          <ul>
+            <li>Added an option to turn off more overview stats.<br></li>
+            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
+          </ul>
+        </div>
+        <div class="None">
+          <b>2020/12/6</b>
+          <ul>
+            <li>Added another mode to overview stats (taken from "More Overview Stats 2.1")</li>
             <li>Fixed conflict with speedfocus add-on (If you use speedfocus you need to enable "Speed focus" option in ARBb settings -> Misc)</li>
           </ul>
         </div><div class="None">
@@ -1625,7 +1852,7 @@ class SettingsMenu(QDialog):
         </div>
         <div class="None">
           <b>2020/5/15</b>
-          <ol>
+          <ul>
             <li>Now it designs review buttons that other add-ons add (like rememorize).<br>
             it treats them like other bottombar button so their color and style<br>
             will be like other bottombar buttons</li>
@@ -1636,11 +1863,11 @@ class SettingsMenu(QDialog):
             <li>Changed color of timer text in bottombar.<br>
             now it uses the same color you have set for other bottombar buttons text color. (not a big deal though, right?)<br></li>
             <font color=dodgerblue>pressed button count STILL at 90%<br></font>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/5/9</b>
-          <ol>
+          <ul>
             <li>Made neon and fill designs customizable. now you can change their colors using \"Colors\" tab.<br>
             Enable custom colors by checking \"Custom Review Button Colors\" checkbox and <br>
             changing again, hard, good and easy colors.<br>
@@ -1656,39 +1883,39 @@ class SettingsMenu(QDialog):
             - (honestly i think it's gonna be usless for most of you :/ it was just something that i needed).</li>
             <li>+ Other settings menu and bottombar buttons changes and improvements.<br></li>
             <font color=dodgerblue>pressed button count STILL at 90%<br></font>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/28</b>
-          <ol>
+          <ul>
             <li>Added an option to choose card type [learn, review, re-learn, cram] for button count stats</li>
             <li>Added an option to manually change decks in button count stats<br></li>
             <font color=dodgerblue>at 90%<br></font>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/5/01</b>
-          <ol>
+          <ul>
             <li>Added total time and time per card to information shown in pressed button stats<br></li>
             <font color=dodgerblue>at 85%<br></font>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/28</b>
-          <ol>
+          <ul>
             <li>Added an option to choose card type [learn, review, re-learn, cram] for button count stats</li>
             <li>Added an option to manually change decks in button count stats<br></li>
             <font color=dodgerblue>at 80%<br></font>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/27</b>
-          <ol>
+          <ul>
             <li>Added an option to choose time period for button count stats</li>
             <li>Added an option to change button count stats scope</li>
             <li>Button count stats window improvements<br></li>
             <font color=dodgerblue>at 50%<br></font>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/26</b>
@@ -1721,11 +1948,11 @@ class SettingsMenu(QDialog):
         </div>
         <div class="None">
           <b>2020/4/20</b>
-          <ol>
+          <ul>
             <li>Fixed tooltip bug (where it would show hard on tooltip when you<br>
             pressed good if you were in a cutom study session )</li>
             <li> Added card info sidebar auto open (opens sidebar automatically when you review a card)</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/18</b>
@@ -1735,10 +1962,10 @@ class SettingsMenu(QDialog):
         </div>
         <div class="None">
           <b>2020/4/17</b>
-          <ol>
+          <ul>
             <li>Fixed Neon 1 style bug</li>
             <li>Addded correct percentage, fastest reveiw, slowest review, note ID and card ID options to card info sidebar</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/16</b>
@@ -1754,101 +1981,101 @@ class SettingsMenu(QDialog):
         </div>
         <div class="None">
           <b>2020/4/14</b>
-          <ol>
+          <ul>
             <li>Added answer tooltips</li>
             <li>Adjusted tooltips for neon and fill designs</li>
             <li>Adjusted tooltips for custom button sizes</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/13</b>
-          <ol>
+          <ul>
             <li>Added a function to get shortcuts (Don't have to test keys that you want to set as shortcuts anymore,<br> if it's Anki's default shortcut for something, the add-on wont accept it)</li>
             <li>Moved button design tooltip to another tab (noticed it was WAY too big for lower resulotions to be useful)</li>
             <br><br><font color="red"># NOTE:</font> if you're updating from any version other than 2020/4/12 you might run into some problems trying to<br>
             open settings menu if you can't open settings menu after update open add-on folder and delete meta.json file if<br>
             that didn't help go to settings.py and put a # in front of the last line then go to tools -> add-ons and<br> press restore defaults on this addon's config page<br>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/12</b>
-          <ol>
+          <ul>
             <li>Changed settings menu so it's easier to work with on lower resolutions (had to code it all over again)</li>
             <li>Made picking colors completely automatic (no color code copy/paste, choose the color and it's set)</li>
             <li>Added an option for you to choose settings menu's position</li>
             <li>Made wide buttons compatible with no distractions add-on</li>
             <br><br><font color="red"># NOTE:</font> After update you need to restore config to defaults in tools -> addons<br>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/8</b>
-          <ol>
+          <ul>
             <li>settings menu bugs fixes</li>
             <li>settings menu minor adjustments for smaller screens</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/7</b>
-          <ol>
+          <ul>
             <li>settings menu improvements</li>
             <li>added an option to color intervals</li>
             <li>added an option to style other bottombar buttons</li>
             <li>added 4 new button designs</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/6</b>
-          <ol>
+          <ul>
             <li>minor settings menu improvements</li>
             <li>card info sidebar improvements for old scheduler</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
-          <ol>
+          <ul>
           <b>2020/4/5</b>
           <li>minor settings menu improvements</li>
           <li>added tooltips with pictures for different settings</li>
           <li>fixed card info sidebar crash bug</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/4</b>
-          <ol>
+          <ul>
             <li>added settings menu</li>
             <li>minor settings menu adjustments</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/2</b>
-          <ol>
+          <ul>
             <li>fix for wide buttons</li>
             <li>fixed card info sidebar problem with beta versions of anki (2.1.23 and 2.1.24)</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/4/1</b>
-          <ol>
+          <ul>
             <li>fixed issue with limiting card reviews in card info sidebar</li>
             <li>added an option to change active button indicator from border to glow and change it's color</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/3/30</b>
-          <ol>
+          <ul>
             <li>adjusted colors and gradients for background color change for light mode</li>
             <li>added background shadow for review buttons (enable in config)</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/3/29</b>
-          <ol>
+          <ul>
             <li>added undo button (enable in config)</li>
             <li>fixed button color for old scheduler</li>
             <li>removed conflict with customize keyboard shortcuts add-on</li>
             <li>removed conflict with speed focus add-on (needs to be enabled in config)</li>
             <li>removed conflict with slackers add-on</li>
             <li>added an option to choose text color in review button background color change</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/3/26</b>
@@ -1870,11 +2097,11 @@ class SettingsMenu(QDialog):
         </div>
         <div class="None">
           <b>2020/3/7</b>
-          <ol>
+          <ul>
             <li>adjusted the color for review buttons</li>
             <li>added an option to choose the font for the text in card info side bar in config</li>
             <li>added an option so you could limit the maximum number of previous reviews that are shown on sidebar for a card</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/3/6</b>
@@ -1884,18 +2111,18 @@ class SettingsMenu(QDialog):
         </div>
         <div class="None">
           <b>2020/3/4</b>
-          <ol>
+          <ul>
             <li>fixed not showing review button colors on new in-app night mode</li>
             <li>adjusted review button text colors for new in-app night mode</li>
             <li>adjusted wide button widths</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/2/8</b>
-          <ol>
+          <ul>
             <li>added an option for you to choose the shortcut key for skip and info buttons (in add-on config)</li>
             <li>added an option to choose the sidebar theme (in add-on config)</li>
-          </ol>
+          </ul>
         </div>
         <div class="None">
           <b>2020/1/2</b>
@@ -1922,10 +2149,10 @@ class SettingsMenu(QDialog):
         layout.addWidget(changeLog_scroll)
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
-        self.tab8 = QScrollArea()
-        self.tab8.setAlignment(Qt.AlignHCenter)
-        self.tab8.setWidgetResizable(True)
-        self.tab8.setWidget(layout_holder)
+        self.tab9 = QScrollArea()
+        self.tab9.setAlignment(Qt.AlignHCenter)
+        self.tab9.setWidgetResizable(True)
+        self.tab9.setWidget(layout_holder)
 
     def loadCurrent(self):
         self.button_style.setCurrentIndex(C_button_style)
@@ -1935,6 +2162,7 @@ class SettingsMenu(QDialog):
         self.cursor_style.setCurrentIndex(C_cursor_style)
         self.showAnswerBorderColor_style.setCurrentIndex(C_showAnswerBorderColor_style)
         self.buttonTransition_time.setValue(int(C_buttonTransition_time))
+        self.buttonBorderRadius.setValue(int(C_buttonBorderRadius))
         if C_colored_intervals:
             self.colored_intervals.setChecked(True)
         if C_style_mainScreenButtons:
@@ -1954,6 +2182,12 @@ class SettingsMenu(QDialog):
             self.skip.setChecked(True)
         if C_undo:
             self.undo.setChecked(True)
+        if C_hideHard:
+            self.hideHard.setChecked(True)
+        if C_hideGood:
+            self.hideGood.setChecked(True)
+        if C_hideEasy:
+            self.hideEasy.setChecked(True)
         if C_right_info:
             self.right_info.setChecked(True)
         elif C_middleRight_info:
@@ -1993,6 +2227,17 @@ class SettingsMenu(QDialog):
         self.info_width.setValue(int(C_info_width))
         self.skip_width.setValue(int(C_skip_width))
         self.undo_width.setValue(int(C_undo_width))
+        self.buttonLabel_studyNow.setText(C_buttonLabel_studyNow)
+        self.buttonLabel_edit.setText(C_buttonLabel_edit)
+        self.buttonLabel_showAnswer.setText(C_buttonLabel_showAnswer)
+        self.buttonLabel_more.setText(C_buttonLabel_more)
+        self.buttonLabel_info.setText(C_buttonLabel_info)
+        self.buttonLabel_skip.setText(C_buttonLabel_skip)
+        self.buttonLabel_undo.setText(C_buttonLabel_undo)
+        self.buttonLabel_again.setText(C_buttonLabel_again)
+        self.buttonLabel_hard.setText(C_buttonLabel_hard)
+        self.buttonLabel_good.setText(C_buttonLabel_good)
+        self.buttonLabel_easy.setText(C_buttonLabel_easy)
         self.sidebar_theme.setCurrentIndex(C_sidebar_theme)
         self.sidebar_font.setCurrentFont(QFont(C_sidebar_font))
         self.sidebar_PreviousCards.setValue(int(C_sidebar_PreviousCards))
@@ -2133,10 +2378,14 @@ class SettingsMenu(QDialog):
         " Review_ Bottombar Buttons Style": self.bottombarButtons_style.currentIndex(),
         " Review_ Cursor Style": self.cursor_style.currentIndex(),
         " Review_ Button Transition Time": self.buttonTransition_time.value(),
+        " Review_ Button Border Radius": self.buttonBorderRadius.value(),
         " Review_ Colored Dues": self.colored_intervals.isChecked(),
         "Button_   Info Button": self.info.isChecked(),
         "Button_   Skip Button": self.skip.isChecked(),
         "Button_   Undo Button": self.undo.isChecked(),
+        "Button_   Hide Hard": self.hideHard.isChecked(),
+        "Button_   Hide Good": self.hideGood.isChecked(),
+        "Button_   Hide Easy": self.hideEasy.isChecked(),
         "Button_  Custom Button Sizes": self.customSizes_on.isChecked(),
         "Button_ Shortcut_ Skip Button": self.skip_shortcut,
         "Button_ Shortcut_ Info Button": self.info_shortcut,
@@ -2152,6 +2401,17 @@ class SettingsMenu(QDialog):
         "Button_ Width_ More Button": self.more_width.value(),
         "Button_ Width_ Review Buttons": self.reviewButtons_width.value(),
         "Button_ Width_ Undo Button": self.undo_width.value(),
+        "Button Label_ Study Now": self.buttonLabel_studyNow.text(),
+        "Button Label_ Edit": self.buttonLabel_edit.text(),
+        "Button Label_ Show Answer": self.buttonLabel_showAnswer.text(),
+        "Button Label_ More": self.buttonLabel_more.text(),
+        "Button Label_ Info": self.buttonLabel_info.text(),
+        "Button Label_ Skip": self.buttonLabel_skip.text(),
+        "Button Label_ Undo": self.buttonLabel_undo.text(),
+        "Button Label_ Again": self.buttonLabel_again.text(),
+        "Button Label_ Hard": self.buttonLabel_hard.text(),
+        "Button Label_ Good": self.buttonLabel_good.text(),
+        "Button Label_ Easy": self.buttonLabel_easy.text(),
         "Card Info sidebar_ Number of previous cards to show": self.sidebar_PreviousCards.value(),
         "Card Info sidebar_ theme": self.sidebar_theme.currentIndex(),
         "Card Info sidebar_ Created": self.sidebar_dateCreated.isChecked(),
@@ -2232,10 +2492,14 @@ class SettingsMenu(QDialog):
 		" Review_ Custom Active Indicator Color": False,
 		" Review_ Cursor Style": 0,
 		" Review_ Button Transition Time": 500,
+        " Review_ Button Border Radius": 5,
 		" Review_ Colored Dues": True,
     	"Button_   Info Button": True,
       	"Button_   Skip Button": True,
     	"Button_   Undo Button": False,
+        "Button_   Hide Hard": False,
+        "Button_   Hide Good": False,
+        "Button_   Hide Again": False,
     	"Button_  Custom Button Sizes": False,
         "Button_ Shortcut_ Skip Button": "c",
         "Button_ Shortcut_ Info Button": "f4",
@@ -2251,6 +2515,17 @@ class SettingsMenu(QDialog):
     	"Button_ Width_ More Button": 150,
     	"Button_ Width_ Review Buttons": 150,
     	"Button_ Width_ Undo Button": 150,
+    	"Button Label_ Study Now": "Study Now",
+    	"Button Label_ Edit": "Edit",
+    	"Button Label_ Show Answer": "Show Answer",
+    	"Button Label_ More": "More",
+    	"Button Label_ Info": "Info",
+    	"Button Label_ Skip": "Skip",
+    	"Button Label_ Undo": "Undo Review",
+    	"Button Label_ Again": "Again",
+    	"Button Label_ Hard": "Hard",
+    	"Button Label_ Good": "Good",
+    	"Button Label_ Easy": "Easy",
         "Card Info sidebar_ Number of previous cards to show": 0,
         "Card Info sidebar_ theme": 0,
         "Card Info sidebar_ Created": True,
@@ -2298,10 +2573,6 @@ class SettingsMenu(QDialog):
 		"Tooltip Text Color": "#000",
 		"Tooltip Style": 0,
 		"Tooltip Position": [100, -100],
-		"ButtonCount_ Type": 0,
-        "ButtonCount_ Scope": 1,
-        "ButtonCount_ Time Spinbox": 1,
-        "ButtonCount_ Period": 2,
 		"ShowAnswer_ Border Color Style": 0,
 		"ShowAnswer_ Ease1": 200,
 		"ShowAnswer_ Ease2": 250,

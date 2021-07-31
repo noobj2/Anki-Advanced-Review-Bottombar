@@ -2,6 +2,9 @@
 
 All changes of the Advanced Review Bottombar will be listed here
 
+## 2021/8/1
+- Minor bug fix
+
 ## 2021/7/30
 - Minor bug fix
 

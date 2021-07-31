@@ -45,6 +45,10 @@ info_label = config['Button Label_ Info']
 skip_label = config['Button Label_ Skip']
 undo_label = config['Button Label_ Undo']
 
+custom_buttonSize = config ['Button_  Custom Button Sizes']
+buttons_height = config['Button_ Height_ All Bottombar Buttons']
+answer_width = config['Button_ Width_ Show Answer Button']
+
 custom_bottombarButtonBorderColor = config['Color_ Custom Bottombar Button Border Color']
 bottombarButtonBorder_color = config['Color_ Bottombar Button Border Color']
 showAnswerBorderColor_style = config['ShowAnswer_ Border Color Style']
@@ -60,7 +64,6 @@ edit_style = styles.edit_style
 info_style = styles.info_style
 skip_style = styles.skip_style
 undo_style = styles.undo_style
-showAnswer_style = styles.showAnswer_style
 more_style = styles.more_style
 min_buttonSize = styles.min_buttonSize
 bottombar_neon1 = styles.bottombar_neon1
@@ -263,6 +266,7 @@ time = %(time)d;
 def _showAnswerButton(self):
     showAnswer_text = showAnswer_label
     highEase_tooltip = ""
+
     if self.card.type not in [0, 1] and showAnswerBorderColor_style in [1, 3]:
         if self.card.factor // 10 < showAnswerEase1:
             showAnswerBorder_color = showAnswerEase1_color
@@ -275,9 +279,21 @@ def _showAnswerButton(self):
         else:
             showAnswerBorder_color = "#7000A8"
             showAnswer_text = "<font size=6 color='#7000A8'> ^_~ </font>"
-
     else:
         showAnswerBorder_color = ""
+
+    #// Moved show answer button size from "styles.py" here to make show answer border color based on ease compatible with custom button sizes
+    if custom_buttonSize:
+        if bottombarButtons_style ==0:
+            showAnswer_style = 'style="height: {}px; width: {}px; border-color: {};"'.format(buttons_height, answer_width, showAnswerBorder_color)
+        else:
+            showAnswer_style = 'style="height: {}px; width: {}px; border-color: {};" id=main'.format(buttons_height, answer_width, showAnswerBorder_color)
+    else:
+        if bottombarButtons_style == 0:
+            showAnswer_style = "style='border-color: {}' id=ansbut".format(showAnswerBorder_color)  #// removed id=ansbut from it's own code for styling
+        else:
+            showAnswer_style = "style='border-color: {}' id=main".format(showAnswerBorder_color)
+
     #// removing conflict with speed focus add-on
     if speedFocus_addOn:
         c = self.mw.col.decks.confForDid(self.card.odid or self.card.did)
@@ -294,12 +310,12 @@ def _showAnswerButton(self):
 %(middleLeft_side1)s
 %(middleLeft_side2)s
 %(middleLeft_side3)s
-<button title="Shortcut key: Space" onclick='pycmd("ans");' %(answer_style)s style='border-color: %(showAnswerBorder_color)s'>%(showAnswer_text)s</button>
+<button title="Shortcut key: Space" onclick='pycmd("ans");' %(answer_style)s>%(showAnswer_text)s</button>
 %(middleRight_side1)s
 %(middleRight_side2)s
 %(middleRight_side3)s
 </td></tr></table>''' % dict(remaining=self._remaining(), middleLeft_side1=middleLeftSide_button1, middleLeft_side2=middleLeftSide_button2, middleLeft_side3=middleLeftSide_button3,
-    answer_style=showAnswer_style, middleRight_side1=middleRightSide_button1, middleRight_side2=middleRightSide_button2, middleRight_side3=middleRightSide_button3, showAnswerBorder_color=showAnswerBorder_color, showAnswer_text=showAnswer_text)
+    answer_style=showAnswer_style, middleRight_side1=middleRightSide_button1, middleRight_side2=middleRightSide_button2, middleRight_side3=middleRightSide_button3, showAnswer_text=showAnswer_text)
     # wrap it in a table so it has the same top margin as the ease buttons
     middle = "%s" % middle
     if self.card.shouldShowTimer():

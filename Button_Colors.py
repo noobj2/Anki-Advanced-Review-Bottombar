@@ -54,7 +54,7 @@ def _answerButtonList(self):
             buttons += good
         return buttons
     elif cnt == 3:
-        again = ((1, " {} ".format(again)),)
+        again = ((1, " {} ".format(again_label)),)
         good = ((2, " {} ".format(good_label)),)
         easy = ((3, " {} ".format(easy_label)),)
         buttons = again

@@ -1800,6 +1800,18 @@ class SettingsMenu(QDialog):
         changeLog_text = """
         <style> li {margin: 10px 0px}</style>
         <div class="None">
+          <b>2021/8/1</b>
+          <ul>
+            <li>Bug Fix</li>
+          </ul>
+        </div>
+        <div class="None">
+          <b>2021/7/30</b>
+          <ul>
+            <li>Bug Fix</li>
+          </ul>
+        </div>
+        <div class="None">
           <b>2021/7/30</b>
           <ul>
             <li>Added an option to set your custom text as button labels.<br>
@@ -1814,7 +1826,8 @@ class SettingsMenu(QDialog):
             <li><font color=red>Removed</font> pressed button stats from the add-on.<br>
             For those who used it, I'll be publishing it as a separate add on named "Pressed Button Stats"</li>
           </ul>
-        </div><div class="None">
+        </div>
+        <div class="None">
           <b>2020/6/9</b>
           <ul>
             <li>Added an option to turn off more overview stats.<br></li>

@@ -323,7 +323,6 @@ if custom_buttonSize:
         info_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, info_width)
         skip_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, skip_width)
         undo_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, undo_width)
-        showAnswer_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, answer_width)
         more_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, more_width)
         min_buttonSize = "<style> button {min-width: 5px} </style>"
     else:
@@ -331,7 +330,6 @@ if custom_buttonSize:
         info_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, info_width)
         skip_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, skip_width)
         undo_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, undo_width)
-        showAnswer_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, answer_width)
         more_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, more_width)
         min_buttonSize = "<style> button {min-width: 5px} </style>"
 else:
@@ -340,7 +338,6 @@ else:
         info_style = ""
         skip_style = ""
         undo_style = ""
-        showAnswer_style = "id=ansbut"  #// removed id=ansbut from it's own code for styling
         more_style = ""
         min_buttonSize = ""
     else:
@@ -348,7 +345,6 @@ else:
         info_style = "id=main"
         skip_style = "id=main"
         undo_style = "id=main"
-        showAnswer_style = "id=main"
         more_style = "id=main"
         min_buttonSize = ""
 ######//////__END__ GENERAL BUTTON DESIGNS __END__//////######

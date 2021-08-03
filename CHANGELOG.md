@@ -4,6 +4,7 @@ All changes of the Advanced Review Bottombar will be listed here
 
 ## 2021/8/4
 - Bug fix (now compatible with Anki 2.1.45)
+- From now on, No update will be released for Anki versions older than 2.1.45
 
 ## 2021/7/31
 - Minor bug fix

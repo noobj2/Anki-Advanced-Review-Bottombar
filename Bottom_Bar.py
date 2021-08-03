@@ -301,9 +301,7 @@ def _showAnswerButton(self):
             self.bottom.web.eval("setAutoAnswer(%d);" % (c['autoAnswer'] * 1000))
         if c.get('autoAlert', 0) > 0:
             self.bottom.web.eval("setAutoAlert(%d);" % (c['autoAlert'] * 1000))
-    if anki_version < 2145:
-        if not self.typeCorrect:
-            self.bottom.web.setFocus()
+            
     middle = '''
 <table cellspacing=0 cellpadding=0><tr><td class=stat2 align=center>
 <span class=stattxt> %(remaining)s </span><br>

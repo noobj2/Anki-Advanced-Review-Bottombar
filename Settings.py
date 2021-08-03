@@ -1800,7 +1800,13 @@ class SettingsMenu(QDialog):
         changeLog_text = """
         <style> li {margin: 10px 0px}</style>
         <div class="None">
-          <b>2021/8/1</b>
+          <b>2021/8/3</b>
+          <ul>
+            <li>Bug fix (now ARBb is compatible with Anki 2.1.45)</li>
+          </ul>
+        </div>
+        <div class="None">
+          <b>2021/7/31</b>
           <ul>
             <li>Bug Fix</li>
           </ul>

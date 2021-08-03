@@ -258,7 +258,7 @@ def _bottomHTML(self):
 time = %(time)d;
 %(SF_bottomHTML)s
 </script>
-""" % dict(bottomHTML_style=bottomHTML_style, min_buttonSize=min_buttonSize, rem=self._remaining(), downArrow=downArrow(), time=self.card.timeTaken() // 1000,
+""" % dict(bottomHTML_style=bottomHTML_style, min_buttonSize=min_buttonSize, rem=self._remaining(), downArrow=downArrow(), time=self.card.time_taken() // 1000,
     edit_style=edit_style, edit_label=edit_label, left_side1=left_side1, left_side2=left_side2, left_side3=left_side3, right_side1=right_side1,
     right_side2=right_side2, right_side3=right_side3, more_style=more_style, more_label=more_label, SF_bottomHTML=SF_bottomHTML, time_color=time_color)
 
@@ -302,8 +302,8 @@ def _showAnswerButton(self):
         if c.get('autoAlert', 0) > 0:
             self.bottom.web.eval("setAutoAlert(%d);" % (c['autoAlert'] * 1000))
 
-    if not self.typeCorrect:
-        self.bottom.web.setFocus()
+    # if not self.typeCorrect:
+    #     self.bottom.web.setFocus()
     middle = '''
 <table cellspacing=0 cellpadding=0><tr><td class=stat2 align=center>
 <span class=stattxt> %(remaining)s </span><br>
@@ -318,8 +318,8 @@ def _showAnswerButton(self):
     answer_style=showAnswer_style, middleRight_side1=middleRightSide_button1, middleRight_side2=middleRightSide_button2, middleRight_side3=middleRightSide_button3, showAnswer_text=showAnswer_text)
     # wrap it in a table so it has the same top margin as the ease buttons
     middle = "%s" % middle
-    if self.card.shouldShowTimer():
-        maxTime = self.card.timeLimit() / 1000
+    if self.card.should_show_timer():
+        maxTime = self.card.time_limit() / 1000
     else:
         maxTime = 0
     self.bottom.web.eval("showQuestion(%s,%d);" % (json.dumps(middle), maxTime))
@@ -338,7 +338,7 @@ def _drawButtons(self):
     for b in drawLinks:
         b.insert(0, "{}".format(mainScreen_style))
         if b[0]:
-            b[0] = _("Shortcut key: %s") % shortcut(b[0])
+            b[0] = ("Shortcut key: %s") % shortcut(b[0])
         buf += """
 <button %s title='%s' onclick='pycmd(\"%s\");'>%s</button>""" % (tuple(b))
     if anki_version > 2121:
@@ -355,16 +355,16 @@ def _drawButtons(self):
 #// Deck Overview Bottombar Buttons
 def _renderBottom(self):
     links = [
-        ["O", "opts", _("Options")],
+        ["O", "opts", ("Options")],
     ]
     if self.mw.col.decks.current()["dyn"]:
-        links.append(["R", "refresh", _("Rebuild")])
-        links.append(["E", "empty", _("Empty")])
+        links.append(["R", "refresh", ("Rebuild")])
+        links.append(["E", "empty", ("Empty")])
     else:
-        links.append(["C", "studymore", _("Custom Study")])
-        # links.append(["F", "cram", _("Filter/Cram")])
+        links.append(["C", "studymore", ("Custom Study")])
+        # links.append(["F", "cram", ("Filter/Cram")])
     if self.mw.col.sched.haveBuried():
-        links.append(["U", "unbury", _("Unbury")])
+        links.append(["U", "unbury", ("Unbury")])
     buf = "{}".format(bottomHTML_style)
     if style_mainScreenButtons:
         #// style='height: px' -> to prevent changing main screen buttons heights
@@ -375,7 +375,7 @@ def _renderBottom(self):
     for b in links:
         b.insert(0, "{}".format(mainScreen_style))
         if b[0]:
-            b[0] = _("Shortcut key: %s") % shortcut(b[0])
+            b[0] = ("Shortcut key: %s") % shortcut(b[0])
         buf += """
 <button %s title="%s" onclick='pycmd("%s")'>%s</button>""" % tuple(b)
     if anki_version > 2121:
@@ -466,7 +466,7 @@ if more_overviewStats == 1:
                     <span title="new" class="new-count">%s</span>
                     <span title="learn" class="learn-count">%s</span>
                     <span title="review" class="review-count">%s</span>
-                </td></tr>''' % (bottomHTML_style, _("Due today"), counts[0], counts[1], counts[2])
+                </td></tr>''' % (bottomHTML_style, ("Due today"), counts[0], counts[1], counts[2])
 
         if (dconf.get('new')):
             html += '''
@@ -474,7 +474,7 @@ if more_overviewStats == 1:
                     <span title="new" class="new-count">%s</span>
                     <span title="learn" class="learn-count">%s</span>
                     <span title="review" class="review-count">%s</span>
-                </td></tr>''' % (_("Due tomorrow"), dueTomorrow[0],
+                </td></tr>''' % (("Due tomorrow"), dueTomorrow[0],
                 dueTomorrow[1], dueTomorrow[2])
 
         html += '''
@@ -488,7 +488,7 @@ if more_overviewStats == 1:
                     <span title="suspended" style="color:#adb300">%s</span>
                 </td>
             </tr>
-        </table>''' % (_("Total Cards"), totals[0], totals[1], totals[2], totals[4],
+        </table>''' % (("Total Cards"), totals[0], totals[1], totals[2], totals[4],
         totals[3])
 
         if not finished:
@@ -504,7 +504,7 @@ if more_overviewStats == 1:
                 studyButton_id = "study"
             html += '''</td>
                 <td align=center nowrap="nowrap">%s</td>
-            </tr></table>''' % (but("study", _("{}".format(studyNow_label)), id="{}".format(studyButton_id), extra="autofocus"))
+            </tr></table>''' % (but("study", ("{}".format(studyNow_label)), id="{}".format(studyButton_id), extra="autofocus"))
 
         return html
 
@@ -648,21 +648,21 @@ elif more_overviewStats == 2:
 
         labels = {}
 
-        labels['mature'] = _('Mature')
-        labels['young'] = _('Young')
-        labels['unseen'] = _('Unseen')
-        labels['suspended'] = _('Suspended')
+        labels['mature'] = ('Mature')
+        labels['young'] = ('Young')
+        labels['unseen'] = ('Unseen')
+        labels['suspended'] = ('Suspended')
 
-        labels['total'] = _('Total')
-        labels['learned'] = _('Learned')
-        labels['unlearned'] = _('Unlearned')
+        labels['total'] = ('Total')
+        labels['learned'] = ('Learned')
+        labels['unlearned'] = ('Unlearned')
 
-        labels['new'] = _('New')
-        labels['learning'] = _('Learning')
-        labels['review'] = _('Review')
-        # labels['due'] = _('Due')
+        labels['new'] = ('New')
+        labels['learning'] = ('Learning')
+        labels['review'] = ('Review')
+        # labels['due'] = ('Due')
 
-        labels['doneDate'] = _('Done in')
+        labels['doneDate'] = ('Done in')
 
         for key in labels:
             labels[key] = u'{:s}:'.format(labels[key])
@@ -874,7 +874,7 @@ elif more_overviewStats == 2:
                 <td colspan="4" style="text-align: center; padding-top: 0.6em;">{button:s}</td>
               </tr>
               </table>
-            '''.format(button=button('study', _('Study Now'), id='{}'.format(studyButton_id), extra="autofocus"))
+            '''.format(button=button('study', ('Study Now'), id='{}'.format(studyButton_id), extra="autofocus"))
 
         return output
 
@@ -882,7 +882,7 @@ else:
     def _table(self):
             counts = list(self.mw.col.sched.counts())
             finished = not sum(counts)
-            if self.mw.col.schedVer() == 1:
+            if self.mw.col.sched_ver() == 1:
                 for n in range(len(counts)):
                     if counts[n] >= 1000:
                         counts[n] = "1000+"
@@ -913,13 +913,13 @@ else:
     </td><td align=center>
     %s</td></tr></table>""" % (
                     bottomHTML_style,
-                    _("New"),
+                    ("New"),
                     counts[0],
-                    _("Learning"),
+                    ("Learning"),
                     counts[1],
-                    _("To Review"),
+                    ("To Review"),
                     counts[2],
-                    but("study", _("Study Now"), id="{}".format(studyButton_id), extra="autofocus"),
+                    but("study", ("Study Now"), id="{}".format(studyButton_id), extra="autofocus"),
                 )
 
 def _limit(counts):

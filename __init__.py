@@ -16,5 +16,3 @@ if reviewTooltip:
 
 if button_colors:
     from . import Button_Colors
-if anki_version > 2119:
-    from . import Graph_Fix

@@ -130,7 +130,7 @@ class StatsSidebar(object):
                 hard_color = "#FF9814"
                 good_color = "#33FF2D"
                 easy_color = "#21C0FF"
-            if self.mw.col.schedVer() == 1 and type == 3:
+            if self.mw.col.sched_ver() == 1 and type == 3:
                 if ease == 1:
                     button = "<div style='color: {};'>Again</div>".format(again_color)
                 elif ease == 2:
@@ -141,7 +141,7 @@ class StatsSidebar(object):
                     button = "<div style='color: {};'>Easy</div>".format(easy_color)
                 else:
                     button = "ease: {}".format(ease)
-            elif self.mw.col.schedVer() == 1 and (type == 0 or type == 2):
+            elif self.mw.col.sched_ver() == 1 and (type == 0 or type == 2):
                 if ease == 1:
                     button = "<div style='color: {};'>Again</div>".format(again_color)
                 elif ease == 2:
@@ -249,7 +249,7 @@ class StatsSidebar(object):
                 self.addLine("Ease", "%d%%" % (c.factor/10.0))
             if infobar_lapses:
                 self.addLine("Lapses", "%d" % c.lapses)
-            if self.col.schedVer() == 1:
+            if self.col.sched_ver() == 1:
                 pressed_again = mw.col.db.scalar("select sum(case when ease = 1 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_good = mw.col.db.scalar("select sum(case when ease = 2 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_easy = mw.col.db.scalar("select sum(case when ease = 3 then 1 else 0 end) from revlog where cid = ?", c.id)
@@ -257,7 +257,7 @@ class StatsSidebar(object):
                 self.addLine("Again", "{} | {:.0f}%".format(str(pressed_again).rjust(4), float(pressed_again/pressed_all)*100))
                 self.addLine("Good", "{} | {:.0f}%".format(str(pressed_good).rjust(4), float(pressed_good/pressed_all)*100))
                 self.addLine("Easy", "{} | {:.0f}%".format(str(pressed_easy).rjust(4), float(pressed_easy/pressed_all)*100))
-            elif self.col.schedVer() == 2:
+            elif self.col.sched_ver() == 2:
                 pressed_again = mw.col.db.scalar("select sum(case when ease = 1 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_hard = mw.col.db.scalar("select sum(case when ease = 2 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_good = mw.col.db.scalar("select sum(case when ease = 3 then 1 else 0 end) from revlog where cid = ?", c.id)

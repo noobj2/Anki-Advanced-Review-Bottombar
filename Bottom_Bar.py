@@ -1,7 +1,6 @@
 #// auth_ Mohamad Janati
 #// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
-from anki import version
-anki_version = int(version.replace('.', ''))
+
 import json
 import time
 from datetime import date, timedelta
@@ -11,38 +10,37 @@ from aqt.qt import *
 from aqt.utils import downArrow, shortcut, showInfo
 from aqt.reviewer import Reviewer
 from anki.hooks import wrap
-from aqt.deckbrowser import DeckBrowser
-from aqt.overview import Overview
-if anki_version > 2119:
-    from aqt.deckbrowser import DeckBrowserBottomBar
-    from aqt.overview import OverviewBottomBar
-from copy import deepcopy
 from . import Card_Info
 from . import styles
+from .Skip import test
+from .Skip import burySkipped
+from .Skip import try_unburySkipped
 
 
 #// getting config information
 config = mw.addonManager.getConfig(__name__)
 speedFocus_addOn = config['  Speed Focus Add-on']
-more_overviewStats = config['  More Overview Stats']
 bottombarButtons_style = config[' Review_ Bottombar Buttons Style']
-style_mainScreenButtons = config['  Style Main Screen Buttons']
+skipMethod = config['  Skip Method']
 skip = config['Button_   Skip Button']
+showSkipped = config['Button_   Show Skipped Button']
 info = config['Button_   Info Button']
 undo = config['Button_   Undo Button']
 skip_shortcut = config ['Button_ Shortcut_ Skip Button'].lower()
+showSkipped_shortcut = config ['Button_ Shortcut_ Show Skipped Button'].lower()
 info_shortcut = config['Button_ Shortcut_ Info Button'].lower()
 undo_shortcut = config['Button_ Shortcut_ Undo Button'].lower()
 info_position = config['Button_ Position_ Info Button'].lower()
 skip_position = config['Button_ Position_ Skip Button'].lower()
+showSkipped_position = config['Button_ Position_ Show Skipped Button'].lower()
 undo_position = config['Button_ Position_ Undo Button'].lower()
 
-studyNow_label = config['Button Label_ Study Now']
 edit_label = config['Button Label_ Edit']
 showAnswer_label = config['Button Label_ Show Answer']
 more_label = config['Button Label_ More']
 info_label = config['Button Label_ Info']
 skip_label = config['Button Label_ Skip']
+showSkipped_label = config['Button Label_ Show Skipped']
 undo_label = config['Button Label_ Undo']
 
 custom_buttonSize = config ['Button_  Custom Button Sizes']
@@ -60,9 +58,12 @@ showAnswerEase1_color = config['ShowAnswer_ Ease1 Color']
 showAnswerEase2_color = config['ShowAnswer_ Ease2 Color']
 showAnswerEase3_color = config['ShowAnswer_ Ease3 Color']
 showAnswerEase4_color = config['ShowAnswer_ Ease4 Color']
+
+# TODO: set the showSkipped styling and stuff
 edit_style = styles.edit_style
 info_style = styles.info_style
 skip_style = styles.skip_style
+showSkipped_style = styles.showSkipped_style
 undo_style = styles.undo_style
 more_style = styles.more_style
 min_buttonSize = styles.min_buttonSize
@@ -70,12 +71,18 @@ bottombar_neon1 = styles.bottombar_neon1
 bottombar_neon2 = styles.bottombar_neon2
 bottombar_fill1 = styles.bottombar_fill1
 bottombar_fill2 = styles.bottombar_fill2
+
 #// adding shortcuts to _shortcutKeys function in anki
 def _shortcutKeys_wrap(self, _old):
     original = _old(self)
+    sched_ver = mw.col.sched.version
+    if sched_ver > 2 or skipMethod == 1:
+        original.append((skip_shortcut, lambda: burySkipped()))
+        original.append((showSkipped_shortcut, lambda: try_unburySkipped()))
+    else:
+        original.append((skip_shortcut, lambda: self.nextCard()))
     original.extend([
     (info_shortcut, lambda: Card_Info._cs.toggle()),
-    (skip_shortcut, lambda: self.nextCard()),
     (undo_shortcut, lambda: mw.onUndo())
     ])
     return original
@@ -83,10 +90,19 @@ def _shortcutKeys_wrap(self, _old):
 
 #// adding button links to link handler function
 def linkHandler_wrap(reviewer, url):
+    sched_ver = mw.col.sched.version
     if url == "card_info":
         Card_Info._cs.toggle()
     elif url == "skip":
-        reviewer.nextCard()
+        if sched_ver > 2 or skipMethod == 1:
+            burySkipped()
+        else:
+            reviewer.nextCard()
+    elif url == "showSkipped":
+        if sched_ver > 2 or skipMethod == 1:
+            try_unburySkipped()
+        else:
+            showInfo("Your skip method is not \"Bury\" Hence you don't have any skipped cards that can be shown using this button.")
     elif url == "undo":
         mw.onUndo()
     else:
@@ -122,6 +138,13 @@ def skip_button():
     else:
         return ""
 
+#// Show Skipped button
+def showSkipped_button():
+    if showSkipped:
+        return """<button title="Shortcut key: {}" onclick="pycmd('showSkipped');" {}>{}</button>""".format(showSkipped_shortcut.upper(), showSkipped_style, showSkipped_label)
+    else:
+        return ""
+
 
 #// undo button
 def undo_button():
@@ -135,15 +158,19 @@ def undo_button():
 leftSide_button1 = ""
 leftSide_button2 = ""
 leftSide_button3 = ""
+leftSide_button4 = ""
 middleLeftSide_button1 = ""
 middleLeftSide_button2 = ""
 middleLeftSide_button3 = ""
+middleLeftSide_button4 = ""
 middleRightSide_button1 = ""
 middleRightSide_button2 = ""
 middleRightSide_button3 = ""
+middleRightSide_button4 = ""
 rightSide_button1 = ""
 rightSide_button2 = ""
 rightSide_button3 = ""
+rightSide_button4 = ""
 
 if info_position == "right":
     rightSide_button1 = info_button()
@@ -163,14 +190,23 @@ elif skip_position == "right":
 else:
     middleLeftSide_button2 = skip_button()
 
-if undo_position == "left":
-    leftSide_button3 = undo_button()
-elif undo_position == "middle right":
-    middleRightSide_button3 = undo_button()
-elif undo_position == "right":
-    rightSide_button3 = undo_button()
+if showSkipped_position == "left":
+    leftSide_button3 = showSkipped_button()
+elif showSkipped_position == "middle right":
+    middleRightSide_button3 = showSkipped_button()
+elif showSkipped_position == "right":
+    rightSide_button3 = showSkipped_button()
 else:
-    middleLeftSide_button3 = undo_button()
+    middleLeftSide_button3 = showSkipped_button()
+
+if undo_position == "left":
+    leftSide_button4 = undo_button()
+elif undo_position == "middle right":
+    middleRightSide_button4 = undo_button()
+elif undo_position == "right":
+    rightSide_button4 = undo_button()
+else:
+    middleLeftSide_button4 = undo_button()
 
 #// Speed focus remove conflicts
 if speedFocus_addOn:
@@ -210,6 +246,11 @@ if leftSide_button3 != "":
 else:
     left_side3 = ""
 
+if leftSide_button4 != "":
+    left_side4 = "<td width=50 align=left valign=top class=stat><br> {} </td>".format(leftSide_button4)
+else:
+    left_side4 = ""
+
 if rightSide_button1 != "":
     right_side1 = "<td width=50 align=right valign=top class=stat><br> {} </td>".format(rightSide_button1)
 else:
@@ -224,6 +265,11 @@ if rightSide_button3 != "":
     right_side3 = "<td width=50 align=right valign=top class=stat><br> {} </td>".format(rightSide_button3)
 else:
     right_side3 = ""
+
+if rightSide_button4 != "":
+    right_side4 = "<td width=50 align=right valign=top class=stat><br> {} </td>".format(rightSide_button4)
+else:
+    right_side4 = ""
 
 #// Review Screen Bottombar HTML
 def _bottomHTML(self):
@@ -242,11 +288,13 @@ def _bottomHTML(self):
 %(left_side1)s
 %(left_side2)s
 %(left_side3)s
+%(left_side4)s
 <td align=center valign=top id=middle>
 </td>
 %(right_side1)s
 %(right_side2)s
 %(right_side3)s
+%(right_side4)s
 <td width=50 align=right valign=top class=stat style='color: %(time_color)s'><span id=time class=stattxt>
 </span><br>
 <button onclick="pycmd('more');" %(more_style)s>%(more_label)s %(downArrow)s</button>
@@ -259,8 +307,8 @@ time = %(time)d;
 %(SF_bottomHTML)s
 </script>
 """ % dict(bottomHTML_style=bottomHTML_style, min_buttonSize=min_buttonSize, rem=self._remaining(), downArrow=downArrow(), time=self.card.time_taken() // 1000,
-    edit_style=edit_style, edit_label=edit_label, left_side1=left_side1, left_side2=left_side2, left_side3=left_side3, right_side1=right_side1,
-    right_side2=right_side2, right_side3=right_side3, more_style=more_style, more_label=more_label, SF_bottomHTML=SF_bottomHTML, time_color=time_color)
+    edit_style=edit_style, edit_label=edit_label, left_side1=left_side1, left_side2=left_side2, left_side3=left_side3, left_side4=left_side4, right_side1=right_side1,
+    right_side2=right_side2, right_side3=right_side3, right_side4=right_side4, more_style=more_style, more_label=more_label, SF_bottomHTML=SF_bottomHTML, time_color=time_color)
 
 #// Show Answer Button
 def _showAnswerButton(self):
@@ -301,19 +349,20 @@ def _showAnswerButton(self):
             self.bottom.web.eval("setAutoAnswer(%d);" % (c['autoAnswer'] * 1000))
         if c.get('autoAlert', 0) > 0:
             self.bottom.web.eval("setAutoAlert(%d);" % (c['autoAlert'] * 1000))
-            
     middle = '''
 <table cellspacing=0 cellpadding=0><tr><td class=stat2 align=center>
 <span class=stattxt> %(remaining)s </span><br>
 %(middleLeft_side1)s
 %(middleLeft_side2)s
 %(middleLeft_side3)s
+%(middleLeft_side4)s
 <button title="Shortcut key: Space" onclick='pycmd("ans");' %(answer_style)s>%(showAnswer_text)s</button>
 %(middleRight_side1)s
 %(middleRight_side2)s
 %(middleRight_side3)s
-</td></tr></table>''' % dict(remaining=self._remaining(), middleLeft_side1=middleLeftSide_button1, middleLeft_side2=middleLeftSide_button2, middleLeft_side3=middleLeftSide_button3,
-    answer_style=showAnswer_style, middleRight_side1=middleRightSide_button1, middleRight_side2=middleRightSide_button2, middleRight_side3=middleRightSide_button3, showAnswer_text=showAnswer_text)
+%(middleRight_side4)s
+</td></tr></table>''' % dict(remaining=self._remaining(), middleLeft_side1=middleLeftSide_button1, middleLeft_side2=middleLeftSide_button2, middleLeft_side3=middleLeftSide_button3, middleLeft_side4=middleLeftSide_button4,
+    answer_style=showAnswer_style, middleRight_side1=middleRightSide_button1, middleRight_side2=middleRightSide_button2, middleRight_side3=middleRightSide_button3, middleRight_side4=middleRightSide_button4, showAnswer_text=showAnswer_text)
     # wrap it in a table so it has the same top margin as the ease buttons
     middle = "%s" % middle
     if self.card.should_show_timer():
@@ -323,614 +372,8 @@ def _showAnswerButton(self):
     self.bottom.web.eval("showQuestion(%s,%d);" % (json.dumps(middle), maxTime))
     self.bottom.web.adjustHeightToFit()
 
-#// Main Screen Bottombar Buttons
-def _drawButtons(self):
-    buf = "{}".format(bottomHTML_style)
-    if style_mainScreenButtons:
-        #// style='height: px' -> to prevent changing main screen buttons heights
-        # based on height defined in #main {}
-        mainScreen_style = """id=main style='height: px' """
-    else:
-        mainScreen_style = ""
-    drawLinks = deepcopy(self.drawLinks)
-    for b in drawLinks:
-        b.insert(0, "{}".format(mainScreen_style))
-        if b[0]:
-            b[0] = ("Shortcut key: %s") % shortcut(b[0])
-        buf += """
-<button %s title='%s' onclick='pycmd(\"%s\");'>%s</button>""" % (tuple(b))
-    if anki_version > 2121:
-        self.bottom.draw(
-            buf=buf,
-            link_handler=self._linkHandler,
-            web_context=DeckBrowserBottomBar(self),
-        )
-    else:
-        self.bottom.draw(buf)
-        self.bottom.web.onBridgeCmd = self._linkHandler
-
-
-#// Deck Overview Bottombar Buttons
-def _renderBottom(self):
-    links = [
-        ["O", "opts", ("Options")],
-    ]
-    if self.mw.col.decks.current()["dyn"]:
-        links.append(["R", "refresh", ("Rebuild")])
-        links.append(["E", "empty", ("Empty")])
-    else:
-        links.append(["C", "studymore", ("Custom Study")])
-        # links.append(["F", "cram", ("Filter/Cram")])
-    if self.mw.col.sched.haveBuried():
-        links.append(["U", "unbury", ("Unbury")])
-    buf = "{}".format(bottomHTML_style)
-    if style_mainScreenButtons:
-        #// style='height: px' -> to prevent changing main screen buttons heights
-        # based on height defined in #main {}
-        mainScreen_style = """id=main style='height: px' """
-    else:
-        mainScreen_style = ""
-    for b in links:
-        b.insert(0, "{}".format(mainScreen_style))
-        if b[0]:
-            b[0] = ("Shortcut key: %s") % shortcut(b[0])
-        buf += """
-<button %s title="%s" onclick='pycmd("%s")'>%s</button>""" % tuple(b)
-    if anki_version > 2121:
-        self.bottom.draw(
-            buf=buf,
-            link_handler=self._linkHandler,
-            web_context=OverviewBottomBar(self)
-        )
-    else:
-        self.bottom.draw(buf)
-        self.bottom.web.onBridgeCmd = self._linkHandler
-
-
-#// Deck Overview Study Now Button | code from more overview stats to add more overview stats, OBVIOUSLY
-if more_overviewStats == 1:
-    def _table(self):
-        """Returns html table with more statistics than before."""
-        sched = self.mw.col.sched
-        deck = self.mw.col.decks.current()
-        dconf = self.mw.col.decks.confForDid(deck.get('id'))
-        but = self.mw.button
-
-        # Get default counts
-        # 0 = new, 1 = learn, 2 = review
-        counts = list(sched.counts())
-        finished = not sum(counts)
-        counts = _limit(counts)
-
-        totals = [
-            #new
-            sched.col.db.scalar("""
-                select count() from (select id from cards where did = %s
-                and queue = 0)""" % deck.get('id')),
-            # learn
-            sched.col.db.scalar("""
-                select count() from (select id from cards where did = %s
-                and queue in (1,3))""" % deck.get('id')),
-            # review
-            sched.col.db.scalar("""
-                select count() from (select id from cards where did = %s
-                and queue = 2)""" % deck.get('id')),
-             # suspended
-            sched.col.db.scalar("""
-                select count() from (select id from cards where did = %s
-                and queue = -1)""" % deck.get('id')),
-            # buried
-            sched.col.db.scalar("""
-                select count() from (select id from cards where did = %s
-                and queue = -2)""" % deck.get('id')),
-        ]
-
-        if (dconf.get('new')):
-            dueTomorrow = _limit([
-                # new
-                min(dconf.get('new').get('perDay'), totals[0]),
-                # review
-                sched.col.db.scalar("""
-                    select count() from cards where did = %s and queue = 3
-                    and due = ?""" % deck.get('id'), sched.today + 1),
-                sched.col.db.scalar("""
-                    select count() from cards where did = %s and queue = 2
-                    and due = ?""" % deck.get('id'), sched.today + 1)
-            ])
-
-        html = ''
-
-        # Style if less than 2.1.20
-        if (int(version.replace('.', '')) < 2120):
-            html += '''
-                <style>
-                    .new-count {color: #00a}
-                    .learn-count {color: #C35617}
-                    .review-count {color: #0a0}
-                </style>'''
-
-        # No need to show due if we have finished collection today
-        if finished:
-            mssg = sched.finishedMsg()
-            html +=  '''
-                <div style="white-space: pre-wrap;">%s</div>
-                <table cellspacing=5>''' % mssg
-        else:
-            html +='''%s
-                <table cellpadding=5>
-                <tr><td align=center valign=top nowrap="nowrap">
-                <table cellspacing=5>
-                <tr><td nowrap="nowrap">%s:</td><td align=right>
-                    <span title="new" class="new-count">%s</span>
-                    <span title="learn" class="learn-count">%s</span>
-                    <span title="review" class="review-count">%s</span>
-                </td></tr>''' % (bottomHTML_style, ("Due today"), counts[0], counts[1], counts[2])
-
-        if (dconf.get('new')):
-            html += '''
-                <tr><td nowrap="nowrap">%s:</td><td align=right>
-                    <span title="new" class="new-count">%s</span>
-                    <span title="learn" class="learn-count">%s</span>
-                    <span title="review" class="review-count">%s</span>
-                </td></tr>''' % (("Due tomorrow"), dueTomorrow[0],
-                dueTomorrow[1], dueTomorrow[2])
-
-        html += '''
-            <tr>
-                <td nowrap="nowrap">%s:</td>
-                <td align=right nowrap="nowrap">
-                    <span title="new" class="new-count">%s</span>
-                    <span title="learn" class="learn-count">%s</span>
-                    <span title="review" class="review-count">%s</span>
-                    <span title="buried" style="color:#ffa500">%s</span>
-                    <span title="suspended" style="color:#adb300">%s</span>
-                </td>
-            </tr>
-        </table>''' % (("Total Cards"), totals[0], totals[1], totals[2], totals[4],
-        totals[3])
-
-        if not finished:
-            if style_mainScreenButtons:
-                #// style='height: px' -> to prevent changing main screen buttons heights
-                # based on height defined in #main {}
-                mainScreen_style = """id=main style='height: px' """
-            else:
-                mainScreen_style = ""
-            if style_mainScreenButtons:
-                studyButton_id = "main"
-            else:
-                studyButton_id = "study"
-            html += '''</td>
-                <td align=center nowrap="nowrap">%s</td>
-            </tr></table>''' % (but("study", ("{}".format(studyNow_label)), id="{}".format(studyButton_id), extra="autofocus"))
-
-        return html
-
-elif more_overviewStats == 2:
-    def _table(self):
-        stat_colors = {
-          "New" : "#00a",
-          "Learning" : "#a00",
-          "Review" : "#080",
-          "Percent" : "#888",
-          "Mature" : "#0051ff",
-          "Young" : "#0051ff",
-          "Learned" : "#080",
-          "Unseen" : "#a00",
-          "Suspended" : "#e7a100",
-          "Done on Date" : "#ddd",
-          "Days until done" : "#ddd",
-          "Total" : "#ddd",
-        }
-        date_format = "%d.%m.%Y"
-        correction_for_notes = 1
-        last_match_length = 0
-        current_deck_name = self.mw.col.decks.current()['name']
-        date_format = "%m/%d/%Y"
-
-        try:
-            learn_per_day = self.mw.col.decks.confForDid(self.mw.col.decks.current()['id'])['new']['perDay']
-        except:
-            learn_per_day = 0
-
-        total, mature, young, unseen, suspended, due = self.mw.col.db.first(
-        u'''
-          select
-          -- total
-          count(id),
-          -- mature
-          sum(case when queue = 2 and ivl >= 21
-               then 1 else 0 end),
-          -- young / learning
-          sum(case when queue in (1, 3) or (queue = 2 and ivl < 21)
-               then 1 else 0 end),
-          -- unseen
-          sum(case when queue = 0
-               then 1 else 0 end),
-          -- suspended
-          sum(case when queue < 0
-               then 1 else 0 end),
-          -- due
-          sum(case when queue = 1 and due <= ?
-               then 1 else 0 end)
-          from cards where did in {:s}
-        '''.format(self.mw.col.sched._deckLimit()), round(time.time())
-        )
-        if not total:
-            return u'<p> No Cards Found.</p>'
-
-        scheduled_counts = list(self.mw.col.sched.counts())
-        deck_is_finished = not sum(scheduled_counts)
-
-        cards = {}
-
-        cards['mature'] = mature // int(correction_for_notes)
-        cards['young'] = young // int(correction_for_notes)
-        cards['unseen'] = unseen // int(correction_for_notes)
-        cards['suspended'] = suspended // int(correction_for_notes)
-
-        cards['total'] = total // int(correction_for_notes)
-        cards['learned'] = cards['mature'] + cards['young']
-        cards['unlearned'] = cards['total'] - cards['learned']
-
-        cards['new'] = scheduled_counts[0]
-        cards['learning'] = scheduled_counts[1]
-        cards['review'] = scheduled_counts[2]
-        # cards['due'] = due + cards['review']
-
-        cards['total_without_suspended'] = cards['total'] - cards['suspended']
-
-        try:
-            daysUntilDone = math.ceil(cards['unseen'] / learn_per_day)
-        except:
-            daysUntilDone = 0
-
-        try:
-            cards['doneDate'] = (date.today()+timedelta(days=daysUntilDone)).strftime(date_format)
-        except:
-            showInfo("Unsupported date format. Defaulting to Day.Month.Year instead. Use one of the shorthands: \"us\", \"asia\" or \"eu\", or specify the date like \"\%d.\%m.\%Y\", \"\%m/\%d/\%Y\" etc.\n For more information check the table at: https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior", type="warning", title="More Overview Stats 2.1 Warning")
-            print(date_format)
-            cards['doneDate'] = (date.today()+timedelta(days=daysUntilDone)).strftime("%d.%m.%Y")
-
-        cards['daysLeft'] = daysUntilDone
-
-        if(daysUntilDone == 1):
-            cards['daysLeft'] = '{} day'.format(daysUntilDone)
-        else:
-            cards['daysLeft'] = '{} days'.format(daysUntilDone)
-
-        cards_percent = {}
-
-        cards_percent['mature'] = cards['mature'] * 1.0 / cards['total']
-        cards_percent['young'] = cards['young'] * 1.0 / cards['total']
-        cards_percent['unseen'] = cards['unseen'] * 1.0 / cards['total']
-        cards_percent['suspended'] = cards['suspended'] * 1.0 / cards['total']
-
-        cards_percent['total'] = 1.0
-        cards_percent['learned'] = cards['learned'] * 1.0 / cards['total']
-        cards_percent['unlearned'] = cards['unlearned'] * 1.0 / cards['total']
-
-        cards_percent['new'] = cards['new'] * 1.0 / cards['total']
-        cards_percent['learning'] = cards['learning'] * 1.0 / cards['total']
-        cards_percent['review'] = cards['review'] * 1.0 / cards['total']
-        # cards_percent['due'] = cards['due'] * 1.0 / cards['total']
-
-        cards_percent_without_suspended = {}
-
-        if(cards['total_without_suspended'] != 0):
-            cards_percent_without_suspended['mature'] = cards['mature'] * 1.0 / cards['total_without_suspended']
-            cards_percent_without_suspended['young'] = cards['young'] * 1.0 / cards['total_without_suspended']
-            cards_percent_without_suspended['unseen'] = cards['unseen'] * 1.0 / cards['total_without_suspended']
-            cards_percent_without_suspended['suspended'] = cards['suspended'] * 1.0 / cards['total_without_suspended']
-
-            cards_percent_without_suspended['total'] = 1.0
-            cards_percent_without_suspended['learned'] = cards['learned'] * 1.0 / cards['total_without_suspended']
-            cards_percent_without_suspended['unlearned'] = cards['unlearned'] * 1.0 / cards['total_without_suspended']
-
-            cards_percent_without_suspended['new'] = cards['new'] * 1.0 / cards['total_without_suspended']
-            cards_percent_without_suspended['learning'] = cards['learning'] * 1.0 / cards['total_without_suspended']
-            cards_percent_without_suspended['review'] = cards['review'] * 1.0 / cards['total_without_suspended']
-        else:
-            cards_percent_without_suspended['mature'] = 0
-            cards_percent_without_suspended['young'] = 0
-            cards_percent_without_suspended['unseen'] = 0
-            cards_percent_without_suspended['suspended'] = 0
-
-            cards_percent_without_suspended['total'] = 1.0
-            cards_percent_without_suspended['learned'] = 0
-            cards_percent_without_suspended['unlearned'] = 0
-
-            cards_percent_without_suspended['new'] = 0
-            cards_percent_without_suspended['learning'] = 0
-            cards_percent_without_suspended['review'] = 0
-
-        labels = {}
-
-        labels['mature'] = ('Mature')
-        labels['young'] = ('Young')
-        labels['unseen'] = ('Unseen')
-        labels['suspended'] = ('Suspended')
-
-        labels['total'] = ('Total')
-        labels['learned'] = ('Learned')
-        labels['unlearned'] = ('Unlearned')
-
-        labels['new'] = ('New')
-        labels['learning'] = ('Learning')
-        labels['review'] = ('Review')
-        # labels['due'] = ('Due')
-
-        labels['doneDate'] = ('Done in')
-
-        for key in labels:
-            labels[key] = u'{:s}:'.format(labels[key])
-
-        button = self.mw.button
-
-        output_table = u'''
-          <style type="text/css">
-          <!--
-          hr {
-            height: 1px;
-            border: none;
-            border-top: 1px solid #aaa;
-          }
-
-          td {
-            vertical-align: top;
-          }
-
-          td.row1 {
-            text-align: left;
-          }
-
-          td.row2 {
-            text-align: right;
-            padding-left: 1.2em;
-            padding-right: 1.2em;
-          }
-
-          td.row3 {
-            text-align: left;
-            padding-left: 1.2em;
-            padding-right: 1.2em;
-          }
-
-          td.row4 {
-            text-align: right;
-          }
-
-          td.new {
-            font-weight: bold;
-            color: ''' + stat_colors["New"] + ''';
-          }
-
-          td.learning {
-            font-weight: bold;
-            color: ''' + stat_colors["Learning"] + ''';
-          }
-
-          td.review {
-            font-weight: bold;
-            color: ''' + stat_colors["Review"] + ''';
-          }
-
-          td.percent {
-            font-weight: normal;
-            color: ''' + stat_colors["Percent"] + ''';
-          }
-
-          td.mature {
-            font-weight: normal;
-            color: ''' + stat_colors["Mature"] + ''';
-          }
-
-          td.young {
-            font-weight: normal;
-            color: ''' + stat_colors["Young"] + ''';
-          }
-
-          td.learned {
-            font-weight: normal;
-            color: ''' + stat_colors["Learned"] + ''';
-          }
-
-          td.unseen {
-            font-weight: normal;
-            color: ''' + stat_colors["Unseen"] + ''';
-          }
-
-          td.suspended {
-            font-weight: normal;
-            color: ''' + stat_colors["Suspended"] + ''';
-          }
-
-          td.doneDate {
-            font-weight: bold;
-            color: ''' + stat_colors["Done on Date"] + ''';
-          }
-
-          td.daysLeft {
-            font-weight: bold;
-            color: ''' + stat_colors["Days until done"] + ''';
-          }
-
-          td.total {
-            font-weight: bold;
-            color: ''' + stat_colors["Total"] + ''';
-          }
-          -->
-          </style>
-
-          <table cellspacing="2">
-        '''
-
-        if not deck_is_finished:
-            output_table += u'''
-              <tr>
-                <td class="row1">{label[new]:s}</td>
-                <td class="row2 new">{cards[new]:d}</td>
-                <td class="row3 percent">{percent[new]:.0%}</td>
-                <td class="row4 percent">{percent2[new]:.0%}</td>
-              </tr>
-              <tr>
-                <td class="row1">{label[learning]:s}</td>
-                <td class="row2 learning">{cards[learning]:d}</td>
-                <td class="row3 percent">{percent[learning]:.0%}</td>
-                <td class="row4 percent">{percent2[learning]:.0%}</td>
-              </tr>
-              <tr>
-                <td class="row1">{label[review]:s}</td>
-                <td class="row2 review">{cards[review]:d}</td>
-                <td class="row3 percent">{percent[review]:.0%}</td>
-                <td class="row4 percent">{percent2[review]:.0%}</td>
-              </tr>
-              <tr>
-                <td colspan="4"><hr /></td>
-              </tr>
-            '''.format(label=labels, cards=cards, percent=cards_percent, percent2=cards_percent_without_suspended)
-        output_table += u'''
-          <tr>
-            <td class="row1">{label[mature]:s}</td>
-            <td class="row2 mature">{cards[mature]:d}</td>
-            <td class="row3 percent">{percent[mature]:.0%}</td>
-            <td class="row4 percent">{percent2[mature]:.0%}</td>
-          </tr>
-          <tr>
-            <td class="row1">{label[young]:s}</td>
-            <td class="row2 young">{cards[young]:d}</td>
-            <td class="row3 percent">{percent[young]:.0%}</td>
-            <td class="row4 percent">{percent2[young]:.0%}</td>
-          </tr>
-          <tr>
-            <td colspan="4"><hr /></td>
-          </tr>
-          <tr>
-            <td class="row1">{label[learned]:s}</td>
-            <td class="row2 learned">{cards[learned]:d}</td>
-            <td class="row3 percent">{percent[learned]:.0%}</td>
-            <td class="row4 percent">{percent2[learned]:.0%}</td>
-          </tr>
-          <tr>
-            <td class="row1">{label[unseen]:s}</td>
-            <td class="row2 unseen">{cards[unseen]:d}</td>
-            <td class="row3 percent">{percent[unseen]:.0%}</td>
-            <td class="row4 percent">{percent2[unseen]:.0%}</td>
-          </tr>
-          <tr>
-            <td class="row1">{label[suspended]:s}</td>
-            <td class="row2 suspended">{cards[suspended]:d}</td>
-            <td class="row3 percent">{percent[suspended]:.0%}</td>
-            <td class="row4 percent">ignored</td>
-          </tr>
-          <tr>
-            <td colspan="4"><hr /></td>
-          </tr>
-          <tr>
-            <td class="row1">{label[total]:s}</td>
-            <td class="row2 total">{cards[total]:d}</td>
-            <td class="row3 percent">{percent[total]:.0%}</td>
-            <td class="row4 percent">{percent2[total]:.0%}</td>
-          </tr>
-            <td colspan="4"><hr /></td>
-          <tr>
-            <td class="row1">{label[doneDate]:s}</td>
-            <td class="row2 daysLeft">{cards[daysLeft]:s}</td>
-            <td class="row3">on:</td>
-            <td class="row4 doneDate">{cards[doneDate]:s}</td>
-          </tr>
-        '''.format(label=labels, cards=cards, percent=cards_percent, percent2=cards_percent_without_suspended)
-
-        output = ''
-
-        if deck_is_finished:
-            if (config == None or not 'options' in config) or (config['options'].get('Show table for finished decks', True)):
-                output += output_table
-                output += u'''
-                  </table>
-                  <hr style="margin: 1.5em 0; border-top: 1px dotted #888;" />
-                '''
-            output += u'''
-              <div style="white-space: pre-wrap;">{:s}</div>
-            '''.format(self.mw.col.sched.finishedMsg())
-        else:
-            if style_mainScreenButtons:
-                #// style='height: px' -> to prevent changing main screen buttons heights
-                # based on height defined in #main {}
-                mainScreen_style = """id=main style='height: px' """
-            else:
-                mainScreen_style = ""
-            if style_mainScreenButtons:
-                studyButton_id = "main"
-            else:
-                studyButton_id = "study"
-
-            output += output_table
-            output += bottomHTML_style
-            output += u'''
-              <tr>
-                <td colspan="4" style="text-align: center; padding-top: 0.6em;">{button:s}</td>
-              </tr>
-              </table>
-            '''.format(button=button('study', ('Study Now'), id='{}'.format(studyButton_id), extra="autofocus"))
-
-        return output
-
-else:
-    def _table(self):
-            counts = list(self.mw.col.sched.counts())
-            finished = not sum(counts)
-            if self.mw.col.sched_ver() == 1:
-                for n in range(len(counts)):
-                    if counts[n] >= 1000:
-                        counts[n] = "1000+"
-            but = self.mw.button
-            if finished:
-                return '<div style="white-space: pre-wrap;">%s</div>' % (
-                    self.mw.col.sched.finishedMsg()
-                )
-            else:
-                if style_mainScreenButtons:
-                    #// style='height: px' -> to prevent changing main screen buttons heights
-                    # based on height defined in #main {}
-                    mainScreen_style = """id=main style='height: px' """
-                else:
-                    mainScreen_style = ""
-                if style_mainScreenButtons:
-                    studyButton_id = "main"
-                else:
-                    studyButton_id = "study"
-                return """%s
-    <table width=400 cellpadding=5>
-    <tr><td align=center valign=top>
-    <table cellspacing=5>
-    <tr><td>%s:</td><td><b><span class=new-count>%s</span></b></td></tr>
-    <tr><td>%s:</td><td><b><span class=learn-count>%s</span></b></td></tr>
-    <tr><td>%s:</td><td><b><span class=review-count>%s</span></b></td></tr>
-    </table>
-    </td><td align=center>
-    %s</td></tr></table>""" % (
-                    bottomHTML_style,
-                    ("New"),
-                    counts[0],
-                    ("Learning"),
-                    counts[1],
-                    ("To Review"),
-                    counts[2],
-                    but("study", ("Study Now"), id="{}".format(studyButton_id), extra="autofocus"),
-                )
-
-def _limit(counts):
-    for i, count in enumerate(counts):
-        if count >= 1000:
-	        counts[i] = "1000+"
-    return counts
-
 
 #// replacing/wraping functions
 Reviewer._shortcutKeys = wrap(Reviewer._shortcutKeys, _shortcutKeys_wrap, 'around')
 Reviewer._showAnswerButton = _showAnswerButton
 Reviewer._bottomHTML =  _bottomHTML
-DeckBrowser._drawButtons = _drawButtons
-Overview._renderBottom = _renderBottom
-Overview._table = _table

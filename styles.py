@@ -39,6 +39,7 @@ edit_width = config['Button_ Width_ Edit Button']
 answer_width = config['Button_ Width_ Show Answer Button']
 info_width = config['Button_ Width_ Info Button']
 skip_width = config['Button_ Width_ Skip Button']
+showSkipped_width = config['Button_ Width_ Show Skipped Button']
 undo_width = config['Button_ Width_ Undo Button']
 more_width = config['Button_ Width_ More Button']
 custom_activeIndicatorColor = config[" Review_ Custom Active Indicator Color"]
@@ -322,6 +323,7 @@ if custom_buttonSize:
         edit_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, edit_width)
         info_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, info_width)
         skip_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, skip_width)
+        showSkipped_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, showSkipped_width)
         undo_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, undo_width)
         more_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, more_width)
         min_buttonSize = "<style> button {min-width: 5px} </style>"
@@ -329,6 +331,7 @@ if custom_buttonSize:
         edit_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, edit_width)
         info_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, info_width)
         skip_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, skip_width)
+        showSkipped_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, showSkipped_width)
         undo_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, undo_width)
         more_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, more_width)
         min_buttonSize = "<style> button {min-width: 5px} </style>"
@@ -337,6 +340,7 @@ else:
         edit_style = ""
         info_style = ""
         skip_style = ""
+        showSkipped_style = ""
         undo_style = ""
         more_style = ""
         min_buttonSize = ""
@@ -344,6 +348,7 @@ else:
         edit_style = "id=main"
         info_style = "id=main"
         skip_style = "id=main"
+        showSkipped_style = "id=main"
         undo_style = "id=main"
         more_style = "id=main"
         min_buttonSize = ""

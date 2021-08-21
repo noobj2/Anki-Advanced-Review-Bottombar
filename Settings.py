@@ -11,7 +11,7 @@ import os
 
 def refreshConfig():
     #// Makes the information that it gets fron "config" global so I can use them for loading the current settings in "loadCurrent(self)" function
-    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_colored_intervals, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_overViewStats, C_settingsMenu_palce
+    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_colored_intervals, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_overViewStats, C_settingsMenu_palce, C_skipMethod
 
     config = mw.addonManager.getConfig(__name__)
 
@@ -37,14 +37,17 @@ def refreshConfig():
 
     C_info = config['Button_   Info Button']
     C_skip = config['Button_   Skip Button']
+    C_showSkipped = config['Button_   Show Skipped Button']
     C_undo = config['Button_   Undo Button']
     C_hideHard = config['Button_   Hide Hard']
     C_hideGood = config['Button_   Hide Good']
     C_hideEasy = config['Button_   Hide Easy']
     C_info_position = config['Button_ Position_ Info Button']
     C_skip_position = config['Button_ Position_ Skip Button']
+    C_showSkipped_position = config['Button_ Position_ Show Skipped Button']
     C_undo_position = config['Button_ Position_ Undo Button']
     C_skip_shortcut = config ['Button_ Shortcut_ Skip Button']
+    C_showSkipped_shortcut = config ['Button_ Shortcut_ Show Skipped Button']
     C_info_shortcut = config['Button_ Shortcut_ Info Button']
     C_undo_shortcut = config['Button_ Shortcut_ Undo Button']
 
@@ -56,6 +59,7 @@ def refreshConfig():
     C_more_width = config['Button_ Width_ More Button']
     C_info_width = config['Button_ Width_ Info Button']
     C_skip_width = config['Button_ Width_ Skip Button']
+    C_showSkipped_width = config['Button_ Width_ Show Skipped Button']
     C_undo_width = config['Button_ Width_ Undo Button']
 
     C_buttonLabel_studyNow = config['Button Label_ Study Now']
@@ -64,6 +68,7 @@ def refreshConfig():
     C_buttonLabel_more = config['Button Label_ More']
     C_buttonLabel_info = config['Button Label_ Info']
     C_buttonLabel_skip = config['Button Label_ Skip']
+    C_buttonLabel_showSkipped = config['Button Label_ Show Skipped']
     C_buttonLabel_undo = config['Button Label_ Undo']
     C_buttonLabel_again = config['Button Label_ Again']
     C_buttonLabel_hard = config['Button Label_ Hard']
@@ -131,6 +136,7 @@ def refreshConfig():
     C_speedFocus = config['  Speed Focus Add-on']
     C_overViewStats = config['  More Overview Stats']
     C_settingsMenu_palce = config['  Settings Menu Place']
+    C_skipMethod = config['  Skip Method']
 
     #// it's easier to store extra button positions as text in config | but here in the settings, I hate to turn it into true/false as each checkbox is diabled/enabled like that :|
     #// Every checkbox is disabled by default
@@ -141,7 +147,11 @@ def refreshConfig():
     C_right_skip = False
     C_middleRight_skip = False
     C_middleLeft_skip = False
-    C_left_skip = False
+    C_left_showSkipped = False
+    C_right_showSkipped = False
+    C_middleRight_showSkipped = False
+    C_middleLeft_showSkipped = False
+    C_left_showSkipped = False
     C_right_undo = False
     C_middleRight_undo = False
     C_middleLeft_undo = False
@@ -165,6 +175,14 @@ def refreshConfig():
         C_middleLeft_skip = True
     else:
         C_left_skip = True
+    if C_showSkipped_position == "right":
+        C_right_showSkipped = True
+    elif C_showSkipped_position == "middle right":
+        C_middleRight_showSkipped = True
+    elif C_showSkipped_position == "middle left":
+        C_middleLeft_showSkipped = True
+    else:
+        C_left_showSkipped = True
     if C_undo_position == "right":
         C_right_undo = True
     elif C_undo_position == "middle right":
@@ -352,7 +370,7 @@ class GetShortcut(QDialog):
             combination.append(self.extra)
         combination = "+".join(combination)
         #// preventing users from assigning a defauls Anki shortcut to something else | to avoid conflicts and stuff :|
-        if combination in ["E", " ", "F5", "Ctrl+1", "Ctrl+2", "Ctrl+3", "Ctrl+4", "Shift+*", "=", "-", "Shift+!", "Shift+@", "Ctrl+Delete", "V", "Shift+V", "O", "1", "2", "3", "4", "5", "6", "7", "T", "Y", "A", "S", "D", "F", "B", "/", "F1", "Ctrl+Q", "Ctrl+E", "Ctrl+P", "Ctrl+Shift+I", "Ctrl+Shift+P", "Ctrl+Shift+A", "Ctrl+Shift+:", "Ctrl+Shif+N", "Ctrl+Z"]:
+        if combination in ["E", " ", "F5", "Ctrl+1", "Ctrl+2", "Ctrl+3", "Ctrl+4", "Shift+*", "=", "-", "Shift+!", "Shift+@", "Ctrl+Delete", "V", "Shift+V", "O", "1", "2", "3", "4", "5", "6", "7", "T", "Y", "A", "S", "D", "F", "B", "I", "/", "F1", "Ctrl+Q", "Ctrl+E", "Ctrl+P", "Ctrl+Shift+I", "Ctrl+Shift+P", "Ctrl+Shift+A", "Ctrl+Shift+:", "Ctrl+Shif+N", "Ctrl+Z"]:
             if combination == "E":
                 showInfo("\"E\" is default Anki shortcut for \"Edit Current Card\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == " ":
@@ -413,6 +431,8 @@ class GetShortcut(QDialog):
                 showInfo("\"F\" is default Anki shortcut for \"Create Filtered Deck\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "B":
                 showInfo("\"B\" is default Anki shortcut for \"Browse\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
+            if combination == "I":
+                showInfo("\"I\" is default Anki shortcut for \"Card Info Window\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "/":
                 showInfo("\"/\" is default Anki shortcut for \"Study Deck\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "F1":
@@ -435,8 +455,6 @@ class GetShortcut(QDialog):
                 showInfo("\"Ctrl+Shift+N\" is default Anki shortcut for \"Manage Note Types\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "Ctrl+Shift+Z":
                 showInfo("\"Ctrl+Shift+Z\" is default Anki shortcut for \"Undo\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
-            if combination == "help":
-                showInfo("What do you need help for?")
             self.ctrl = False
             self.alt = False
             self.shift = False
@@ -457,6 +475,7 @@ class SettingsMenu(QDialog):
     end = "</div>"
     info_shortcut = C_info_shortcut
     skip_shortcut = C_skip_shortcut
+    showSkipped_shortcut = C_showSkipped_shortcut
     undo_shortcut = C_undo_shortcut
     def __init__(self, parent=None):
         super(SettingsMenu, self).__init__(parent)
@@ -711,8 +730,13 @@ class SettingsMenu(QDialog):
         layout.addLayout(buttonBorderRadius_holder)
         layout.addLayout(tab1line5)
         layout.addStretch()
-        self.tab1 = QWidget()
-        self.tab1.setLayout(layout)
+        layout_holder = QWidget()
+        layout_holder.setLayout(layout)
+        self.tab1 = QScrollArea()
+        self.tab1.setFixedWidth(640)
+        self.tab1.setAlignment(Qt.AlignHCenter)
+        self.tab1.setWidgetResizable(True)
+        self.tab1.setWidget(layout_holder)
 
     def createSecondTab(self):
         begin = self.begin
@@ -819,22 +843,30 @@ class SettingsMenu(QDialog):
         layout.addWidget(tab2box2)
         layout.addWidget(tab2box3)
         layout.addStretch()
-        self.tab2 = QWidget()
-        self.tab2.setLayout(layout)
+        layout_holder = QWidget()
+        layout_holder.setLayout(layout)
+        self.tab2 = QScrollArea()
+        self.tab2.setFixedWidth(640)
+        self.tab2.setAlignment(Qt.AlignHCenter)
+        self.tab2.setWidgetResizable(True)
+        self.tab2.setWidget(layout_holder)
 
     def createThirdTab(self):
         begin = self.begin
         end = self.end
         images = self.images
-        self.info = QCheckBox("Info Button")
+        self.info = QCheckBox("Info")
         self.info.setToolTip("{0} If enabled adds info button to review bottombar. {1}".format(begin, end))
-        self.skip = QCheckBox("Skip Button")
+        self.skip = QCheckBox("Skip")
         self.skip.setToolTip("{0} If enabled adds skip card button to review bottombar. {1}".format(begin, end))
-        self.undo = QCheckBox("Undo Button")
+        self.showSkipped = QCheckBox("Show Skipped")
+        self.showSkipped.setToolTip("{0} If enabled adds show skipped button to review bottombar. {1}".format(begin, end))
+        self.undo = QCheckBox("Undo")
         self.undo.setToolTip("{0} If enabled adds undo review button to review bottombar. {1}".format(begin, end))
         extraButtonsPart = QHBoxLayout()
         extraButtonsPart.addWidget(self.info)
         extraButtonsPart.addWidget(self.skip)
+        extraButtonsPart.addWidget(self.showSkipped)
         extraButtonsPart.addWidget(self.undo)
         extraButtonsBox = QGroupBox("Extra Buttons")
         extraButtonsBox.setLayout(extraButtonsPart)
@@ -848,9 +880,10 @@ class SettingsMenu(QDialog):
         hideButtonsPart.addWidget(self.hideHard)
         hideButtonsPart.addWidget(self.hideGood)
         hideButtonsPart.addWidget(self.hideEasy)
+        hideButtonsPart.addWidget(QLabel(""))
         hideButtonsBox = QGroupBox("Hide Buttons")
         hideButtonsBox.setLayout(hideButtonsPart)
-        infoPosition_label = QLabel("Info Button Position:")
+        infoPosition_label = QLabel("Info:")
         infoPosition_label.setToolTip("{0} Changes info button position in bottombar. {1}".format(begin, end))
         self.left_info = QRadioButton("Left")
         self.middleLeft_info = QRadioButton("Middle left")
@@ -868,7 +901,7 @@ class SettingsMenu(QDialog):
             self.infoButtonPositionBox.setEnabled(True)
         self.info.toggled.connect(infoButtonPositionBox.setEnabled)
         infoButtonPositionBox.setLayout(infoPosition_holder)
-        skipPosition_label = QLabel("Skip Button Position:")
+        skipPosition_label = QLabel("Skip:")
         skipPosition_label.setToolTip("{0} Changes skip button position in bottombar. {1}".format(begin, end))
         self.left_skip = QRadioButton("Left")
         self.middleLeft_skip = QRadioButton("Middle left")
@@ -882,11 +915,29 @@ class SettingsMenu(QDialog):
         skipPosition_holder.addWidget(self.right_skip)
         skipButtonPositionBox = QGroupBox()
         skipButtonPositionBox.setDisabled(True)
-        if self.info.isChecked():
+        if self.skip.isChecked():
             skipButtonPositionBox.setEnabled(True)
         self.skip.toggled.connect(skipButtonPositionBox.setEnabled)
         skipButtonPositionBox.setLayout(skipPosition_holder)
-        undoPosition_label = QLabel("Undo Button Position:")
+        showSkippedPosition_label = QLabel("Show Skipped:")
+        showSkippedPosition_label.setToolTip("{0} Changes show skipped button position in bottombar. {1}".format(begin, end))
+        self.left_showSkipped = QRadioButton("Left")
+        self.middleLeft_showSkipped = QRadioButton("Middle left")
+        self.middleRight_showSkipped = QRadioButton("Middle right")
+        self.right_showSkipped = QRadioButton("Right")
+        showSkippedPosition_holder = QHBoxLayout()
+        showSkippedPosition_holder.addWidget(showSkippedPosition_label)
+        showSkippedPosition_holder.addWidget(self.left_showSkipped)
+        showSkippedPosition_holder.addWidget(self.middleLeft_showSkipped)
+        showSkippedPosition_holder.addWidget(self.middleRight_showSkipped)
+        showSkippedPosition_holder.addWidget(self.right_showSkipped)
+        showSkippedButtonPositionBox = QGroupBox()
+        showSkippedButtonPositionBox.setDisabled(True)
+        if self.showSkipped.isChecked():
+            showSkippedButtonPositionBox.setEnabled(True)
+        self.showSkipped.toggled.connect(showSkippedButtonPositionBox.setEnabled)
+        showSkippedButtonPositionBox.setLayout(showSkippedPosition_holder)
+        undoPosition_label = QLabel("Undo:")
         undoPosition_label.setToolTip("{0} Changes undo review button position in bottombar. {1}".format(begin, end))
         self.left_undo = QRadioButton("Left")
         self.middleLeft_undo = QRadioButton("Middle left")
@@ -907,12 +958,13 @@ class SettingsMenu(QDialog):
         buttonPositionsPart = QVBoxLayout()
         buttonPositionsPart.addWidget(infoButtonPositionBox)
         buttonPositionsPart.addWidget(skipButtonPositionBox)
+        buttonPositionsPart.addWidget(showSkippedButtonPositionBox)
         buttonPositionsPart.addWidget(undoButtonPositionBox)
         buttonPositionsBox = QGroupBox("Button Positions")
         buttonPositionsBox.setLayout(buttonPositionsPart)
-        infoShortcut_label = QLabel("Info Button Shortcut:")
+        infoShortcut_label = QLabel("Info:")
         infoShortcut_label.setToolTip("{0} Changes show card info shortcut.<hr> Shortcut will work even if\
-        you disable the skip button.<hr> skip button can be a sngle key\
+        you disable the Info button.<hr> Info button can be a sngle key\
         like \"i\" or \"f4\" or a combination of keys like \"ctrl+i\" or \"alt+i\".<hr>\
         <font color=red>NOTE: </font>Make sure the shortcut you want to set for the\
         button isn't already in use by anki itself or another add-on. {1}".format(begin, end))
@@ -924,7 +976,7 @@ class SettingsMenu(QDialog):
         infoShortcut_holder.addWidget(infoShortcut_label)
         infoShortcut_holder.addStretch()
         infoShortcut_holder.addWidget(self.infoShortcut_button)
-        skipShortcut_label = QLabel("Skip Button Shortcut:")
+        skipShortcut_label = QLabel("Skip:")
         skipShortcut_label.setToolTip("{0} Changes skip card shortcut.<hr> Shortcut will work even if\
         you disable the skip button.<hr> skip button can be a sngle key\
         like \"s\" or \"f6\" or a combination of keys like \"ctrl+s\" or \"alt+s\".<hr>\
@@ -938,9 +990,23 @@ class SettingsMenu(QDialog):
         skipShortcut_holder.addWidget(skipShortcut_label)
         skipShortcut_holder.addStretch()
         skipShortcut_holder.addWidget(self.skipShortcut_button)
-        undoShortcut_label = QLabel("Undo Button Shortcut:")
+        showSkippedShortcut_label = QLabel("Show Skipped:")
+        showSkippedShortcut_label.setToolTip("{0} Changes Show Skipped cards shortcut.<hr> Shortcut will work even if\
+        you disable the Show Skipped Cards button.<hr> Show Skipped cards button shortcut can be a sngle key\
+        like \"s\" or \"f6\" or a combination of keys like \"ctrl+s\" or \"alt+s\".<hr>\
+        <font color=red>NOTE: </font>Make sure the shortcut you want to set for the\
+        button isn't already in use by anki itself or another add-on. {1}".format(begin, end))
+        showSkippedShortcut_label.setFixedWidth(125)
+        self.showSkippedShortcut_button = QPushButton()
+        self.showSkippedShortcut_button.setFixedWidth(300)
+        self.showSkippedShortcut_button.clicked.connect(lambda: self.showGetShortcut("showSkipped_shortcut"))
+        showSkippedShortcut_holder = QHBoxLayout()
+        showSkippedShortcut_holder.addWidget(showSkippedShortcut_label)
+        showSkippedShortcut_holder.addStretch()
+        showSkippedShortcut_holder.addWidget(self.showSkippedShortcut_button)
+        undoShortcut_label = QLabel("Undo:")
         undoShortcut_label.setToolTip("{0} Changes undo review shortcut.<hr> Shortcut will work even if\
-        you disable the skip button.<hr> skip button can be a sngle key\
+        you disable the undo button.<hr> undo button shortcut can be a sngle key\
         like \"z\" or \"f1\" or a combination of keys like \"ctrl+z\" or \"alt+z\".<hr>\
         <font color=red>NOTE: </font>Make sure the shortcut you want to set for the button isn't already\
         in use by anki itself or another add-on.<hr> the default shortcut for this\
@@ -959,6 +1025,7 @@ class SettingsMenu(QDialog):
         buttonShortcutsPart = QVBoxLayout()
         buttonShortcutsPart.addLayout(infoShortcut_holder)
         buttonShortcutsPart.addLayout(skipShortcut_holder)
+        buttonShortcutsPart.addLayout(showSkippedShortcut_holder)
         buttonShortcutsPart.addLayout(undoShortcut_holder)
         buttonShortcutsBox = QGroupBox("Button Shortcuts")
         buttonShortcutsBox.setLayout(buttonShortcutsPart)
@@ -968,8 +1035,13 @@ class SettingsMenu(QDialog):
         layout.addWidget(buttonPositionsBox)
         layout.addWidget(buttonShortcutsBox)
         layout.addStretch()
-        self.tab3 = QWidget()
-        self.tab3.setLayout(layout)
+        layout_holder = QWidget()
+        layout_holder.setLayout(layout)
+        self.tab3 = QScrollArea()
+        self.tab3.setFixedWidth(640)
+        self.tab3.setAlignment(Qt.AlignHCenter)
+        self.tab3.setWidgetResizable(True)
+        self.tab3.setWidget(layout_holder)
 
     def createFourthTab(self):
         begin = self.begin
@@ -1084,6 +1156,18 @@ class SettingsMenu(QDialog):
         skipWidth_holder.addWidget(skipWidth_label)
         skipWidth_holder.addWidget(self.skip_width)
         skipWidth_holder.addWidget(skipWidth_px)
+        showSkippedWidth_label = QLabel("Show Skipped Width:")
+        showSkippedWidth_label.setToolTip("{0} Sets width for Show Skipped button.{1}".format(begin, end))
+        showSkippedWidth_label.setFixedWidth(180)
+        self.showSkipped_width = QSpinBox()
+        self.showSkipped_width.setFixedWidth(120)
+        self.showSkipped_width.setMinimum(40)
+        self.showSkipped_width.setMaximum(400)
+        showSkippedWidth_px = QLabel("px")
+        showSkippedWidth_holder = QHBoxLayout()
+        showSkippedWidth_holder.addWidget(showSkippedWidth_label)
+        showSkippedWidth_holder.addWidget(self.showSkipped_width)
+        showSkippedWidth_holder.addWidget(showSkippedWidth_px)
         undoWidth_label = QLabel("Undo Width:")
         undoWidth_label.setToolTip("{0} Sets width for undo button.{1}".format(begin, end))
         undoWidth_label.setFixedWidth(180)
@@ -1104,6 +1188,7 @@ class SettingsMenu(QDialog):
         tab4line2.addLayout(moreWidth_holder)
         tab4line2.addLayout(infoWidth_holder)
         tab4line2.addLayout(skipWidth_holder)
+        tab4line2.addLayout(showSkippedWidth_holder)
         tab4line2.addLayout(undoWidth_holder)
         tab4box2 = QGroupBox()
         tab4box2.setDisabled(True)
@@ -1115,8 +1200,13 @@ class SettingsMenu(QDialog):
         layout.addWidget(tab4box1)
         layout.addWidget(tab4box2)
         layout.addStretch()
-        self.tab4 = QWidget()
-        self.tab4.setLayout(layout)
+        layout_holder = QWidget()
+        layout_holder.setLayout(layout)
+        self.tab4 = QScrollArea()
+        self.tab4.setFixedWidth(640)
+        self.tab4.setAlignment(Qt.AlignHCenter)
+        self.tab4.setWidgetResizable(True)
+        self.tab4.setWidget(layout_holder)
 
     def createFifthTab(self):
         begin = self.begin
@@ -1185,19 +1275,27 @@ class SettingsMenu(QDialog):
         thirdLine = QHBoxLayout()
         thirdLine.addWidget(buttonLabel_info_box)
         thirdLine.addWidget(buttonLabel_skip_box)
-
         buttonLabel_undo_label = QLabel("Undo:")
         buttonLabel_undo_label.setToolTip("{0}Replaces the text for \"Undo\" Button with your custom text.{1}".format(begin, end))
         buttonLabel_undo_label.setFixedWidth(90)
         self.buttonLabel_undo = QLineEdit()
-        self.buttonLabel_undo.setFixedWidth(190)
         buttonlabel_undo_holder = QHBoxLayout()
         buttonlabel_undo_holder.addWidget(buttonLabel_undo_label)
         buttonlabel_undo_holder.addWidget(self.buttonLabel_undo)
-        buttonlabel_undo_holder.addStretch()
         buttonLabel_undo_box = QGroupBox()
         buttonLabel_undo_box.setLayout(buttonlabel_undo_holder)
-
+        buttonLabel_showSkipped_label = QLabel("Show Skipped:")
+        buttonLabel_showSkipped_label.setToolTip("{0}Replaces the text for \"Show Skipped\" Button with your custom text.{1}".format(begin, end))
+        buttonLabel_showSkipped_label.setFixedWidth(90)
+        self.buttonLabel_showSkipped = QLineEdit()
+        buttonlabel_showSkipped_holder = QHBoxLayout()
+        buttonlabel_showSkipped_holder.addWidget(buttonLabel_showSkipped_label)
+        buttonlabel_showSkipped_holder.addWidget(self.buttonLabel_showSkipped)
+        buttonLabel_showSkipped_box = QGroupBox()
+        buttonLabel_showSkipped_box.setLayout(buttonlabel_showSkipped_holder)
+        fourthLine = QHBoxLayout()
+        fourthLine.addWidget(buttonLabel_undo_box)
+        fourthLine.addWidget(buttonLabel_showSkipped_box)
         buttonLabel_again_label = QLabel("Again:")
         buttonLabel_again_label.setToolTip("{0}Replaces the text for \"Again\" Button with your custom text.{1}".format(begin, end))
         buttonLabel_again_label.setFixedWidth(90)
@@ -1216,9 +1314,9 @@ class SettingsMenu(QDialog):
         buttonlabel_hard_holder.addWidget(self.buttonLabel_hard)
         buttonLabel_hard_box = QGroupBox()
         buttonLabel_hard_box.setLayout(buttonlabel_hard_holder)
-        fourthLine = QHBoxLayout()
-        fourthLine.addWidget(buttonLabel_again_box)
-        fourthLine.addWidget(buttonLabel_hard_box)
+        fifthLine = QHBoxLayout()
+        fifthLine.addWidget(buttonLabel_again_box)
+        fifthLine.addWidget(buttonLabel_hard_box)
         buttonLabel_good_label = QLabel("Good:")
         buttonLabel_good_label.setToolTip("{0}Replaces the text for \"Good\" Button with your custom text.{1}".format(begin, end))
         buttonLabel_good_label.setFixedWidth(90)
@@ -1237,16 +1335,16 @@ class SettingsMenu(QDialog):
         buttonlabel_easy_holder.addWidget(self.buttonLabel_easy)
         buttonLabel_easy_box = QGroupBox()
         buttonLabel_easy_box.setLayout(buttonlabel_easy_holder)
-        fifthLine = QHBoxLayout()
-        fifthLine.addWidget(buttonLabel_good_box)
-        fifthLine.addWidget(buttonLabel_easy_box)
+        sixthLine = QHBoxLayout()
+        sixthLine.addWidget(buttonLabel_good_box)
+        sixthLine.addWidget(buttonLabel_easy_box)
         layout = QVBoxLayout()
         layout.addLayout(firstLine)
         layout.addLayout(secondLine)
         layout.addLayout(thirdLine)
-        layout.addWidget(buttonLabel_undo_box)
         layout.addLayout(fourthLine)
         layout.addLayout(fifthLine)
+        layout.addLayout(sixthLine)
         layout.addStretch()
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
@@ -1417,8 +1515,13 @@ class SettingsMenu(QDialog):
         layout.addWidget(tab5box1)
         layout.addWidget(tab5box2)
         layout.addStretch()
-        self.tab6 = QWidget()
-        self.tab6.setLayout(layout)
+        layout_holder = QWidget()
+        layout_holder.setLayout(layout)
+        self.tab6 = QScrollArea()
+        self.tab6.setFixedWidth(640)
+        self.tab6.setAlignment(Qt.AlignHCenter)
+        self.tab6.setWidgetResizable(True)
+        self.tab6.setWidget(layout_holder)
 
     def createSeventhTab(self):
         begin = self.begin
@@ -1747,14 +1850,34 @@ class SettingsMenu(QDialog):
         settingsMenuPlace_holder.addStretch()
         settingsMenuPlace_box = QGroupBox()
         settingsMenuPlace_box.setLayout(settingsMenuPlace_holder)
+        skipMethod_label = QLabel("Skip Method:")
+        skipMethod_label.setToolTip("{0}Changes Skip method.\n\"Next Card\" just skips the card and the skipped cards will be shown again randomly\
+        while \"Bury\" bureis the skipped cards and the skipped cards will get unburied when you finish reviewing normal cards. You\
+        can manually unbury skipped cards by pressing the \"Show Skipped\" button or by pressing the shortcut key that you've chosen for the button.{1}".format(begin, end))
+        skipMethod_label.setFixedWidth(180)
+        self.skipMethod = QComboBox()
+        self.skipMethod.addItems(["Next Card", "Bury"])
+        self.skipMethod.setFixedWidth(150)
+        skipMethod_holder = QHBoxLayout()
+        skipMethod_holder.addWidget(skipMethod_label)
+        skipMethod_holder.addWidget(self.skipMethod)
+        skipMethod_holder.addStretch()
+        skipMethod_box = QGroupBox()
+        skipMethod_box.setLayout(skipMethod_holder)
         layout = QVBoxLayout()
         layout.addWidget(buttonColors_box)
         layout.addWidget(speedFocus_box)
         layout.addWidget(overViewStats_box)
         layout.addWidget(settingsMenuPlace_box)
+        layout.addWidget(skipMethod_box)
         layout.addStretch()
-        self.tab8 = QWidget()
-        self.tab8.setLayout(layout)
+        layout_holder = QWidget()
+        layout_holder.setLayout(layout)
+        self.tab8 = QScrollArea()
+        self.tab8.setFixedWidth(640)
+        self.tab8.setAlignment(Qt.AlignHCenter)
+        self.tab8.setWidgetResizable(True)
+        self.tab8.setWidget(layout_holder)
         self.tab1.setDisabled(True)
         if self.buttonColors_on.isChecked():
             self.tab1.setEnabled(True)
@@ -1797,381 +1920,32 @@ class SettingsMenu(QDialog):
         about.setOpenExternalLinks(True)
         about_scroll = QScrollArea()
         about_scroll.setWidget(about)
-        changeLog_text = """
-        <style> li {margin: 10px 0px}</style>
-        <div class="None">
-          <b>2021/8/4</b>
-          <ul>
-            <li>Bug fix (now ARBb is compatible with Anki 2.1.45)</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2021/7/31</b>
-          <ul>
-            <li>Bug Fix</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2021/7/30</b>
-          <ul>
-            <li>Bug Fix</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2021/7/30</b>
-          <ul>
-            <li>Added an option to set your custom text as button labels.<br>
-            replace again, hard, good, easy, etc. text with your custom text or emoji.<br>
-            To change button labels and use your own custom text, go to "Button label" tab in the settings.<br>
-            To the person asking me how to change button labels -_- you can use this from now on. No need to change the code.</li>
-            <li>Added an option to hide hard, good, easy buttons. (Requested)<br>
-            (no I haven't forgotten to put again in the list -_- you can't hide again button).<br>
-            To use this option, go to "Bottombar Buttons" and look for "Hide Buttons" part there.</li>
-            <li>Added an option to change the roundness of the buttons.<br>
-            To use this option, go to "Styles" tab and look for "Button Border Radius" there.</li>
-            <li><font color=red>Removed</font> pressed button stats from the add-on.<br>
-            For those who used it, I'll be publishing it as a separate add on named "Pressed Button Stats"</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/6/9</b>
-          <ul>
-            <li>Added an option to turn off more overview stats.<br></li>
-            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/12/6</b>
-          <ul>
-            <li>Added another mode to overview stats (taken from "More Overview Stats 2.1")</li>
-            <li>Fixed conflict with speedfocus add-on (If you use speedfocus you need to enable "Speed focus" option in ARBb settings -> Misc)</li>
-          </ul>
-        </div><div class="None">
-          <b>2020/6/9</b>
-          <ul>
-            <li>Added an option to turn off more overview stats.<br></li>
-            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-        <div class="None">
-          <b>2020/5/30</b>
-          <ul>
-            <li>Changed tooltip behavior.<br>
-            Now it's size won't be as size of the buttons when it's position is fixed.<br></li>
-            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/5/18</b>
-          <ul>
-            <li>Minor code changes/improvements.<br></li>
-            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/5/15</b>
-          <ul>
-            <li>Now it designs review buttons that other add-ons add (like rememorize).<br>
-            it treats them like other bottombar button so their color and style<br>
-            will be like other bottombar buttons</li>
-            <li>you can style other bottombar buttons that are added by other add-on (like deferer button).<br>
-            you'll need to change their code a bit. if you want to style them leave a comment here or on github page.<br>
-            (the last picture is how the extra buttons the those add-on add look after styling them using this add-on)</li>
-            <li>finally a github page :\ <a href="https://github.com/noobj2/Anki-Advanced-Review-Bottombar">Here it is</a></li>
-            <li>Changed color of timer text in bottombar.<br>
-            now it uses the same color you have set for other bottombar buttons text color. (not a big deal though, right?)<br></li>
-            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/5/9</b>
-          <ul>
-            <li>Made neon and fill designs customizable. now you can change their colors using \"Colors\" tab.<br>
-            Enable custom colors by checking \"Custom Review Button Colors\" checkbox and <br>
-            changing again, hard, good and easy colors.<br>
-            as these designs don't have a separate hover color, changing hover colors won't<br>
-            change anything about these buttons</li>
-            <li>Made review bottombar buttons, deck overview buttons and main screen bottombar buttons customizable. <br>
-            you can change their border and text colors in \"Colors\" tab by changing \"General Button\" text and border colors.<br>
-            you can't chage text or background color for general buttons if their button style is set on default.<br>
-            to change general buttons style go to \"Styles\" tab and change \"General Buttons Style\".</li>
-            <li>Added an option to change show answer button border color based on card ease. <br>
-            you can enable than option in \"Style\" tab by changing \"Show Answer Border Color Style\" <br>
-            from \"Fixed\" to \"Based on Card Ease\". you cand change color for each ease range in \"Colors\" tab.<br>
-            - (honestly i think it's gonna be usless for most of you :/ it was just something that i needed).</li>
-            <li>+ Other settings menu and bottombar buttons changes and improvements.<br></li>
-            <font color=dodgerblue>pressed button count STILL at 90%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/28</b>
-          <ul>
-            <li>Added an option to choose card type [learn, review, re-learn, cram] for button count stats</li>
-            <li>Added an option to manually change decks in button count stats<br></li>
-            <font color=dodgerblue>at 90%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/5/01</b>
-          <ul>
-            <li>Added total time and time per card to information shown in pressed button stats<br></li>
-            <font color=dodgerblue>at 85%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/28</b>
-          <ul>
-            <li>Added an option to choose card type [learn, review, re-learn, cram] for button count stats</li>
-            <li>Added an option to manually change decks in button count stats<br></li>
-            <font color=dodgerblue>at 80%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/27</b>
-          <ul>
-            <li>Added an option to choose time period for button count stats</li>
-            <li>Added an option to change button count stats scope</li>
-            <li>Button count stats window improvements<br></li>
-            <font color=dodgerblue>at 50%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/26</b>
-          <ul>
-            <li><font color=tomato>NEW FEATURE:</font> pressed button count + Percent<br>
-            <font color=red>NOTE:</font> it's work in progress and very basic<br>
-            the only reason i'm publishing it is that i want to hear you opinions on it and see what you need<br>
-            I want to hear your ideas about it, tell me what i can do to make it better<br>
-            you can Email me your ideas<br>
-            however, i think some of you may want to change the time period for this option<br>
-            to do that go to config -> Advanced review bottombar -> open add-on folder -> <br>
-            open Button_Count.py -> go to line 47 you'll see what you need there<br>
-            when you're on a deck, it shows pressed button stats for that deck, <br>
-            when you're in main window, it'll show overall stats<br></li>
-            <font color=dodgerblue>at 15%<br></font>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/22</b>
-          <ul>
-            <li>Made styling main screen and deck overview compatible with anki versions older than 2.1.19</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/21</b>
-          <ul>
-            <li>Added an option to change main screen and deck overview buttons style<br>
-            (Their style will be as other bottombar buttons style)</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/20</b>
-          <ul>
-            <li>Fixed tooltip bug (where it would show hard on tooltip when you<br>
-            pressed good if you were in a cutom study session )</li>
-            <li> Added card info sidebar auto open (opens sidebar automatically when you review a card)</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/18</b>
-          <ul>
-            <li>Minor settings menu improvements</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/17</b>
-          <ul>
-            <li>Fixed Neon 1 style bug</li>
-            <li>Addded correct percentage, fastest reveiw, slowest review, note ID and card ID options to card info sidebar</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/16</b>
-          <ul>
-            <li>Added change button transition time option (for fill and neon designs only)</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/15</b>
-          <ul>
-            <li>Added an option to change cursor type when you hover over bottombar buttons</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/14</b>
-          <ul>
-            <li>Added answer tooltips</li>
-            <li>Adjusted tooltips for neon and fill designs</li>
-            <li>Adjusted tooltips for custom button sizes</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/13</b>
-          <ul>
-            <li>Added a function to get shortcuts (Don't have to test keys that you want to set as shortcuts anymore,<br> if it's Anki's default shortcut for something, the add-on wont accept it)</li>
-            <li>Moved button design tooltip to another tab (noticed it was WAY too big for lower resulotions to be useful)</li>
-            <br><br><font color="red"># NOTE:</font> if you're updating from any version other than 2020/4/12 you might run into some problems trying to<br>
-            open settings menu if you can't open settings menu after update open add-on folder and delete meta.json file if<br>
-            that didn't help go to settings.py and put a # in front of the last line then go to tools -> add-ons and<br> press restore defaults on this addon's config page<br>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/12</b>
-          <ul>
-            <li>Changed settings menu so it's easier to work with on lower resolutions (had to code it all over again)</li>
-            <li>Made picking colors completely automatic (no color code copy/paste, choose the color and it's set)</li>
-            <li>Added an option for you to choose settings menu's position</li>
-            <li>Made wide buttons compatible with no distractions add-on</li>
-            <br><br><font color="red"># NOTE:</font> After update you need to restore config to defaults in tools -> addons<br>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/8</b>
-          <ul>
-            <li>settings menu bugs fixes</li>
-            <li>settings menu minor adjustments for smaller screens</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/7</b>
-          <ul>
-            <li>settings menu improvements</li>
-            <li>added an option to color intervals</li>
-            <li>added an option to style other bottombar buttons</li>
-            <li>added 4 new button designs</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/6</b>
-          <ul>
-            <li>minor settings menu improvements</li>
-            <li>card info sidebar improvements for old scheduler</li>
-          </ul>
-        </div>
-        <div class="None">
-          <ul>
-          <b>2020/4/5</b>
-          <li>minor settings menu improvements</li>
-          <li>added tooltips with pictures for different settings</li>
-          <li>fixed card info sidebar crash bug</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/4</b>
-          <ul>
-            <li>added settings menu</li>
-            <li>minor settings menu adjustments</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/2</b>
-          <ul>
-            <li>fix for wide buttons</li>
-            <li>fixed card info sidebar problem with beta versions of anki (2.1.23 and 2.1.24)</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/4/1</b>
-          <ul>
-            <li>fixed issue with limiting card reviews in card info sidebar</li>
-            <li>added an option to change active button indicator from border to glow and change it's color</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/3/30</b>
-          <ul>
-            <li>adjusted colors and gradients for background color change for light mode</li>
-            <li>added background shadow for review buttons (enable in config)</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/3/29</b>
-          <ul>
-            <li>added undo button (enable in config)</li>
-            <li>fixed button color for old scheduler</li>
-            <li>removed conflict with customize keyboard shortcuts add-on</li>
-            <li>removed conflict with speed focus add-on (needs to be enabled in config)</li>
-            <li>removed conflict with slackers add-on</li>
-            <li>added an option to choose text color in review button background color change</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/3/26</b>
-          <ul>
-            <li>added change button size option</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/3/25</b>
-          <ul>
-            <li>added change skip and info button position option</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/3/20</b>
-          <ul>
-            <li>fixed conflict with "replay button on card" add-on</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/3/7</b>
-          <ul>
-            <li>adjusted the color for review buttons</li>
-            <li>added an option to choose the font for the text in card info side bar in config</li>
-            <li>added an option so you could limit the maximum number of previous reviews that are shown on sidebar for a card</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/3/6</b>
-          <ul>
-            <li>made the info sidebar customizable, you can choose what you want to see on card info sidebar in config</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/3/4</b>
-          <ul>
-            <li>fixed not showing review button colors on new in-app night mode</li>
-            <li>adjusted review button text colors for new in-app night mode</li>
-            <li>adjusted wide button widths</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/2/8</b>
-          <ul>
-            <li>added an option for you to choose the shortcut key for skip and info buttons (in add-on config)</li>
-            <li>added an option to choose the sidebar theme (in add-on config)</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2020/1/2</b>
-          <ul>
-            <li>fix for old scheduler</li>
-          </ul>
-        </div>
-        <div class="None">
-          <b>2019/12/14</b>
-          <ul>
-            <li>Initial Release</li>
-          </ul>
-        </div>
-        """
-        changeLog = QLabel()
-        changeLog.setText(changeLog_text)
-        changeLog_scroll = QScrollArea()
-        changeLog_scroll.setWidget(changeLog)
-        changeLog_label = QLabel("<div style='color: dodgerblue; font-size: 14px;'>Changelog:</div>")
-        # TODO: set about
+        changeLog_window = QDialog()
+        changeLog_window.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint | Qt.WindowMinimizeButtonHint)
+        changeLog_window.setWindowTitle("Changelog")
+        changeLog_window.setWindowIcon(QIcon(images + "\icon.png"))
+        changeLog_button = QPushButton("Show Changelog")
+        self.changeLog_webView = QWebEngineView()
+        self.loadChaneLog()
+        changeLog_layout = QVBoxLayout()
+        changeLog_layout.addWidget(self.changeLog_webView)
+        changeLog_window.setLayout(changeLog_layout)
+        changeLog_button.clicked.connect(lambda: changeLog_window.exec_())
         layout = QVBoxLayout()
         layout.addWidget(about_scroll)
-        layout.addWidget(changeLog_label)
-        layout.addWidget(changeLog_scroll)
+        layout.addWidget(changeLog_button)
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab9 = QScrollArea()
         self.tab9.setAlignment(Qt.AlignHCenter)
         self.tab9.setWidgetResizable(True)
         self.tab9.setWidget(layout_holder)
+
+    def loadChaneLog(self):
+        file = "{}\changelog.html".format(os.path.dirname(os.path.abspath(__file__)))
+        with open(file, 'r') as f:
+            html = f.read()
+            self.changeLog_webView.setHtml(html)
 
     def loadCurrent(self):
         self.button_style.setCurrentIndex(C_button_style)
@@ -2199,6 +1973,8 @@ class SettingsMenu(QDialog):
             self.info.setChecked(True)
         if C_skip:
             self.skip.setChecked(True)
+        if C_showSkipped:
+            self.showSkipped.setChecked(True)
         if C_undo:
             self.undo.setChecked(True)
         if C_hideHard:
@@ -2223,6 +1999,14 @@ class SettingsMenu(QDialog):
             self.middleLeft_skip.setChecked(True)
         else:
             self.left_skip.setChecked(True)
+        if C_right_showSkipped:
+            self.right_showSkipped.setChecked(True)
+        elif C_middleRight_showSkipped:
+            self.middleRight_showSkipped.setChecked(True)
+        elif C_middleLeft_showSkipped:
+            self.middleLeft_showSkipped.setChecked(True)
+        else:
+            self.left_showSkipped.setChecked(True)
         if C_right_undo:
             self.right_undo.setChecked(True)
         elif C_middleRight_undo:
@@ -2233,6 +2017,7 @@ class SettingsMenu(QDialog):
             self.left_undo.setChecked(True)
         self.infoShortcut_button.setText("Change Shortcut (Current: {})".format(C_info_shortcut))
         self.skipShortcut_button.setText("Change Shortcut (Current: {})".format(C_skip_shortcut))
+        self.showSkippedShortcut_button.setText("Change Shortcut (Current: {})".format(C_showSkipped_shortcut))
         self.undoShortcut_button.setText("Change Shortcut (Current: {})".format(C_undo_shortcut))
         if C_custom_sizes:
             self.customSizes_on.setChecked(True)
@@ -2245,6 +2030,7 @@ class SettingsMenu(QDialog):
         self.more_width.setValue(int(C_more_width))
         self.info_width.setValue(int(C_info_width))
         self.skip_width.setValue(int(C_skip_width))
+        self.showSkipped_width.setValue(int(C_showSkipped_width))
         self.undo_width.setValue(int(C_undo_width))
         self.buttonLabel_studyNow.setText(C_buttonLabel_studyNow)
         self.buttonLabel_edit.setText(C_buttonLabel_edit)
@@ -2252,6 +2038,7 @@ class SettingsMenu(QDialog):
         self.buttonLabel_more.setText(C_buttonLabel_more)
         self.buttonLabel_info.setText(C_buttonLabel_info)
         self.buttonLabel_skip.setText(C_buttonLabel_skip)
+        self.buttonLabel_showSkipped.setText(C_buttonLabel_showSkipped)
         self.buttonLabel_undo.setText(C_buttonLabel_undo)
         self.buttonLabel_again.setText(C_buttonLabel_again)
         self.buttonLabel_hard.setText(C_buttonLabel_hard)
@@ -2349,6 +2136,7 @@ class SettingsMenu(QDialog):
             self.speedFocus_off.setChecked(True)
         self.overViewStats.setCurrentIndex(C_overViewStats)
         self.settingsMenu_place.setCurrentIndex(C_settingsMenu_palce)
+        self.skipMethod.setCurrentIndex(C_skipMethod)
 
     def onApply(self):
         if self.left_skip.isChecked():
@@ -2359,6 +2147,14 @@ class SettingsMenu(QDialog):
             skip_position ="right"
         else:
             skip_position = "middle left"
+        if self.left_showSkipped.isChecked():
+            showSkipped_position = "left"
+        elif self.middleRight_showSkipped.isChecked():
+            showSkipped_position ="middle right"
+        elif self.right_showSkipped.isChecked():
+            showSkipped_position ="right"
+        else:
+            showSkipped_position = "middle left"
         if self.middleLeft_info.isChecked():
             info_position = "middle left"
         elif self.middleRight_info.isChecked():
@@ -2387,6 +2183,7 @@ class SettingsMenu(QDialog):
         "  Speed Focus Add-on": self.speedFocus_on.isChecked(),
         "  More Overview Stats": self.overViewStats.currentIndex(),
         "  Settings Menu Place": self.settingsMenu_place.currentIndex(),
+        "  Skip Method": self.skipMethod.currentIndex(),
         "  Style Main Screen Buttons": self.style_mainScreenButtons.isChecked(),
         " Review_ Active Button Indicator": self.active_indicator.currentIndex(),
         " Review_ Buttons Style": self.button_style.currentIndex(),
@@ -2401,22 +2198,26 @@ class SettingsMenu(QDialog):
         " Review_ Colored Dues": self.colored_intervals.isChecked(),
         "Button_   Info Button": self.info.isChecked(),
         "Button_   Skip Button": self.skip.isChecked(),
+        "Button_   Show Skipped Button": self.showSkipped.isChecked(),
         "Button_   Undo Button": self.undo.isChecked(),
         "Button_   Hide Hard": self.hideHard.isChecked(),
         "Button_   Hide Good": self.hideGood.isChecked(),
         "Button_   Hide Easy": self.hideEasy.isChecked(),
         "Button_  Custom Button Sizes": self.customSizes_on.isChecked(),
         "Button_ Shortcut_ Skip Button": self.skip_shortcut,
+        "Button_ Shortcut_ Show Skipped Button": self.showSkipped_shortcut,
         "Button_ Shortcut_ Info Button": self.info_shortcut,
         "Button_ Shortcut_ Undo Button": self.undo_shortcut,
         "Button_ Position_ Info Button": info_position,
         "Button_ Position_ Skip Button": skip_position,
+        "Button_ Position_ Show Skipped Button": showSkipped_position,
         "Button_ Position_ Undo Button": undo_position,
         "Button_ Height_ All Bottombar Buttons": self.buttons_height.value(),
         "Button_ Width_ Edit Button": self.edit_width.value(),
         "Button_ Width_ Show Answer Button": self.answer_width.value(),
         "Button_ Width_ Info Button": self.info_width.value(),
         "Button_ Width_ Skip Button": self.skip_width.value(),
+        "Button_ Width_ Show Skipped Button": self.showSkipped_width.value(),
         "Button_ Width_ More Button": self.more_width.value(),
         "Button_ Width_ Review Buttons": self.reviewButtons_width.value(),
         "Button_ Width_ Undo Button": self.undo_width.value(),
@@ -2426,6 +2227,7 @@ class SettingsMenu(QDialog):
         "Button Label_ More": self.buttonLabel_more.text(),
         "Button Label_ Info": self.buttonLabel_info.text(),
         "Button Label_ Skip": self.buttonLabel_skip.text(),
+        "Button Label_ Show Skipped": self.buttonLabel_showSkipped.text(),
         "Button Label_ Undo": self.buttonLabel_undo.text(),
         "Button Label_ Again": self.buttonLabel_again.text(),
         "Button Label_ Hard": self.buttonLabel_hard.text(),
@@ -2501,6 +2303,7 @@ class SettingsMenu(QDialog):
     	"  Speed Focus Add-on": False,
         "  More Overview Stats": 1,
     	"  Settings Menu Place": 0,
+    	"  Skip Method": 0,
     	"  Style Main Screen Buttons": True,
         " Review_ Active Button Indicator": 1,
     	" Review_ Hover Effect": 1,
@@ -2515,22 +2318,26 @@ class SettingsMenu(QDialog):
 		" Review_ Colored Dues": True,
     	"Button_   Info Button": True,
       	"Button_   Skip Button": True,
+      	"Button_   Show Skipped Button": False,
     	"Button_   Undo Button": False,
         "Button_   Hide Hard": False,
         "Button_   Hide Good": False,
         "Button_   Hide Again": False,
     	"Button_  Custom Button Sizes": False,
         "Button_ Shortcut_ Skip Button": "c",
+        "Button_ Shortcut_ Show Skipped Button": "Alt + c",
         "Button_ Shortcut_ Info Button": "f4",
     	"Button_ Shortcut_ Undo Button": "x",
     	"Button_ Position_ Info Button": "left",
     	"Button_ Position_ Skip Button": "middle left",
+    	"Button_ Position_ Show Skipped Button": "middle left",
     	"Button_ Position_ Undo Button": "middle right",
     	"Button_ Height_ All Bottombar Buttons": 40,
     	"Button_ Width_ Edit Button": 150,
     	"Button_ Width_ Show Answer Button": 150,
     	"Button_ Width_ Info Button": 150,
     	"Button_ Width_ Skip Button": 150,
+    	"Button_ Width_ Show Skipped Button": 150,
     	"Button_ Width_ More Button": 150,
     	"Button_ Width_ Review Buttons": 150,
     	"Button_ Width_ Undo Button": 150,
@@ -2540,6 +2347,7 @@ class SettingsMenu(QDialog):
     	"Button Label_ More": "More",
     	"Button Label_ Info": "Info",
     	"Button Label_ Skip": "Skip",
+    	"Button Label_ Show Skipped": "Show Skipped",
     	"Button Label_ Undo": "Undo Review",
     	"Button Label_ Again": "Again",
     	"Button Label_ Hard": "Hard",
@@ -2668,6 +2476,9 @@ class SettingsMenu(QDialog):
         elif button_variable == "skip_shortcut":
             shortcut = combination or self.skip_shortcut
             self.skipShortcut_button.setText("Change Shortcut (Current: {})".format(shortcut))
+        elif button_variable == "showSkipped_shortcut":
+            shortcut = combination or self.showSkippedp_shortcut
+            self.showSkippedShortcut_button.setText("Change Shortcut (Current: {})".format(shortcut))
         elif button_variable == "undo_shortcut":
             shortcut = combination or self.undo_shortcut
             self.undoShortcut_button.setText("Change Shortcut (Current: {})".format(shortcut))
@@ -2679,6 +2490,8 @@ class SettingsMenu(QDialog):
                 self.info_shortcut = combination
             elif button_variable == "skip_shortcut":
                 self.skip_shortcut = combination
+            elif button_variable == "showSkipped_shortcut":
+                self.showSkipped_shortcut = combination
             elif button_variable == "undo_shortcut":
                 self.undo_shortcut = combination
             else:
@@ -2690,6 +2503,8 @@ class SettingsMenu(QDialog):
 
 def open_settings():
     settings = SettingsMenu()
+    #// For styling settings menu -_-
+    # settings.setStyle(QStyleFactory.create("Fusion"))
     settings.exec()
 
 def setupMenu():

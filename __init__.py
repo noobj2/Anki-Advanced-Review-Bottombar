@@ -11,6 +11,7 @@ reviewTooltip = config['Tooltip']
 anki_version = int(version.replace('.', ''))
 from . import Bottom_Bar
 from . import Settings
+from . import Deck_Overview
 if reviewTooltip:
     from . import Tooltip
 

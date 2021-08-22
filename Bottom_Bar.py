@@ -2,8 +2,6 @@
 #// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
 
 import json
-import time
-from datetime import date, timedelta
 from aqt import mw
 import aqt
 from aqt.qt import *

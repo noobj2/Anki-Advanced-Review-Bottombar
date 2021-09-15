@@ -1,5 +1,11 @@
 <html>
   <div class="background">
+    <h1>2021/9/15</h1>
+    <ul>
+      <li>Minor bug fix</li>
+    </ul>
+  </div>
+  <div class="background">
     <h1>2021/8/23</h1>
     <ul>
       <li>Detailed Deck Overview bug fix</li>

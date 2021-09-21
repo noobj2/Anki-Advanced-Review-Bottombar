@@ -1942,7 +1942,10 @@ class SettingsMenu(QDialog):
         self.tab9.setWidget(layout_holder)
 
     def loadChaneLog(self):
-        file = "{}\changelog.html".format(self.addon_path)
+        #// For some weird reason, using dirname(__file__) inside the .format() thingy doesn't seem to be working on macOS
+        #// Can't confirm tho -_- since I can't test my add-on on mac
+        addon_path = dirname(__file__)
+        file = "{}/changelog.html".format(addon_path)
         with open(file, 'r') as f:
             html = f.read()
             self.changeLog_webView.setHtml(html)

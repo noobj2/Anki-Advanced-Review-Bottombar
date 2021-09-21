@@ -1,5 +1,11 @@
 <html>
   <div class="background">
+    <h1>2021/9/22</h1>
+    <ul>
+      <li>Minor macOS bug fix (Hopefully -_-)</li>
+    </ul>
+  </div>
+  <div class="background">
     <h1>2021/9/15</h1>
     <ul>
       <li>Minor bug fix</li>

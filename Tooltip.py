@@ -585,7 +585,9 @@ def showTooltip(text, background_color, tooltip_textColor, button_width, button_
     p.setColor(QPalette.WindowText, QColor("transparent"))
     lab.setPalette(p)
     if tooltip_style == 0:
-        lab.move(aw.mapToGlobal(QPoint(x_offset+(aw.width()-button_width)/2, y_offset+aw.height())))
+        x_coordinate = int(x_offset+(aw.width()-button_width)/2)
+        y_coordinate = y_offset+aw.height()
+        lab.move(aw.mapToGlobal(QPoint(x_coordinate, y_coordinate)))
     else:
         x_coordinate = min(x_offset, aw.width())
         y_coordinate = min(y_offset, aw.height())

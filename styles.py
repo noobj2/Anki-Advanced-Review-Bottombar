@@ -36,9 +36,10 @@ custom_bottombarButtonBorderColor = config['Color_ Custom Bottombar Button Borde
 custom_buttonSize = config ['Button_  Custom Button Sizes']
 buttons_height = config['Button_ Height_ All Bottombar Buttons']
 edit_width = config['Button_ Width_ Edit Button']
-answer_width = config['Button_ Width_ Show Answer Button']
+# answer_width = config['Button_ Width_ Show Answer Button']
 info_width = config['Button_ Width_ Info Button']
 skip_width = config['Button_ Width_ Skip Button']
+text_size = config["Button_ Text Size"]
 showSkipped_width = config['Button_ Width_ Show Skipped Button']
 undo_width = config['Button_ Width_ Undo Button']
 more_width = config['Button_ Width_ More Button']
@@ -320,21 +321,21 @@ else:
 
 if custom_buttonSize:
     if bottombarButtons_style == 0:
-        edit_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, edit_width)
-        info_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, info_width)
-        skip_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, skip_width)
-        showSkipped_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, showSkipped_width)
-        undo_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, undo_width)
-        more_style = 'style="height: {}px; width: {}px;"'.format(buttons_height, more_width)
-        min_buttonSize = "<style> button {min-width: 5px} </style>"
+        edit_style = 'style="height: {}px; width: {}px; font-size: {}px;"'.format(buttons_height, edit_width, text_size)
+        info_style = 'style="height: {}px; width: {}px; font-size: {}px;"'.format(buttons_height, info_width, text_size)
+        skip_style = 'style="height: {}px; width: {}px; font-size: {}px;"'.format(buttons_height, skip_width, text_size)
+        showSkipped_style = 'style="height: {}px; width: {}px; font-size: {}px;"'.format(buttons_height, showSkipped_width, text_size)
+        undo_style = 'style="height: {}px; width: {}px; font-size: {}px;"'.format(buttons_height, undo_width, text_size)
+        more_style = 'style="height: {}px; width: {}px; font-size: {}px;"'.format(buttons_height, more_width, text_size)
+        min_buttonSize = "<style> button {min-width: 5px; cursor: %s} </style>" % cursor
     else:
-        edit_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, edit_width)
-        info_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, info_width)
-        skip_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, skip_width)
-        showSkipped_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, showSkipped_width)
-        undo_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, undo_width)
-        more_style = 'style="height: {}px; width: {}px;" id=main'.format(buttons_height, more_width)
-        min_buttonSize = "<style> button {min-width: 5px} </style>"
+        edit_style = 'style="height: {}px; width: {}px; font-size: {}px;" id=main'.format(buttons_height, edit_width, text_size)
+        info_style = 'style="height: {}px; width: {}px; font-size: {}px;" id=main'.format(buttons_height, info_width, text_size)
+        skip_style = 'style="height: {}px; width: {}px; font-size: {}px;" id=main'.format(buttons_height, skip_width, text_size)
+        showSkipped_style = 'style="height: {}px; width: {}px; font-size: {}px;" id=main'.format(buttons_height, showSkipped_width, text_size)
+        undo_style = 'style="height: {}px; width: {}px; font-size: {}px;" id=main'.format(buttons_height, undo_width, text_size)
+        more_style = 'style="height: {}px; width: {}px; font-size: {}px;" id=main'.format(buttons_height, more_width, text_size)
+        min_buttonSize = "<style> button {min-width: 5px; cursor: %s} </style>" % cursor
 else:
     if bottombarButtons_style == 0:
         edit_style = ""
@@ -343,7 +344,7 @@ else:
         showSkipped_style = ""
         undo_style = ""
         more_style = ""
-        min_buttonSize = ""
+        min_buttonSize = "<style> button {cursor: %s} </style>" % cursor
     else:
         edit_style = "id=main"
         info_style = "id=main"
@@ -351,7 +352,7 @@ else:
         showSkipped_style = "id=main"
         undo_style = "id=main"
         more_style = "id=main"
-        min_buttonSize = ""
+        min_buttonSize = "<style> button {cursor: %s} </style>" % cursor
 ######//////__END__ GENERAL BUTTON DESIGNS __END__//////######
 
 ######//////__BEGIN__ ACtIVE BUTTON INDOCATORS __BEGIN__//////######
@@ -840,29 +841,33 @@ neon1 = """<style>
 text_color = """<style>
     #again {
       color: #BA0C0C;
+      cursor: %(cursor)s;
       }
     #again:hover{
       %(again_hover)s
     }
     #hard {
       color: #BF720F;
+      cursor: %(cursor)s;
     }
     #hard:hover{
       %(hard_hover)s
     }
     #good {
       color: #20A11C;
+      cursor: %(cursor)s;
     }
     #good:hover{
       %(good_hover)s
     }
     #easy {
       color: #188AB8;
+      cursor: %(cursor)s;
     }
     #easy:hover{
       %(easy_hover)s
     }
-    </style>""" % dict(again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover)
+    </style>""" % dict(cursor=cursor, again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover)
 
 #// styling for background color change method
 if is_nightMode:  #// style if anki version is 2.1.20 and night mode is enabled
@@ -870,6 +875,7 @@ if is_nightMode:  #// style if anki version is 2.1.20 and night mode is enabled
         #again, #hard, #good, #easy {
           border: hidden;
           color: %(text)s;
+          cursor: %(cursor)s;
           text-shadow: none;
         }
         #again {
@@ -900,12 +906,13 @@ if is_nightMode:  #// style if anki version is 2.1.20 and night mode is enabled
           color: %(text)s;
           %(easy_hover)s
         }
-        </style>""" % dict (text=textColor, again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover)
+        </style>""" % dict (text=textColor, cursor=cursor, again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover)
 else:  #// style if anki version is older than 2.1.20 or night mode is disabled
     background_color = """<style>
         #again, #hard, #good, #easy {
           border: hidden;
           color: %(text)s;
+          cursor: %(cursor)s;
           text-shadow: none;
           border-radius: 3px;
         }
@@ -937,36 +944,40 @@ else:  #// style if anki version is older than 2.1.20 or night mode is disabled
           color: %(text)s;
           %(easy_hover)s
         }
-        </style>""" % dict (text=textColor, again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover)
+        </style>""" % dict (text=textColor, cursor=cursor, again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover)
 
 #// styling for custom text color change method
 custom_text = """<style>
     #again {
       color: %(again_color)s;
+      cursor: %(cursor)s;
     }
     #again:hover{
       %(again_hover)s
     }
     #hard {
       color: %(hard_color)s;
+      cursor: %(cursor)s;
     }
     #hard:hover{
       %(hard_hover)s
     }
     #good {
       color: %(good_color)s;
+      cursor: %(cursor)s;
     }
     #good:hover{
       %(good_hover)s
     }
     #easy {
       color: %(easy_color)s;
+      cursor: %(cursor)s;
     }
     #easy:hover{
       %(easy_hover)s
     }
     </style>""" % dict(again_color=again_color, hard_color=hard_color, good_color=good_color, easy_color=easy_color, easy_hover_color=easy_hover_color,
-    again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover)
+    again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover, cursor=cursor)
 
 #// styling for custom background color change method
 if is_nightMode:  #// style if anki version is 2.1.20 and above and night mode is endabled
@@ -974,6 +985,7 @@ if is_nightMode:  #// style if anki version is 2.1.20 and above and night mode i
     #again, #hard, #good, #easy {
       border: hidden;
       color: %(text)s;
+      cursor: %(cursor)s;
       text-shadow: none;
     }
     #again {
@@ -1004,13 +1016,14 @@ if is_nightMode:  #// style if anki version is 2.1.20 and above and night mode i
       color: %(text)s;
       %(easy_hover)s
     }
-    </style>""" % dict (text=textColor, again_color=again_color, hard_color=hard_color, good_color=good_color, easy_color=easy_color,
+    </style>""" % dict (text=textColor, cursor=cursor, again_color=again_color, hard_color=hard_color, good_color=good_color, easy_color=easy_color,
     again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover)
 else:  #// style if anki is in day/light mode or anki version is older than 2.1.20
     custom_background = """<style>
     #again, #hard, #good, #easy {
       border: hidden;
       color: %(text)s;
+      cursor: %(cursor)s;
       text-shadow: none;
       border-radius: 3px
     }
@@ -1046,7 +1059,7 @@ else:  #// style if anki is in day/light mode or anki version is older than 2.1.
       background: %(easy_hover_color)s;
       %(easy_hover)s
     }
-    </style>""" % dict (text=textColor, again_color=again_color, again_hover_color=again_hover_color, hard_color=hard_color, hard_hover_color=hard_hover_color, good_color=good_color, good_hover_color=good_hover_color, easy_color=easy_color, easy_hover_color=easy_hover_color,
+    </style>""" % dict (text=textColor, cursor=cursor, again_color=again_color, again_hover_color=again_hover_color, hard_color=hard_color, hard_hover_color=hard_hover_color, good_color=good_color, good_hover_color=good_hover_color, easy_color=easy_color, easy_hover_color=easy_hover_color,
     again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover)
 
 button_styles = """<style>

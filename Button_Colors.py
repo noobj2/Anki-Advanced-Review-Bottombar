@@ -14,13 +14,15 @@ hide_hard = config['Button_   Hide Hard']
 hide_good = config['Button_   Hide Good']
 hide_easy = config['Button_   Hide Easy']
 custom_buttonSize = config['Button_  Custom Button Sizes']
-color_dues = config[' Review_ Colored Dues']
+interval_style = config[' Review_ Interval Style']
 if custom_buttonSize:
     buttons_height = config['Button_ Height_ All Bottombar Buttons']
     reviewButtons_width = config['Button_ Width_ Review Buttons']
+    text_size = config['Button_ Text Size']
 else:
     buttons_height = ""
     reviewButtons_width = ""
+    text_size = ""
 again_label = config['Button Label_ Again']
 hard_label = config['Button Label_ Hard']
 good_label = config['Button Label_ Good']
@@ -122,7 +124,8 @@ def _answerButtons(self):
             else:
                 button_id = ""
         due_plain = self._buttonTime(i)
-        if color_dues:
+        inButton_due = ""
+        if interval_style == 1:
             if button_id == "again":
                 due = "<font color={}>{}</font>".format(again_color, due_plain)
             elif button_id == "hard":
@@ -136,6 +139,12 @@ def _answerButtons(self):
                     due = due_plain
                 else:
                     return
+        elif interval_style == 2:
+            if due_plain:
+                due = "<br>"
+                inButton_due = " | {}".format(due_plain)
+            else:
+                return
         else:
             if due_plain:
                 due = due_plain
@@ -162,9 +171,9 @@ def _answerButtons(self):
                 style = text_color
         #// Choosing style for active button
         if i == default:
-            extra = "style='{}; height: {}px; width: {}px;'".format(active_extra, buttons_height, reviewButtons_width)
+            extra = "style='{}; height: {}px; width: {}px; font-size: {}px;'".format(active_extra, buttons_height, reviewButtons_width, text_size)
         else:
-            extra = "style='height: {}px; width: {}px'".format(buttons_height, reviewButtons_width)
+            extra = "style='height: {}px; width: {}px; font-size: {}px;'".format(buttons_height, reviewButtons_width, text_size)
         #// Choosing button styles based on what user has chosen in config
         if button_style == 2 or button_style == 3:
             button_class = "wide"
@@ -175,10 +184,14 @@ def _answerButtons(self):
                 extra = "style='height: {}px'".format(buttons_height)
         else:
             button_class = "mybuttons"
+        if interval_style == 2:
+            bottombar_table = ""
+        else:
+            bottombar_table = ""
         return style + button_styles + '''
 <td align=center>{0}
-<button title="Shortcut Key: {1}" data-ease="{1}" onclick='pycmd("ease{1}");' class={2} id={3} {4}>{5}</button>
-</td>'''.format(due, i, button_class, button_id, extra, label)
+<button title="Shortcut Key: {1}" data-ease="{1}" onclick='pycmd("ease{1}");' class={2} id={3} {4}>{5}{6}</button>
+</td>'''.format(due, i, button_class, button_id, extra, label, inButton_due)
     #// adjusting the answer button table for wide button
     if button_style == 2 or button_style == 3:
         bottombar_width = "80%"

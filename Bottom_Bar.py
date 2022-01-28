@@ -44,6 +44,7 @@ undo_label = config['Button Label_ Undo']
 custom_buttonSize = config ['Button_  Custom Button Sizes']
 buttons_height = config['Button_ Height_ All Bottombar Buttons']
 answer_width = config['Button_ Width_ Show Answer Button']
+text_size = config['Button_ Text Size']
 
 custom_bottombarButtonBorderColor = config['Color_ Custom Bottombar Button Border Color']
 bottombarButtonBorder_color = config['Color_ Bottombar Button Border Color']
@@ -331,9 +332,9 @@ def _showAnswerButton(self):
     #// Moved show answer button size from "styles.py" here to make show answer border color based on ease compatible with custom button sizes
     if custom_buttonSize:
         if bottombarButtons_style ==0:
-            showAnswer_style = 'style="height: {}px; width: {}px; border-color: {};"'.format(buttons_height, answer_width, showAnswerBorder_color)
+            showAnswer_style = 'style="height: {}px; width: {}px; font-size: {}px; border-color: {};"'.format(buttons_height, answer_width, text_size, showAnswerBorder_color)
         else:
-            showAnswer_style = 'style="height: {}px; width: {}px; border-color: {};" id=main'.format(buttons_height, answer_width, showAnswerBorder_color)
+            showAnswer_style = 'style="height: {}px; width: {}px; font-size: {}px; border-color: {};" id=main'.format(buttons_height, answer_width, text_size, showAnswerBorder_color)
     else:
         if bottombarButtons_style == 0:
             showAnswer_style = "style='border-color: {}' id=ansbut".format(showAnswerBorder_color)  #// removed id=ansbut from it's own code for styling

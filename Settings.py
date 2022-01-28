@@ -1,17 +1,20 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2022 Mohamad Janati (freaking stupid, right? :|)
 
 from os.path import  join, dirname
+from datetime import datetime
 from aqt import mw
 from aqt.qt import *
-from aqt.utils import tooltip, showInfo, askUser
+from aqt.utils import tooltip, showInfo, askUser, getText
 import random
 import os
+import json
+import subprocess
 
 
 def refreshConfig():
     #// Makes the information that it gets fron "config" global so I can use them for loading the current settings in "loadCurrent(self)" function
-    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_colored_intervals, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_overViewStats, C_settingsMenu_palce, C_skipMethod
+    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_interval_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_text_size, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_configEdit, C_overViewStats, C_settingsMenu_palce, C_skipMethod
 
     config = mw.addonManager.getConfig(__name__)
 
@@ -24,10 +27,10 @@ def refreshConfig():
     C_active_indicator = config[' Review_ Active Button Indicator']
     C_bottombarButtons_style = config[' Review_ Bottombar Buttons Style']
     C_cursor_style = config[' Review_ Cursor Style']
+    C_interval_style = config[' Review_ Interval Style']
     C_buttonTransition_time = config[' Review_ Button Transition Time']
     # Button Border Radius is used for all buttons, not just the review buttons
     C_buttonBorderRadius = config[' Review_ Button Border Radius']
-    C_colored_intervals = config[' Review_ Colored Dues']
 
     C_reviewTooltip = config['Tooltip']
     C_reviewTooltip_timer = config['Tooltip Timer']
@@ -52,6 +55,7 @@ def refreshConfig():
     C_undo_shortcut = config['Button_ Shortcut_ Undo Button']
 
     C_custom_sizes = config ['Button_  Custom Button Sizes']
+    C_text_size = config['Button_ Text Size']
     C_buttons_height = config['Button_ Height_ All Bottombar Buttons']
     C_reviewButtons_width = config['Button_ Width_ Review Buttons']
     C_edit_width = config['Button_ Width_ Edit Button']
@@ -134,6 +138,7 @@ def refreshConfig():
 
     C_button_colors = config['  Button Colors']
     C_speedFocus = config['  Speed Focus Add-on']
+    C_configEdit = config['  Direct Config Edit']
     C_overViewStats = config['  More Overview Stats']
     C_settingsMenu_palce = config['  Settings Menu Place']
     C_skipMethod = config['  Skip Method']
@@ -509,12 +514,23 @@ class SettingsMenu(QDialog):
         self.createEighthTab()
         self.createNinthTab()
         self.loadCurrent()
-        buttonbox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
-        restoreDefaults = buttonbox.addButton("Restore Defaults", QDialogButtonBox.ResetRole)
-        buttonbox.accepted.connect(self.onApply)
-        buttonbox.rejected.connect(self.reject)
-        buttonbox.rejected.connect(lambda: tooltip("Changes Discarded."))
-        restoreDefaults.clicked.connect(self.onRestoreDefaults)
+
+        #// Create the bottom row of settings menu
+        loadSettingsButton = QPushButton("&Load Settings")
+        loadSettingsButton.clicked.connect(self.onLoadSettings)
+        saveSettingsButton = QPushButton("&Backup Settings")
+        saveSettingsButton.clicked.connect(self.onSaveSettings)
+        acceptButton = QPushButton("&Apply")
+        acceptButton.clicked.connect(self.onApply)
+        rejectButton = QPushButton("&Discard")
+        rejectButton.clicked.connect(self.reject)
+        rejectButton.clicked.connect(lambda: tooltip("Changes Discarded."))
+        buttonbox = QHBoxLayout()
+        buttonbox.addWidget(loadSettingsButton)
+        buttonbox.addWidget(saveSettingsButton)
+        buttonbox.addStretch()
+        buttonbox.addWidget(acceptButton)
+        buttonbox.addWidget(rejectButton)
 
         #// create tabs widget and adds each tab
         tabs = QTabWidget()
@@ -522,7 +538,7 @@ class SettingsMenu(QDialog):
         tabs.addTab(self.tab2, "Answer Tooltip")
         tabs.addTab(self.tab3, "Bottombar Buttons")
         tabs.addTab(self.tab4, "Button Sizes")
-        tabs.addTab(self.tab5, "Button Label")
+        tabs.addTab(self.tab5, "Button Labels")
         tabs.addTab(self.tab6, "Sidebar")
         tabs.addTab(self.tab7, "Colors")
         tabs.addTab(self.tab8, "Misc")
@@ -530,7 +546,7 @@ class SettingsMenu(QDialog):
 
         vbox = QVBoxLayout()
         vbox.addWidget(tabs)
-        vbox.addWidget(buttonbox)
+        vbox.addLayout(buttonbox)
 
         self.setLayout(vbox)
         self.setWindowTitle("Advanced Review Bottombar Settings Menu")
@@ -648,7 +664,6 @@ class SettingsMenu(QDialog):
         cursorStyle_holder.addWidget(cursorStyle_label)
         cursorStyle_holder.addWidget(self.cursor_style)
         cursorStyle_holder.addStretch()
-
         showAnswerBorderType_label = QLabel("Show Answer Border Color Style:")
         showAnswerBorderType_label.setToolTip("{0}Changes how show answer border color behaves.<hr>\
         if set on \"Fixed\" it's border color will be the same as other bottombar buttons.<br>\
@@ -662,7 +677,16 @@ class SettingsMenu(QDialog):
         showAnswerBorderType_holder.addWidget(showAnswerBorderType_label)
         showAnswerBorderType_holder.addWidget(self.showAnswerBorderColor_style)
         showAnswerBorderType_holder.addStretch()
-
+        intervalStyle_label = QLabel("Button Interval Style:")
+        intervalStyle_label.setToolTip("{0}Changes the style of button intervals.{1}".format(begin, end))
+        intervalStyle_label.setFixedWidth(180)
+        self.interval_style = QComboBox()
+        self.interval_style.addItems(["Stock", "Colored Stock", "Inside the Buttons"])
+        self.interval_style.setFixedWidth(180)
+        intervalStyle_holder = QHBoxLayout()
+        intervalStyle_holder.addWidget(intervalStyle_label)
+        intervalStyle_holder.addWidget(self.interval_style)
+        intervalStyle_holder.addStretch()
         buttonTransitionTime_label = QLabel("Button Transition Time:")
         buttonTransitionTime_label.setToolTip("{0}Changes button animation time for fill and neon styles.{1}".format(begin, end))
         buttonTransitionTime_label.setFixedWidth(180)
@@ -698,17 +722,13 @@ class SettingsMenu(QDialog):
             self.active_indicator.setDisabled(True)
             if buttonStyle_index in [0, 1, 2, 3]:
                 self.active_indicator.setEnabled(True)
-            self.cursor_style.setDisabled(True)
+            # self.cursor_style.setDisabled(True)
             self.buttonTransition_time.setDisabled(True)
             if buttonStyle_index in [4, 5, 6, 7]:
-                self.cursor_style.setEnabled(True)
+                # self.cursor_style.setEnabled(True)
                 self.buttonTransition_time.setEnabled(True)
         buttonStyle_signal()
         self.button_style.currentIndexChanged.connect(buttonStyle_signal)
-        self.colored_intervals = QCheckBox("Colored Intervals")
-        self.colored_intervals.setFixedWidth(180)
-        self.colored_intervals.setToolTip("{0} Makes button intervals colored.<hr>\
-        <img src='{2}/coloredDues.png'>{1}".format(begin, end, images))
         self.style_mainScreenButtons = QCheckBox("Style Main Screen Buttons")
         self.style_mainScreenButtons.setToolTip("{0}Changes style of main screen and deck overview buttons if enabled.<hr>\
         <img src='{2}/changeMainScreenButtons.png'><br>\
@@ -716,7 +736,6 @@ class SettingsMenu(QDialog):
         <img src='{2}/changeMainScreenButtons3.png'>{1}".format(begin, end, images))
         self.style_mainScreenButtons.setFixedWidth(180)
         tab1line5 = QHBoxLayout()
-        tab1line5.addWidget(self.colored_intervals)
         tab1line5.addWidget(self.style_mainScreenButtons)
         tab1line5.addStretch()
         layout = QVBoxLayout()
@@ -726,6 +745,7 @@ class SettingsMenu(QDialog):
         layout.addLayout(activeIndicator_holder)
         layout.addLayout(cursorStyle_holder)
         layout.addLayout(showAnswerBorderType_holder)
+        layout.addLayout(intervalStyle_holder)
         layout.addLayout(buttonTransitionTime_holder)
         layout.addLayout(buttonBorderRadius_holder)
         layout.addLayout(tab1line5)
@@ -1070,13 +1090,27 @@ class SettingsMenu(QDialog):
         tab4line1.addStretch()
         tab4box1 = QGroupBox()
         tab4box1.setLayout(tab4line1)
+        textSize_label = QLabel("Buttons Text Size:")
+        textSize_label.setToolTip("{0}Sets the text size for all bottombar buttons.\
+        It only works on review screen buttons and it will not affect main screen\
+         and study screen buttons{1}".format(begin, end))
+        textSize_label.setFixedWidth(180)
+        self.text_size = QSpinBox()
+        self.text_size.setFixedWidth(120)
+        self.text_size.setMinimum(0)
+        self.text_size.setMaximum(200)
+        textSize_px = QLabel("px")
+        textSize_holder = QHBoxLayout()
+        textSize_holder.addWidget(textSize_label)
+        textSize_holder.addWidget(self.text_size)
+        textSize_holder.addWidget(textSize_px)
         buttonsHeight_label = QLabel("Bottombar Buttons Height:")
         buttonsHeight_label.setToolTip("{0} Sets height for all bottombar buttons including edit, info,\
         ski, show answer, undo review, more and review buttons.".format(begin, end))
         buttonsHeight_label.setFixedWidth(180)
         self.buttons_height = QSpinBox()
         self.buttons_height.setFixedWidth(120)
-        self.buttons_height.setMinimum(20)
+        self.buttons_height.setMinimum(0)
         self.buttons_height.setMaximum(200)
         buttonsHeight_px = QLabel("px")
         buttonsHeight_holder = QHBoxLayout()
@@ -1089,7 +1123,7 @@ class SettingsMenu(QDialog):
         reviewButtonsWidth_label.setFixedWidth(180)
         self.reviewButtons_width = QSpinBox()
         self.reviewButtons_width.setFixedWidth(120)
-        self.reviewButtons_width.setMinimum(40)
+        self.reviewButtons_width.setMinimum(0)
         self.reviewButtons_width.setMaximum(400)
         reviewButtonsWidth_px = QLabel("px")
         reviewButtonsWidth_holder = QHBoxLayout()
@@ -1101,7 +1135,7 @@ class SettingsMenu(QDialog):
         editWidth_label.setFixedWidth(180)
         self.edit_width = QSpinBox()
         self.edit_width.setFixedWidth(120)
-        self.edit_width.setMinimum(40)
+        self.edit_width.setMinimum(0)
         self.edit_width.setMaximum(400)
         editWidth_px = QLabel("px")
         editWidth_holder = QHBoxLayout()
@@ -1113,7 +1147,7 @@ class SettingsMenu(QDialog):
         answerWidth_label.setFixedWidth(180)
         self.answer_width = QSpinBox()
         self.answer_width.setFixedWidth(120)
-        self.answer_width.setMinimum(40)
+        self.answer_width.setMinimum(0)
         self.answer_width.setMaximum(400)
         answerWidth_px = QLabel("px")
         answerWidth_holder = QHBoxLayout()
@@ -1125,7 +1159,7 @@ class SettingsMenu(QDialog):
         moreWidth_label.setFixedWidth(180)
         self.more_width = QSpinBox()
         self.more_width.setFixedWidth(120)
-        self.more_width.setMinimum(40)
+        self.more_width.setMinimum(0)
         self.more_width.setMaximum(400)
         moreWidth_px = QLabel("px")
         moreWidth_holder = QHBoxLayout()
@@ -1137,7 +1171,7 @@ class SettingsMenu(QDialog):
         infoWidth_label.setFixedWidth(180)
         self.info_width = QSpinBox()
         self.info_width.setFixedWidth(120)
-        self.info_width.setMinimum(40)
+        self.info_width.setMinimum(0)
         self.info_width.setMaximum(400)
         infoWidth_px = QLabel("px")
         infoWidth_holder = QHBoxLayout()
@@ -1149,7 +1183,7 @@ class SettingsMenu(QDialog):
         skipWidth_label.setFixedWidth(180)
         self.skip_width = QSpinBox()
         self.skip_width.setFixedWidth(120)
-        self.skip_width.setMinimum(40)
+        self.skip_width.setMinimum(0)
         self.skip_width.setMaximum(400)
         skipWidth_px = QLabel("px")
         skipWidth_holder = QHBoxLayout()
@@ -1161,7 +1195,7 @@ class SettingsMenu(QDialog):
         showSkippedWidth_label.setFixedWidth(180)
         self.showSkipped_width = QSpinBox()
         self.showSkipped_width.setFixedWidth(120)
-        self.showSkipped_width.setMinimum(40)
+        self.showSkipped_width.setMinimum(0)
         self.showSkipped_width.setMaximum(400)
         showSkippedWidth_px = QLabel("px")
         showSkippedWidth_holder = QHBoxLayout()
@@ -1173,7 +1207,7 @@ class SettingsMenu(QDialog):
         undoWidth_label.setFixedWidth(180)
         self.undo_width = QSpinBox()
         self.undo_width.setFixedWidth(120)
-        self.undo_width.setMinimum(40)
+        self.undo_width.setMinimum(0)
         self.undo_width.setMaximum(400)
         undoWidth_px = QLabel("px")
         undoWidth_holder = QHBoxLayout()
@@ -1181,6 +1215,7 @@ class SettingsMenu(QDialog):
         undoWidth_holder.addWidget(self.undo_width)
         undoWidth_holder.addWidget(undoWidth_px)
         tab4line2 = QVBoxLayout()
+        tab4line2.addLayout(textSize_holder)
         tab4line2.addLayout(buttonsHeight_holder)
         tab4line2.addLayout(reviewButtonsWidth_holder)
         tab4line2.addLayout(editWidth_holder)
@@ -1772,7 +1807,8 @@ class SettingsMenu(QDialog):
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab7 = QScrollArea()
-        self.tab7.setFixedWidth(640)
+        #// I use this part to control the initial settings menu width -_-
+        self.tab7.setFixedWidth(645)
         self.tab7.setAlignment(Qt.AlignHCenter)
         self.tab7.setWidgetResizable(True)
         self.tab7.setWidget(layout_holder)
@@ -1781,6 +1817,46 @@ class SettingsMenu(QDialog):
         begin = self.begin
         end = self.end
         images = self.images
+        overViewStats_label = QLabel("More Overview Stats:")
+        overViewStats_label.setToolTip("{0}Shows number of new, learn and review cards for today and\
+        tomorrow and show total number of new, review, learn, buried and suspended cards on deck overview\
+        if enabled.{1}".format(begin, end))
+        overViewStats_label.setFixedWidth(180)
+        self.overViewStats = QComboBox()
+        self.overViewStats.addItems(["Stock", "Stock-ish", "Detailed"])
+        self.overViewStats.setFixedWidth(150)
+        overViewStats_holder = QHBoxLayout()
+        overViewStats_holder.addWidget(overViewStats_label)
+        overViewStats_holder.addWidget(self.overViewStats)
+        overViewStats_holder.addStretch()
+        settingsMenuPlace_label = QLabel("Settings Menu Placement:")
+        settingsMenuPlace_label.setToolTip("{0}Changes the position of settings menu.{1}".format(begin, end))
+        settingsMenuPlace_label.setFixedWidth(180)
+        self.settingsMenu_place = QComboBox()
+        self.settingsMenu_place.addItems(["Main Toolbar", "Tools Menu"])
+        self.settingsMenu_place.setFixedWidth(150)
+        settingsMenuPlace_holder = QHBoxLayout()
+        settingsMenuPlace_holder.addWidget(settingsMenuPlace_label)
+        settingsMenuPlace_holder.addWidget(self.settingsMenu_place)
+        settingsMenuPlace_holder.addStretch()
+        skipMethod_label = QLabel("Skip Method:")
+        skipMethod_label.setToolTip("{0}Changes Skip method.\n\"Next Card\" just skips the card and the skipped cards will be shown again randomly\
+        while \"Bury\" bureis the skipped cards and the skipped cards will get unburied when you finish reviewing normal cards. You\
+        can manually unbury skipped cards by pressing the \"Show Skipped\" button or by pressing the shortcut key that you've chosen for the button.{1}".format(begin, end))
+        skipMethod_label.setFixedWidth(180)
+        self.skipMethod = QComboBox()
+        self.skipMethod.addItems(["Next Card", "Bury"])
+        self.skipMethod.setFixedWidth(150)
+        skipMethod_holder = QHBoxLayout()
+        skipMethod_holder.addWidget(skipMethod_label)
+        skipMethod_holder.addWidget(self.skipMethod)
+        skipMethod_holder.addStretch()
+        skipMethod_box = QVBoxLayout()
+        skipMethod_box.addLayout(overViewStats_holder)
+        skipMethod_box.addLayout(settingsMenuPlace_holder)
+        skipMethod_box.addLayout(skipMethod_holder)
+        general_box = QGroupBox()
+        general_box.setLayout(skipMethod_box)
         buttonColors_label = QLabel("Button Colors:")
         buttonColors_label.setToolTip("{0} Enables and disables change button color.<hr> If you use\
         any other add-on to change review button colors, turn this off and you can\
@@ -1824,52 +1900,27 @@ class SettingsMenu(QDialog):
         speedFocus_holder.addStretch()
         speedFocus_box = QGroupBox()
         speedFocus_box.setLayout(speedFocus_holder)
-        overViewStats_label = QLabel("More Overview Stats:")
-        overViewStats_label.setToolTip("{0}Shows number of new, learn and review cards for today and\
-        tomorrow and show total number of new, review, learn, buried and suspended cards on deck overview\
-        if enabled.{1}".format(begin, end))
-        overViewStats_label.setFixedWidth(180)
-        self.overViewStats = QComboBox()
-        self.overViewStats.addItems(["Stock", "Stock-ish", "Detaild"])
-        self.overViewStats.setFixedWidth(150)
-        overViewStats_holder = QHBoxLayout()
-        overViewStats_holder.addWidget(overViewStats_label)
-        overViewStats_holder.addWidget(self.overViewStats)
-        overViewStats_holder.addStretch()
-        overViewStats_box = QGroupBox()
-        overViewStats_box.setLayout(overViewStats_holder)
-        settingsMenuPlace_label = QLabel("Settings Menu Placement:")
-        settingsMenuPlace_label.setToolTip("{0}Changes the position of settings menu.{1}".format(begin, end))
-        settingsMenuPlace_label.setFixedWidth(180)
-        self.settingsMenu_place = QComboBox()
-        self.settingsMenu_place.addItems(["Main Toolbar", "Tools Menu"])
-        self.settingsMenu_place.setFixedWidth(150)
-        settingsMenuPlace_holder = QHBoxLayout()
-        settingsMenuPlace_holder.addWidget(settingsMenuPlace_label)
-        settingsMenuPlace_holder.addWidget(self.settingsMenu_place)
-        settingsMenuPlace_holder.addStretch()
-        settingsMenuPlace_box = QGroupBox()
-        settingsMenuPlace_box.setLayout(settingsMenuPlace_holder)
-        skipMethod_label = QLabel("Skip Method:")
-        skipMethod_label.setToolTip("{0}Changes Skip method.\n\"Next Card\" just skips the card and the skipped cards will be shown again randomly\
-        while \"Bury\" bureis the skipped cards and the skipped cards will get unburied when you finish reviewing normal cards. You\
-        can manually unbury skipped cards by pressing the \"Show Skipped\" button or by pressing the shortcut key that you've chosen for the button.{1}".format(begin, end))
-        skipMethod_label.setFixedWidth(180)
-        self.skipMethod = QComboBox()
-        self.skipMethod.addItems(["Next Card", "Bury"])
-        self.skipMethod.setFixedWidth(150)
-        skipMethod_holder = QHBoxLayout()
-        skipMethod_holder.addWidget(skipMethod_label)
-        skipMethod_holder.addWidget(self.skipMethod)
-        skipMethod_holder.addStretch()
-        skipMethod_box = QGroupBox()
-        skipMethod_box.setLayout(skipMethod_holder)
+        configEdit_label = QLabel("Direct Config Edit:")
+        configEdit_label.setToolTip("{0} Enables direct config editor.\
+        If you enable this option, clicking on \"Config\" in add-ons window\
+        won't open ARBb settings window and will open the config editor instead.{1}".format(begin, end))
+        configEdit_label.setFixedWidth(180)
+        self.configEdit_on = QRadioButton("On")
+        self.configEdit_on.setFixedWidth(90)
+        self.configEdit_off = QRadioButton("Off")
+        self.configEdit_off.setFixedWidth(90)
+        configEdit_holder = QHBoxLayout()
+        configEdit_holder.addWidget(configEdit_label)
+        configEdit_holder.addWidget(self.configEdit_on)
+        configEdit_holder.addWidget(self.configEdit_off)
+        configEdit_holder.addStretch()
+        configEdit_box = QGroupBox()
+        configEdit_box.setLayout(configEdit_holder)
         layout = QVBoxLayout()
+        layout.addWidget(general_box)
         layout.addWidget(buttonColors_box)
         layout.addWidget(speedFocus_box)
-        layout.addWidget(overViewStats_box)
-        layout.addWidget(settingsMenuPlace_box)
-        layout.addWidget(skipMethod_box)
+        layout.addWidget(configEdit_box)
         layout.addStretch()
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
@@ -1956,11 +2007,10 @@ class SettingsMenu(QDialog):
         self.hover_effect.setCurrentIndex(C_hover_effect)
         self.active_indicator.setCurrentIndex(C_active_indicator)
         self.cursor_style.setCurrentIndex(C_cursor_style)
+        self.interval_style.setCurrentIndex(C_interval_style)
         self.showAnswerBorderColor_style.setCurrentIndex(C_showAnswerBorderColor_style)
         self.buttonTransition_time.setValue(int(C_buttonTransition_time))
         self.buttonBorderRadius.setValue(int(C_buttonBorderRadius))
-        if C_colored_intervals:
-            self.colored_intervals.setChecked(True)
         if C_style_mainScreenButtons:
             self.style_mainScreenButtons.setChecked(True)
         if C_reviewTooltip:
@@ -2026,6 +2076,7 @@ class SettingsMenu(QDialog):
             self.customSizes_on.setChecked(True)
         else:
             self.customSizes_off.setChecked(True)
+        self.text_size.setValue(int(C_text_size))
         self.buttons_height.setValue(int(C_buttons_height))
         self.reviewButtons_width.setValue(int(C_reviewButtons_width))
         self.edit_width.setValue(int(C_edit_width))
@@ -2137,9 +2188,202 @@ class SettingsMenu(QDialog):
             self.speedFocus_on.setChecked(True)
         else:
             self.speedFocus_off.setChecked(True)
+        if C_configEdit:
+            self.configEdit_on.setChecked(True)
+        else:
+            self.configEdit_off.setChecked(True)
         self.overViewStats.setCurrentIndex(C_overViewStats)
         self.settingsMenu_place.setCurrentIndex(C_settingsMenu_palce)
         self.skipMethod.setCurrentIndex(C_skipMethod)
+
+    def onLoadSettings(self):
+        addon_path = dirname(__file__)
+        #// Open a file browser to choose the settings file (returns a tuple) the first item in the tuple is the settings file location
+        fileName_tuple = QFileDialog.getOpenFileName(self, 'Open file', r'{}\user_files'.format(addon_path))
+        #// If user cancels the operation and no file is chosen, then return without doing anything
+        if not fileName_tuple[0]:
+            return
+        #// Select the settings file from the tuple
+        settingsFile = fileName_tuple[0]
+        #// Open and read the JSON File
+        settings = open("{}".format(settingsFile), "r")
+        conf = json.load(settings)
+        load = askUser("your're about to load settings. Load?", defaultno=True, title="Advanced Review Bottomabr")
+        if load:
+            mw.addonManager.writeConfig(__name__, conf)
+            showInfo("<div style='font-size: 15px;'>Settings Loaded Succesfully.\
+            </div><div style='color: red; font-size: 15px;'> Changes will take \
+            effect after you restart anki.</div>", title="Advanced Review Bottombar Settings")
+            self.close()
+            refreshConfig()
+        else:
+            return
+        settings.close()
+
+    def onSaveSettings(self):
+        addon_path = dirname(__file__)
+        #// Choose a name for the backup file
+        file_name = "ARBb {}".format(datetime.now().strftime("%d-%b-%Y %H-%M-%S"))
+        path_to_file = "{}\\user_files\\{}.json".format(addon_path, file_name)
+        f = open(path_to_file, "w")
+
+        if self.left_skip.isChecked():
+            skip_position = "left"
+        elif self.middleRight_skip.isChecked():
+            skip_position ="middle right"
+        elif self.right_skip.isChecked():
+            skip_position ="right"
+        else:
+            skip_position = "middle left"
+        if self.left_showSkipped.isChecked():
+            showSkipped_position = "left"
+        elif self.middleRight_showSkipped.isChecked():
+            showSkipped_position ="middle right"
+        elif self.right_showSkipped.isChecked():
+            showSkipped_position ="right"
+        else:
+            showSkipped_position = "middle left"
+        if self.middleLeft_info.isChecked():
+            info_position = "middle left"
+        elif self.middleRight_info.isChecked():
+            info_position = "middle right"
+        elif self.right_info.isChecked():
+            info_position = "right"
+        else:
+            info_position = "left"
+        if self.left_undo.isChecked():
+            undo_position = "left"
+        elif self.middleLeft_undo.isChecked():
+            undo_position = "middle left"
+        elif self.right_undo.isChecked():
+            undo_position = "right"
+        else:
+            undo_position = "middle right"
+        if self.showAnswerEase1.value() > self.showAnswerEase2.value():
+            self.showAnswerEase2.setValue((self.showAnswerEase1.value() + 50))
+        if self.showAnswerEase2.value() > self.showAnswerEase3.value():
+            self.showAnswerEase3.setValue((self.showAnswerEase2.value() + 50))
+        if self.showAnswerEase3.value() > self.showAnswerEase4.value():
+            self.showAnswerEase4.setValue((self.showAnswerEase3.value() + 50))
+        conf = {
+        "  Button Colors": self.buttonColors_on.isChecked(),
+        "  Speed Focus Add-on": self.speedFocus_on.isChecked(),
+        "  Direct Config Edit": self.configEdit_on.isChecked(),
+        "  More Overview Stats": self.overViewStats.currentIndex(),
+        "  Settings Menu Place": self.settingsMenu_place.currentIndex(),
+        "  Skip Method": self.skipMethod.currentIndex(),
+        "  Style Main Screen Buttons": self.style_mainScreenButtons.isChecked(),
+        " Review_ Active Button Indicator": self.active_indicator.currentIndex(),
+        " Review_ Buttons Style": self.button_style.currentIndex(),
+        " Review_ Hover Effect": self.hover_effect.currentIndex(),
+        " Review_ Custom Colors": self.custom_reviewButtonColors.isChecked(),
+        " Review_ Custom Review Button Text Color": self.custom_reviewButtonTextColor.isChecked(),
+        " Review_ Custom Active Indicator Color": self.custom_activeIndicatorColor.isChecked(),
+        " Review_ Bottombar Buttons Style": self.bottombarButtons_style.currentIndex(),
+        " Review_ Cursor Style": self.cursor_style.currentIndex(),
+        " Review_ Interval Style": self.interval_style.currentIndex(),
+        " Review_ Button Transition Time": self.buttonTransition_time.value(),
+        " Review_ Button Border Radius": self.buttonBorderRadius.value(),
+        "Button_   Info Button": self.info.isChecked(),
+        "Button_   Skip Button": self.skip.isChecked(),
+        "Button_   Show Skipped Button": self.showSkipped.isChecked(),
+        "Button_   Undo Button": self.undo.isChecked(),
+        "Button_   Hide Hard": self.hideHard.isChecked(),
+        "Button_   Hide Good": self.hideGood.isChecked(),
+        "Button_   Hide Easy": self.hideEasy.isChecked(),
+        "Button_  Custom Button Sizes": self.customSizes_on.isChecked(),
+        "Button_ Shortcut_ Skip Button": self.skip_shortcut,
+        "Button_ Shortcut_ Show Skipped Button": self.showSkipped_shortcut,
+        "Button_ Shortcut_ Info Button": self.info_shortcut,
+        "Button_ Shortcut_ Undo Button": self.undo_shortcut,
+        "Button_ Position_ Info Button": info_position,
+        "Button_ Position_ Skip Button": skip_position,
+        "Button_ Position_ Show Skipped Button": showSkipped_position,
+        "Button_ Position_ Undo Button": undo_position,
+        "Button_ Text Size": self.text_size.value(),
+        "Button_ Height_ All Bottombar Buttons": self.buttons_height.value(),
+        "Button_ Width_ Edit Button": self.edit_width.value(),
+        "Button_ Width_ Show Answer Button": self.answer_width.value(),
+        "Button_ Width_ Info Button": self.info_width.value(),
+        "Button_ Width_ Skip Button": self.skip_width.value(),
+        "Button_ Width_ Show Skipped Button": self.showSkipped_width.value(),
+        "Button_ Width_ More Button": self.more_width.value(),
+        "Button_ Width_ Review Buttons": self.reviewButtons_width.value(),
+        "Button_ Width_ Undo Button": self.undo_width.value(),
+        "Button Label_ Study Now": self.buttonLabel_studyNow.text(),
+        "Button Label_ Edit": self.buttonLabel_edit.text(),
+        "Button Label_ Show Answer": self.buttonLabel_showAnswer.text(),
+        "Button Label_ More": self.buttonLabel_more.text(),
+        "Button Label_ Info": self.buttonLabel_info.text(),
+        "Button Label_ Skip": self.buttonLabel_skip.text(),
+        "Button Label_ Show Skipped": self.buttonLabel_showSkipped.text(),
+        "Button Label_ Undo": self.buttonLabel_undo.text(),
+        "Button Label_ Again": self.buttonLabel_again.text(),
+        "Button Label_ Hard": self.buttonLabel_hard.text(),
+        "Button Label_ Good": self.buttonLabel_good.text(),
+        "Button Label_ Easy": self.buttonLabel_easy.text(),
+        "Card Info sidebar_ Number of previous cards to show": self.sidebar_PreviousCards.value(),
+        "Card Info sidebar_ theme": self.sidebar_theme.currentIndex(),
+        "Card Info sidebar_ Created": self.sidebar_dateCreated.isChecked(),
+        "Card Info sidebar_ Edited": self.sidebar_dateEdited.isChecked(),
+        "Card Info sidebar_ First Review": self.sidebar_firstReview.isChecked(),
+        "Card Info sidebar_ Latest Review": self.sidebar_latestReview.isChecked(),
+        "Card Info sidebar_ Due": self.sidebar_due.isChecked(),
+        "Card Info sidebar_ Interval": self.sidebar_interval.isChecked(),
+        "Card Info sidebar_ Ease": self.sidebar_ease.isChecked(),
+        "Card Info sidebar_ Reviews": self.sidebar_numberOfReviews.isChecked(),
+        "Card Info sidebar_ Lapses": self.sidebar_lapses.isChecked(),
+		"Card Info Sidebar_ COrrect Percent": self.sidebar_correctPercent.isChecked(),
+		"Card Info Sidebar_ Fastest Review": self.sidebar_fastestReview.isChecked(),
+		"Card Info Sidebar_ Slowest Review": self.sidebar_slowestReview.isChecked(),
+        "Card Info sidebar_ Average Time": self.sidebar_averageTime.isChecked(),
+        "Card Info sidebar_ Total Time": self.sidebar_totalTime.isChecked(),
+        "Card Info sidebar_ Card Type": self.sidebar_cardType.isChecked(),
+        "Card Info sidebar_ Note Type": self.sidebar_noteType.isChecked(),
+        "Card Info sidebar_ Deck": self.sidebar_deck.isChecked(),
+        "Card Info sidebar_ Tags": self.sidebar_tags.isChecked(),
+		"Card Info Sidebar_ Note ID": self.sidebar_noteID.isChecked(),
+		"Card Info Sidebar_ Card ID": self.sidebar_cardID.isChecked(),
+        "Card Info sidebar_ Sort Field": self.sidebar_sortField.isChecked(),
+        "Card Info sidebar_ Current Review Count": self.sidebar_currentReviewCount.isChecked(),
+        "Card Info sidebar_ Font": self.sidebar_font.currentFont().family(),
+        "Card Info sidebar_ number of reviews to show for a card": self.sidebar_reviewsToShow.value(),
+        "Card Info sidebar_ Auto Open": self.sidebar_autoOpen.isChecked(),
+        "Card Info sidebar_ warning note": self.sidebar_warningNote.isChecked(),
+        "Color_  General Text Color": self.reviewButtonText_color,
+        "Color_ Active Button Indicator": self.activeIndicator_color,
+    	"Color_ Bottombar Button Text Color": self.bottombarButtonText_color,
+    	"Color_ Bottombar Button Border Color": self.bottombarButtonBorder_color,
+    	"Color_ Custom Bottombar Button Text Color": self.custom_bottombarButtonTextColor.isChecked(),
+    	"Color_ Custom Bottombar Button Border Color": self.custom_bottombarButtonBorderColor.isChecked(),
+        "Color_ Again": self.again_color,
+        "Color_ Again on hover": self.againHover_color,
+        "Color_ Hard": self.hard_color,
+        "Color_ Hard on hover": self.hardHover_color,
+        "Color_ Good":self.good_color,
+        "Color_ Good on hover": self.goodHover_color,
+        "Color_ Easy": self.easy_color,
+        "Color_ Easy on hover": self.easyHover_color,
+        "Tooltip": self.reviewTooltip_on.isChecked(),
+        "Tooltip Timer": self.reviewTooltip_timer.value(),
+        "Tooltip Text Color": self.reviewTooltipText_color,
+        "Tooltip Style": self.reviewTooltip_style.currentIndex(),
+        "Tooltip Position": [self.reviewTooltipPositionX.value(), self.reviewTooltipPositionY.value()],
+        "ShowAnswer_ Border Color Style": self.showAnswerBorderColor_style.currentIndex(),
+		"ShowAnswer_ Ease1": self.showAnswerEase1.value(),
+		"ShowAnswer_ Ease2": self.showAnswerEase2.value(),
+		"ShowAnswer_ Ease3": self.showAnswerEase3.value(),
+		"ShowAnswer_ Ease4": self.showAnswerEase4.value(),
+		"ShowAnswer_ Ease1 Color": self.showAnswerEase1_color,
+		"ShowAnswer_ Ease2 Color": self.showAnswerEase2_color,
+		"ShowAnswer_ Ease3 Color": self.showAnswerEase3_color,
+		"ShowAnswer_ Ease4 Color": self.showAnswerEase4_color
+      }
+        #// Save settings in a JSON file
+        json.dump(conf, f, indent=4)
+        #// Open file explorer after saving so users know where the backup file is (and maybe save it somewhere else)
+        subprocess.Popen(f'explorer /select, "{path_to_file}"')
+        f.close()
 
     def onApply(self):
         if self.left_skip.isChecked():
@@ -2184,6 +2428,7 @@ class SettingsMenu(QDialog):
         conf = {
         "  Button Colors": self.buttonColors_on.isChecked(),
         "  Speed Focus Add-on": self.speedFocus_on.isChecked(),
+        "  Direct Config Edit": self.configEdit_on.isChecked(),
         "  More Overview Stats": self.overViewStats.currentIndex(),
         "  Settings Menu Place": self.settingsMenu_place.currentIndex(),
         "  Skip Method": self.skipMethod.currentIndex(),
@@ -2196,9 +2441,9 @@ class SettingsMenu(QDialog):
         " Review_ Custom Active Indicator Color": self.custom_activeIndicatorColor.isChecked(),
         " Review_ Bottombar Buttons Style": self.bottombarButtons_style.currentIndex(),
         " Review_ Cursor Style": self.cursor_style.currentIndex(),
+        " Review_ Interval Style": self.interval_style.currentIndex(),
         " Review_ Button Transition Time": self.buttonTransition_time.value(),
         " Review_ Button Border Radius": self.buttonBorderRadius.value(),
-        " Review_ Colored Dues": self.colored_intervals.isChecked(),
         "Button_   Info Button": self.info.isChecked(),
         "Button_   Skip Button": self.skip.isChecked(),
         "Button_   Show Skipped Button": self.showSkipped.isChecked(),
@@ -2215,6 +2460,7 @@ class SettingsMenu(QDialog):
         "Button_ Position_ Skip Button": skip_position,
         "Button_ Position_ Show Skipped Button": showSkipped_position,
         "Button_ Position_ Undo Button": undo_position,
+        "Button_ Text Size": self.text_size.value(),
         "Button_ Height_ All Bottombar Buttons": self.buttons_height.value(),
         "Button_ Width_ Edit Button": self.edit_width.value(),
         "Button_ Width_ Show Answer Button": self.answer_width.value(),
@@ -2300,127 +2546,6 @@ class SettingsMenu(QDialog):
         </div>", title="Advanced Review Bottombar Settings")
         refreshConfig()
         self.close()
-    def onRestoreDefaults(self):
-        conf = {
-    	"  Button Colors": True,
-    	"  Speed Focus Add-on": False,
-        "  More Overview Stats": 1,
-    	"  Settings Menu Place": 0,
-    	"  Skip Method": 0,
-    	"  Style Main Screen Buttons": True,
-        " Review_ Active Button Indicator": 1,
-    	" Review_ Hover Effect": 1,
-        " Review_ Buttons Style": 0,
-		" Review_ Bottombar Buttons Style": 0,
-        " Review_ Custom Colors": False,
-		" Review_ Custom Review Button Text Color": False,
-		" Review_ Custom Active Indicator Color": False,
-		" Review_ Cursor Style": 0,
-		" Review_ Button Transition Time": 500,
-        " Review_ Button Border Radius": 5,
-		" Review_ Colored Dues": True,
-    	"Button_   Info Button": True,
-      	"Button_   Skip Button": True,
-      	"Button_   Show Skipped Button": False,
-    	"Button_   Undo Button": False,
-        "Button_   Hide Hard": False,
-        "Button_   Hide Good": False,
-        "Button_   Hide Again": False,
-    	"Button_  Custom Button Sizes": False,
-        "Button_ Shortcut_ Skip Button": "c",
-        "Button_ Shortcut_ Show Skipped Button": "Alt + c",
-        "Button_ Shortcut_ Info Button": "f4",
-    	"Button_ Shortcut_ Undo Button": "x",
-    	"Button_ Position_ Info Button": "left",
-    	"Button_ Position_ Skip Button": "middle left",
-    	"Button_ Position_ Show Skipped Button": "middle left",
-    	"Button_ Position_ Undo Button": "middle right",
-    	"Button_ Height_ All Bottombar Buttons": 40,
-    	"Button_ Width_ Edit Button": 150,
-    	"Button_ Width_ Show Answer Button": 150,
-    	"Button_ Width_ Info Button": 150,
-    	"Button_ Width_ Skip Button": 150,
-    	"Button_ Width_ Show Skipped Button": 150,
-    	"Button_ Width_ More Button": 150,
-    	"Button_ Width_ Review Buttons": 150,
-    	"Button_ Width_ Undo Button": 150,
-    	"Button Label_ Study Now": "Study Now",
-    	"Button Label_ Edit": "Edit",
-    	"Button Label_ Show Answer": "Show Answer",
-    	"Button Label_ More": "More",
-    	"Button Label_ Info": "Info",
-    	"Button Label_ Skip": "Skip",
-    	"Button Label_ Show Skipped": "Show Skipped",
-    	"Button Label_ Undo": "Undo Review",
-    	"Button Label_ Again": "Again",
-    	"Button Label_ Hard": "Hard",
-    	"Button Label_ Good": "Good",
-    	"Button Label_ Easy": "Easy",
-        "Card Info sidebar_ Number of previous cards to show": 0,
-        "Card Info sidebar_ theme": 0,
-        "Card Info sidebar_ Created": True,
-        "Card Info sidebar_ Edited": True,
-        "Card Info sidebar_ First Review": True,
-        "Card Info sidebar_ Latest Review": True,
-        "Card Info sidebar_ Due": True,
-        "Card Info sidebar_ Interval": True,
-        "Card Info sidebar_ Ease": True,
-        "Card Info sidebar_ Reviews": True,
-        "Card Info sidebar_ Lapses": True,
-		"Card Info Sidebar_ COrrect Percent": True,
-		"Card Info Sidebar_ Fastest Review": True,
-		"Card Info Sidebar_ Slowest Review": True,
-        "Card Info sidebar_ Average Time": True,
-        "Card Info sidebar_ Total Time": True,
-        "Card Info sidebar_ Card Type": True,
-        "Card Info sidebar_ Note Type": True,
-        "Card Info sidebar_ Deck": True,
-        "Card Info sidebar_ Tags": True,
-		"Card Info Sidebar_ Note ID": False,
-		"Card Info Sidebar_ Card ID": False,
-        "Card Info sidebar_ Sort Field": True,
-        "Card Info sidebar_ Current Review Count": True,
-        "Card Info sidebar_ Font": "consolas",
-        "Card Info sidebar_ number of reviews to show for a card": 0,
-		"Card Info sidebar_ Auto Open": False,
-        "Card Info sidebar_ warning note": False,
-    	"Color_  General Text Color": "#ffffff",
-    	"Color_ Active Button Indicator": "#ffffff",
-    	"Color_ Bottombar Button Text Color": "#FF1111",
-    	"Color_ Bottombar Button Border Color": "#FF1111",
-    	"Color_ Custom Bottombar Button Text Color": False,
-    	"Color_ Custom Bottombar Button Border Color": False,
-        "Color_ Again": "#BA0C0C",
-        "Color_ Again on hover": "#FF1111",
-        "Color_ Hard": "#BF720F",
-        "Color_ Hard on hover": "#FF9814",
-        "Color_ Good": "#20A11C",
-        "Color_ Good on hover": "#33FF2D",
-        "Color_ Easy": "#188AB8",
-        "Color_ Easy on hover": "#21C0FF",
-		"Tooltip": True,
-		"Tooltip Timer": 500,
-		"Tooltip Text Color": "#000",
-		"Tooltip Style": 0,
-		"Tooltip Position": [100, -100],
-		"ShowAnswer_ Border Color Style": 0,
-		"ShowAnswer_ Ease1": 200,
-		"ShowAnswer_ Ease2": 250,
-		"ShowAnswer_ Ease3": 300,
-		"ShowAnswer_ Ease4": 350,
-		"ShowAnswer_ Ease1 Color": "#FF1111",
-		"ShowAnswer_ Ease2 Color": "#FF9814",
-		"ShowAnswer_ Ease3 Color": "#33FF2D",
-		"ShowAnswer_ Ease4 Color": "#21C0FF"
-    }
-
-        restore = askUser("All customization will be lost. Restore Defaults?", defaultno=True, title="Advanced Review Bottombar")
-        if restore:
-            mw.addonManager.writeConfig(__name__, conf)
-            self.close()
-            refreshConfig()
-        else:
-            return
 
     def getNewColor(self, color_variable, color_button):
         color_window = QColorDialog()
@@ -2521,4 +2646,6 @@ def setupMenu():
     settings.triggered.connect(open_settings)
     settings.setShortcut(QKeySequence('Shift+A'))
 setupMenu()
-mw.addonManager.setConfigAction(__name__, open_settings)
+
+if not C_configEdit:
+    mw.addonManager.setConfigAction(__name__, open_settings)

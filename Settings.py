@@ -2208,7 +2208,8 @@ class SettingsMenu(QDialog):
         #// Open and read the JSON File
         settings = open("{}".format(settingsFile), "r")
         conf = json.load(settings)
-        load = askUser("your're about to load settings. Load?", defaultno=True, title="Advanced Review Bottomabr")
+        settingsFile_name = os.path.basename(settingsFile)
+        load = askUser("Replace current settings with settings file <{}>?".format(settingsFile_name), self, None, defaultno=True, title="Advanced Review Bottomabr")
         if load:
             mw.addonManager.writeConfig(__name__, conf)
             showInfo("<div style='font-size: 15px;'>Settings Loaded Succesfully.\

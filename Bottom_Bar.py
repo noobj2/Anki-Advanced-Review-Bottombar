@@ -110,7 +110,7 @@ def linkHandler_wrap(reviewer, url):
 Review_linkHandelr_Original = Reviewer._linkHandler
 Reviewer._linkHandler = linkHandler_wrap
 
-#// Chosing stylinhg for review other buttons in reviewer bottombar based on chosen style
+#// Choosing styling for review other buttons in reviewer bottombar based on chosen style
 if bottombarButtons_style == 0:
     bottomHTML_style = "<style></style>"
 elif bottombarButtons_style == 1:
@@ -337,7 +337,7 @@ def _showAnswerButton(self):
             showAnswer_style = 'style="height: {}px; width: {}px; font-size: {}px; border-color: {};" id=main'.format(buttons_height, answer_width, text_size, showAnswerBorder_color)
     else:
         if bottombarButtons_style == 0:
-            showAnswer_style = "style='border-color: {}' id=ansbut".format(showAnswerBorder_color)  #// removed id=ansbut from it's own code for styling
+            showAnswer_style = "style='border-color: {}' id=ansbut".format(showAnswerBorder_color)  #// removed id=ansbut from its own code for styling
         else:
             showAnswer_style = "style='border-color: {}' id=main".format(showAnswerBorder_color)
 
@@ -362,7 +362,7 @@ def _showAnswerButton(self):
 %(middleRight_side4)s
 </td></tr></table>''' % dict(remaining=self._remaining(), middleLeft_side1=middleLeftSide_button1, middleLeft_side2=middleLeftSide_button2, middleLeft_side3=middleLeftSide_button3, middleLeft_side4=middleLeftSide_button4,
     answer_style=showAnswer_style, middleRight_side1=middleRightSide_button1, middleRight_side2=middleRightSide_button2, middleRight_side3=middleRightSide_button3, middleRight_side4=middleRightSide_button4, showAnswer_text=showAnswer_text)
-    # wrap it in a table so it has the same top margin as the ease buttons
+    # wrap it in a table, so it has the same top margin as the ease buttons
     middle = "%s" % middle
     if self.card.should_show_timer():
         maxTime = self.card.time_limit() / 1000
@@ -372,7 +372,7 @@ def _showAnswerButton(self):
     self.bottom.web.adjustHeightToFit()
 
 
-#// replacing/wraping functions
+#// replacing/wrapping functions
 Reviewer._shortcutKeys = wrap(Reviewer._shortcutKeys, _shortcutKeys_wrap, 'around')
 Reviewer._showAnswerButton = _showAnswerButton
 Reviewer._bottomHTML =  _bottomHTML

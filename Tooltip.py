@@ -56,7 +56,7 @@ else:
     good_backgroundColor = "#33FF2D"
     easy_backgroundColor = "#21C0FF"
 
-def myTooltip(self, ease):  #\\ should i store text, color and position all in this function?? YESSS
+def myTooltip(self, ease):  #\\ should I store text, color and position all in this function?? YESSS
     button_count = self.mw.col.sched.answerButtons(self.card)
     if button_count == 2:
         if ease == 1:

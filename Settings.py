@@ -13,12 +13,12 @@ import subprocess
 
 
 def refreshConfig():
-    #// Makes the information that it gets fron "config" global so I can use them for loading the current settings in "loadCurrent(self)" function
+    #// Makes the information that it gets from "config" global, so I can use them for loading the current settings in "loadCurrent(self)" function
     global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_interval_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_text_size, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_configEdit, C_overViewStats, C_settingsMenu_palce, C_skipMethod
 
     config = mw.addonManager.getConfig(__name__)
 
-    #// Gets the information from the config and assigns them to the "C_" variables so I can make them global | "C_" is added to the name of the parts of the settings variables to avoid confusion :D
+    #// Gets the information from the config and assigns them to the "C_" variables, so I can make them global | "C_" is added to the name of the parts of the settings variables to avoid confusion :D
     #// Just delete the "C_" from the name to find related parts of the settings (C_style_mainScreenButtons -> style_mainScreenButtons)
     C_style_mainScreenButtons = config['  Style Main Screen Buttons']
 
@@ -143,7 +143,7 @@ def refreshConfig():
     C_settingsMenu_palce = config['  Settings Menu Place']
     C_skipMethod = config['  Skip Method']
 
-    #// it's easier to store extra button positions as text in config | but here in the settings, I hate to turn it into true/false as each checkbox is diabled/enabled like that :|
+    #// it's easier to store extra button positions as text in config | but here in the settings, I hate to turn it into true/false as each checkbox is disabled/enabled like that :|
     #// Every checkbox is disabled by default
     C_right_info = False
     C_middleRight_info = False
@@ -238,7 +238,7 @@ class GetShortcut(QDialog):
         #// limits the allowed keys to keyboard keys
         if evt.key() > 30 and evt.key() < 127:
             self.extra = chr(evt.key())
-        #// stores the pressed key in a variable so we could later add it in a list and use it as a key combination
+        #// stores the pressed key in a variable, so we could later add it in a list and use it as a key combination
         elif evt.key() == Qt.Key_Control:
             self.ctrl = True
         elif evt.key() == Qt.Key_Alt:
@@ -374,8 +374,8 @@ class GetShortcut(QDialog):
         if self.extra:
             combination.append(self.extra)
         combination = "+".join(combination)
-        #// preventing users from assigning a defauls Anki shortcut to something else | to avoid conflicts and stuff :|
-        if combination in ["E", " ", "F5", "Ctrl+1", "Ctrl+2", "Ctrl+3", "Ctrl+4", "Shift+*", "=", "-", "Shift+!", "Shift+@", "Ctrl+Delete", "V", "Shift+V", "O", "1", "2", "3", "4", "5", "6", "7", "T", "Y", "A", "S", "D", "F", "B", "I", "/", "F1", "Ctrl+Q", "Ctrl+E", "Ctrl+P", "Ctrl+Shift+I", "Ctrl+Shift+P", "Ctrl+Shift+A", "Ctrl+Shift+:", "Ctrl+Shif+N", "Ctrl+Z"]:
+        #// preventing users from assigning a default Anki shortcut to something else | to avoid conflicts and stuff :|
+        if combination in ["E", " ", "F5", "Ctrl+1", "Ctrl+2", "Ctrl+3", "Ctrl+4", "Shift+*", "=", "-", "Shift+!", "Shift+@", "Ctrl+Delete", "V", "Shift+V", "O", "1", "2", "3", "4", "5", "6", "7", "T", "Y", "A", "S", "D", "F", "B", "I", "/", "F1", "Ctrl+Q", "Ctrl+E", "Ctrl+P", "Ctrl+Shift+I", "Ctrl+Shift+P", "Ctrl+Shift+A", "Ctrl+Shift+:", "Ctrl+Shift+N", "Ctrl+Z"]:
             if combination == "E":
                 showInfo("\"E\" is default Anki shortcut for \"Edit Current Card\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == " ":
@@ -417,7 +417,7 @@ class GetShortcut(QDialog):
             if combination == "4":
                 showInfo("\"4\" is default Anki shortcut for \"Answer with ease 4 (Easy)\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "5":
-                showInfo("\"5\" is default Anki shortcut for \"Puase Audio\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
+                showInfo("\"5\" is default Anki shortcut for \"Pause Audio\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "6":
                 showInfo("\"6\" is default Anki shortcut for \"Seek Backward\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "7":
@@ -451,7 +451,7 @@ class GetShortcut(QDialog):
             if combination == "Ctrl+Shift+I":
                 showInfo("\"Ctrl+Shift+I\" is default Anki shortcut for \"Import\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "Ctrl+Shift+P":
-                showInfo("\"Ctrl+Shift+P\" is default Anki shortcut for \"Swith Profile\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
+                showInfo("\"Ctrl+Shift+P\" is default Anki shortcut for \"Switch Profile\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "Ctrl+Shift+A":
                 showInfo("\"Ctrl+Shift+A\" is default Anki shortcut for \"Add-ons\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == "Ctrl+Shift+:":
@@ -566,7 +566,7 @@ class SettingsMenu(QDialog):
         reviewButtonDesigns_button = QPushButton("Show Designs")
         reviewButtonDesigns_button.setFixedWidth(180)
         reviewButtonDesigns_text = "{0}Default + Text Color <br> <img src='{2}/buttonStyle_defaultText.png'><hr> Default\
-        + Bakground Color<br> <img src='{2}/buttonStyle_defaultBackground.png'><hr>\
+        + Background Color<br> <img src='{2}/buttonStyle_defaultBackground.png'><hr>\
         Wide + Text Color<br> <img src='{2}/buttonStyle_wideText.png'><hr>Wide +\
         Background Color<br> <img src='{2}/buttonStyle_wideBackground.png'><hr>Neon1 (Easy is hovered over)<br>\
         <img src='{2}/buttonStyle_neon1.png'><hr>Neon2 (Easy is hovered over)<br>\
@@ -783,14 +783,14 @@ class SettingsMenu(QDialog):
         self.reviewTooltip_style = QComboBox()
         self.reviewTooltip_style.addItems(["On Buttons", "Fixed Position"])
         self.reviewTooltip_style.setToolTip("{0}On buttons -> Shows the tooltip on the button that you have pressed<hr>\
-        Fixed Position -> Shows all the tooltips in a position that you have chosen in review toolip position box.{1}".format(begin, end))
+        Fixed Position -> Shows all the tooltips in a position that you have chosen in review tooltip position box.{1}".format(begin, end))
         self.reviewTooltip_style.setFixedWidth(180)
         reviewTooltipStyle_holder = QHBoxLayout()
         reviewTooltipStyle_holder.addWidget(reviewTooltipStyle_label)
         reviewTooltipStyle_holder.addWidget(self.reviewTooltip_style)
         reviewTooltipStyle_holder.addStretch()
         reviewTooltipTimer_label = QLabel("Tooltip Show Duration:")
-        reviewTooltipTimer_label.setToolTip("{0}Changes lenghth of the period that tooltip is shown.<hr>the unit is millisecond, 1000ms = 1s{1} (I know everybody knows this, put it here just in case :|)".format(begin, end))
+        reviewTooltipTimer_label.setToolTip("{0}Changes length of the period that tooltip is shown.<hr>the unit is millisecond, 1000ms = 1s{1} (I know everybody knows this, put it here just in case :|)".format(begin, end))
         reviewTooltipTimer_label.setFixedWidth(180)
         self.reviewTooltip_timer = QSpinBox()
         self.reviewTooltip_timer.setFixedWidth(180)
@@ -839,10 +839,10 @@ class SettingsMenu(QDialog):
         tab2line3.addLayout(reviewerTooltipPosition_holder)
         tab2box3 = QGroupBox("Tooltip Position")
         tab2box3.setToolTip("{0}Changes position of the fixed tooltip.<hr>\
-        (<font color=red># NOTE:</font> If your resulotion is not 1920 x 1080, it's not accurate, but you\
+        (<font color=red># NOTE:</font> If your resolution is not 1920 x 1080, it's not accurate, but you\
         can find the place that you wanna put the tooltip on, by toying with the sliders\
         and restarting anki till you get the desired result.<br>\
-        <font color=red># NOTE:</font> If your resulotion is 1920 x 1080 the sliders are accurate for\
+        <font color=red># NOTE:</font> If your resolution is 1920 x 1080 the sliders are accurate for\
         maximized anki window.<br> <font color=red># NOTE:</font> If you set the position for a window that\
         it's size is for example 500 x 500, the position will not be accurate when you\
         change anki's window size to any other size. and if you decide to resize anki's\
@@ -984,7 +984,7 @@ class SettingsMenu(QDialog):
         buttonPositionsBox.setLayout(buttonPositionsPart)
         infoShortcut_label = QLabel("Info:")
         infoShortcut_label.setToolTip("{0} Changes show card info shortcut.<hr> Shortcut will work even if\
-        you disable the Info button.<hr> Info button can be a sngle key\
+        you disable the Info button.<hr> Info button can be a single key\
         like \"i\" or \"f4\" or a combination of keys like \"ctrl+i\" or \"alt+i\".<hr>\
         <font color=red>NOTE: </font>Make sure the shortcut you want to set for the\
         button isn't already in use by anki itself or another add-on. {1}".format(begin, end))
@@ -998,7 +998,7 @@ class SettingsMenu(QDialog):
         infoShortcut_holder.addWidget(self.infoShortcut_button)
         skipShortcut_label = QLabel("Skip:")
         skipShortcut_label.setToolTip("{0} Changes skip card shortcut.<hr> Shortcut will work even if\
-        you disable the skip button.<hr> skip button can be a sngle key\
+        you disable the skip button.<hr> skip button can be a single key\
         like \"s\" or \"f6\" or a combination of keys like \"ctrl+s\" or \"alt+s\".<hr>\
         <font color=red>NOTE: </font>Make sure the shortcut you want to set for the\
         button isn't already in use by anki itself or another add-on. {1}".format(begin, end))
@@ -1012,7 +1012,7 @@ class SettingsMenu(QDialog):
         skipShortcut_holder.addWidget(self.skipShortcut_button)
         showSkippedShortcut_label = QLabel("Show Skipped:")
         showSkippedShortcut_label.setToolTip("{0} Changes Show Skipped cards shortcut.<hr> Shortcut will work even if\
-        you disable the Show Skipped Cards button.<hr> Show Skipped cards button shortcut can be a sngle key\
+        you disable the Show Skipped Cards button.<hr> Show Skipped cards button shortcut can be a single key\
         like \"s\" or \"f6\" or a combination of keys like \"ctrl+s\" or \"alt+s\".<hr>\
         <font color=red>NOTE: </font>Make sure the shortcut you want to set for the\
         button isn't already in use by anki itself or another add-on. {1}".format(begin, end))
@@ -1026,7 +1026,7 @@ class SettingsMenu(QDialog):
         showSkippedShortcut_holder.addWidget(self.showSkippedShortcut_button)
         undoShortcut_label = QLabel("Undo:")
         undoShortcut_label.setToolTip("{0} Changes undo review shortcut.<hr> Shortcut will work even if\
-        you disable the undo button.<hr> undo button shortcut can be a sngle key\
+        you disable the undo button.<hr> undo button shortcut can be a single key\
         like \"z\" or \"f1\" or a combination of keys like \"ctrl+z\" or \"alt+z\".<hr>\
         <font color=red>NOTE: </font>Make sure the shortcut you want to set for the button isn't already\
         in use by anki itself or another add-on.<hr> the default shortcut for this\
@@ -1658,7 +1658,7 @@ class SettingsMenu(QDialog):
         reviewButtonColors_layout.addLayout(easy_line)
         self.custom_reviewButtonColors.setLayout(reviewButtonColors_layout)
         self.custom_reviewButtonTextColor = QCheckBox("Review Button Text:")
-        self.custom_reviewButtonTextColor.setToolTip("{0}Changes the color of general textcolor inside buttons.\
+        self.custom_reviewButtonTextColor.setToolTip("{0}Changes the color of general text color inside buttons.\
         <hr> This option does not work on Default + Text Color and Wide + Text Color Styles {1}".format(begin, end))
         self.custom_reviewButtonTextColor.setFixedWidth(140)
         self.reviewButtonTextColor_button = QPushButton()
@@ -1674,7 +1674,7 @@ class SettingsMenu(QDialog):
         self.custom_reviewButtonTextColor.toggled.connect(self.reviewButtonTextColor_button.setEnabled)
         self.custom_activeIndicatorColor = QCheckBox("Active Indicator:")
         self.custom_activeIndicatorColor.setToolTip("{0}Changes the active indicator color.<hr>\
-        This option doesn not work on neon and fill buttons as they don't have active indicator for active buttons.{1}".format(begin, end))
+        This option does not work on neon and fill buttons as they don't have active indicator for active buttons.{1}".format(begin, end))
         self.custom_activeIndicatorColor.setFixedWidth(140)
         self.activeIndicatorColor_button = QPushButton()
         self.activeIndicatorColor_button.clicked.connect(lambda: self.getNewColor("activeIndicator_color", self.activeIndicatorColor_button))
@@ -1841,7 +1841,7 @@ class SettingsMenu(QDialog):
         settingsMenuPlace_holder.addStretch()
         skipMethod_label = QLabel("Skip Method:")
         skipMethod_label.setToolTip("{0}Changes Skip method.\n\"Next Card\" just skips the card and the skipped cards will be shown again randomly\
-        while \"Bury\" bureis the skipped cards and the skipped cards will get unburied when you finish reviewing normal cards. You\
+        while \"Bury\" buries the skipped cards and the skipped cards will get unburied when you finish reviewing normal cards. You\
         can manually unbury skipped cards by pressing the \"Show Skipped\" button or by pressing the shortcut key that you've chosen for the button.{1}".format(begin, end))
         skipMethod_label.setFixedWidth(180)
         self.skipMethod = QComboBox()
@@ -1943,27 +1943,27 @@ class SettingsMenu(QDialog):
           <font color="tomato">Don't know what each option does?<br></font>
           hover over the title and you'll see a brief description about that option <br><br>
 
-          <font color="tomato">Wanna see what each design is like withot having to restart anki?<br></font>
+          <font color="tomato">Wanna see what each design is like without having to restart anki?<br></font>
           by hovering over options in front of titles, if the option is related to styling buttons<br>
           or changing how something looks like, you'll see pictures showing you what each option looks like<br>
           Hovering over them won't show you the animations, if the buttons are animated<br><br><br>
 
           <font color="tomato">Have an idea for a new feature?<br></font>
-          Feel free to tell me in comment section on <a href="https://ankiweb.net/shared/info/1136455830">Add-on's Page</a> or <a href="mailto:mamad.jj98@gmail.com">Email me</a><br><br>
+          Feel free to tell me in comment section on <a href="https://ankiweb.net/shared/info/1136455830">Add-ons Page</a> or <a href="mailto:mamad.jj98@gmail.com">Email me</a><br><br>
 
           <font color="tomato">Saw a cool button design somewhere?<br></font>
-          senf me a link to where you saw that design, i'll try to replicate that design<br>
+          send me a link to where you saw that design, i'll try to replicate that design<br>
           and put it on the add-on as and option for you to choose<br>
-          <a href="https://ankiweb.net/shared/info/1136455830">Add-on's Page</a> or <a href="mailto:mamad.jj98@gmail.com">my Email</a><br><br>
+          <a href="https://ankiweb.net/shared/info/1136455830">Add-ons Page</a> or <a href="mailto:mamad.jj98@gmail.com">my Email</a><br><br>
 
           <font color="tomato">Encountered a bug or some part is not acting how it's supposed to?<br></font>
           Tell me what your settings were on add-on, what's your anki version or if anki showed you an error log,<br>
-          copy the error log and comment it on <a href="https://ankiweb.net/shared/info/1136455830">Add-on's Page</a> or or <a href="mailto:mamad.jj98@gmail.com">Email me</a> <br>
+          copy the error log and comment it on <a href="https://ankiweb.net/shared/info/1136455830">Add-ons Page</a> or or <a href="mailto:mamad.jj98@gmail.com">Email me</a> <br>
           (the more information you give me,<br>
           the sooner i find out what's causing the problem and i fix the bug)<br><br>
 
           <font color="tomato">Like the add-on?<br></font>
-          Give it a like on <a href="https://ankiweb.net/shared/review/1136455830">Add-on's Page</a>
+          Give it a like on <a href="https://ankiweb.net/shared/review/1136455830">Add-ons Page</a>
         </div>
         """
         about = QLabel()
@@ -1994,7 +1994,7 @@ class SettingsMenu(QDialog):
 
     def loadChaneLog(self):
         #// For some weird reason, using dirname(__file__) inside the .format() thingy doesn't seem to be working on macOS
-        #// Can't confirm tho -_- since I can't test my add-on on mac
+        #// Can't confirm tho -_- since I can't test my add-on on Mac
         addon_path = dirname(__file__)
         file = "{}/changelog.html".format(addon_path)
         with open(file, 'r') as f:
@@ -2209,10 +2209,10 @@ class SettingsMenu(QDialog):
         settings = open("{}".format(settingsFile), "r")
         conf = json.load(settings)
         settingsFile_name = os.path.basename(settingsFile)
-        load = askUser("Replace current settings with settings file <{}>?".format(settingsFile_name), self, None, defaultno=True, title="Advanced Review Bottomabr")
+        load = askUser("Replace current settings with settings file <{}>?".format(settingsFile_name), self, None, defaultno=True, title="Advanced Review Bottombar")
         if load:
             mw.addonManager.writeConfig(__name__, conf)
-            showInfo("<div style='font-size: 15px;'>Settings Loaded Succesfully.\
+            showInfo("<div style='font-size: 15px;'>Settings Loaded Successfully.\
             </div><div style='color: red; font-size: 15px;'> Changes will take \
             effect after you restart anki.</div>", title="Advanced Review Bottombar Settings")
             self.close()

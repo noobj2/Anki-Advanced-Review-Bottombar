@@ -25,7 +25,7 @@ bottombar_neon2 = styles.bottombar_neon2
 bottombar_fill1 = styles.bottombar_fill1
 bottombar_fill2 = styles.bottombar_fill2
 
-#// Chosing stylinhg for review other buttons in reviewer bottombar based on chosen style
+#// Choosing styling for review other buttons in reviewer bottombar based on chosen style
 if bottombarButtons_style == 0:
     bottomHTML_style = "<style></style>"
 elif bottombarButtons_style == 1:

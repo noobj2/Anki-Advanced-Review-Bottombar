@@ -32,7 +32,7 @@ def try_unburySkipped():
     if hasattr(mw.reviewer, "skipped_cards"):
         unburySkipped()
 
-#// Unbury skipped cards upon exiting review screeen
+#// Unbury skipped cards upon exiting review screen
 gui_hooks.reviewer_will_end.append(try_unburySkipped)
 
 def test():

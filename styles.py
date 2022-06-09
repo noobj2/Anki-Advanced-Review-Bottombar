@@ -50,11 +50,11 @@ transition = "{}s".format(float(config[' Review_ Button Transition Time']/1000))
 border_radius = "{}px".format(config[' Review_ Button Border Radius'])
 
 ######//////__BEGIN__ EXTRAS __BEGIN__//////######
-#// replacing textColor with "default" if custom review button text color is disabled
+#// rplacing textColor with "default" if custom review button text color is disabled
 if custom_reviewButtonTextColor == False:
     textColor_background = "default"
 
-#//replacing indicator color with "default" is custom active indicator color is disabled
+#//replacing indicato color with "default" is custom active indicator color is disabled
 if custom_activeIndicatorColor == False:
     activeIndicator_color = "default"
 
@@ -107,7 +107,7 @@ else:
         elif bottombarButtons_style in[3, 4]:
             border_color = "#080808"
 
-#// setting colors for neon and fill designs when custom colors is disabled
+#// seting colors for neon and fill desings when custom colors is disabled
 if not custom_colors:
     again_color = "#FF1111"
     hard_color = "#FF9814"
@@ -119,7 +119,7 @@ if not custom_colors:
 ######//////__BEGIN__ GENERAL BUTTON DESIGNS __BEGIN__ //////######
 #// changing height and width of bottombar buttons based on button design or sizes that user has given
 #// bottomHTML_style makes us able to add classes ids or edit bottombar buttons altogether
-#// edit_style, info_style, etc. make us able to define classes, ids or add styles to each button
+#// edit_stle, info_style, etc. make us able to define classes, ids or add styles to each button
 #// classes and ids should be defined in bottomHTML_style first
 if is_nightMode:
     bottombar_neon1 = """<style>
@@ -355,7 +355,7 @@ else:
         min_buttonSize = "<style> button {cursor: %s} </style>" % cursor
 ######//////__END__ GENERAL BUTTON DESIGNS __END__//////######
 
-######//////__BEGIN__ ACtIVE BUTTON INDICATORS __BEGIN__//////######
+######//////__BEGIN__ ACtIVE BUTTON INDOCATORS __BEGIN__//////######
 #// active button indicator
 if activeIndicator_color == "default":
     activeIndicator_color = "#21BFFF"
@@ -365,7 +365,7 @@ else:
     active_extra = "border: solid 1px; border-color: {}".format(activeIndicator_color)
 if active_indicator == 0 or button_style in [4, 5, 6, 7]:
     active_extra = ""
-######//////__END__ ACtIVE BUTTON INDICATORS __END__//////######
+######//////__END__ ACtIVE BUTTON INDOCATORS __END__//////######
 
 
 ######//////__BEGIN__ HOVER EFFECTS __BEGIN__//////######
@@ -980,7 +980,7 @@ custom_text = """<style>
     again_hover=again_hover, hard_hover=hard_hover, good_hover=good_hover, easy_hover=easy_hover, cursor=cursor)
 
 #// styling for custom background color change method
-if is_nightMode:  #// style if anki version is 2.1.20 and above and night mode is enabled
+if is_nightMode:  #// style if anki version is 2.1.20 and above and night mode is endabled
     custom_background = """<style>
     #again, #hard, #good, #easy {
       border: hidden;

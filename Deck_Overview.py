@@ -4,7 +4,7 @@ import time
 from datetime import date, timedelta
 from aqt import mw
 from copy import deepcopy
-from aqt.utils import shortcut, showInfo
+from aqt.utils import shortcut, showInfo, tr
 from anki import version
 anki_version = int(version.replace('.', ''))
 if anki_version > 2119:
@@ -25,7 +25,7 @@ bottombar_neon2 = styles.bottombar_neon2
 bottombar_fill1 = styles.bottombar_fill1
 bottombar_fill2 = styles.bottombar_fill2
 
-#// Choosing styling for review other buttons in reviewer bottombar based on chosen style
+#// Chosing stylinhg for review other buttons in reviewer bottombar based on chosen style
 if bottombarButtons_style == 0:
     bottomHTML_style = "<style></style>"
 elif bottombarButtons_style == 1:
@@ -66,16 +66,17 @@ def _drawButtons(self):
 #// Deck Overview Bottombar Buttons
 def _renderBottom(self):
     links = [
-        ["O", "opts", ("Options")],
+        ["O", "opts", tr.actions_options()],
     ]
     if self.mw.col.decks.current()["dyn"]:
-        links.append(["R", "refresh", ("Rebuild")])
-        links.append(["E", "empty", ("Empty")])
+        links.append(["R", "refresh", tr.actions_rebuild()])
+        links.append(["E", "empty", tr.studying_empty()])
     else:
-        links.append(["C", "studymore", ("Custom Study")])
+        links.append(["C", "studymore", tr.actions_custom_study()])
         # links.append(["F", "cram", ("Filter/Cram")])
     if self.mw.col.sched.haveBuried():
-        links.append(["U", "unbury", ("Unbury")])
+        links.append(["U", "unbury", tr.studying_unbury()])
+    links.append(["", "description", tr.scheduling_description()])
     buf = "{}".format(bottomHTML_style)
     if style_mainScreenButtons:
         #// style='height: px' -> to prevent changing main screen buttons heights
@@ -177,7 +178,7 @@ if more_overviewStats == 1:
                     <span title="new" class="new-count">%s</span>
                     <span title="learn" class="learn-count">%s</span>
                     <span title="review" class="review-count">%s</span>
-                </td></tr>''' % (bottomHTML_style, ("Due today"), counts[0], counts[1], counts[2])
+                </td></tr>''' % (bottomHTML_style, tr.browsing_sidebar_due_today(), counts[0], counts[1], counts[2])
 
         if (dconf.get('new')):
             html += '''
@@ -185,7 +186,7 @@ if more_overviewStats == 1:
                     <span title="new" class="new-count">%s</span>
                     <span title="learn" class="learn-count">%s</span>
                     <span title="review" class="review-count">%s</span>
-                </td></tr>''' % (("Due tomorrow"), dueTomorrow[0],
+                </td></tr>''' % (tr.statistics_due_tomorrow(), dueTomorrow[0],
                 dueTomorrow[1], dueTomorrow[2])
 
         html += '''
@@ -199,7 +200,7 @@ if more_overviewStats == 1:
                     <span title="suspended" style="color:#adb300">%s</span>
                 </td>
             </tr>
-        </table>''' % (("Total Cards"), totals[0], totals[1], totals[2], totals[4],
+        </table>''' % (tr.statistics_counts_total_cards(), totals[0], totals[1], totals[2], totals[4],
         totals[3])
 
         if not finished:
@@ -359,17 +360,17 @@ elif more_overviewStats == 2:
 
         labels = {}
 
-        labels['mature'] = ('Mature')
-        labels['young'] = ('Young')
+        labels['mature'] = tr.statistics_counts_mature_cards()
+        labels['young'] = tr.statistics_counts_young_cards()
         labels['unseen'] = ('Unseen')
-        labels['suspended'] = ('Suspended')
+        labels['suspended'] = tr.statistics_counts_suspended_cards()
 
-        labels['total'] = ('Total')
+        labels['total'] = tr.statistics_counts_total_cards()
         labels['learned'] = ('Learned')
         labels['unlearned'] = ('Unlearned')
 
-        labels['new'] = ('New')
-        labels['learning'] = ('Learning')
+        labels['new'] = tr.statistics_counts_new_cards()
+        labels['learning'] = tr.statistics_counts_learning_cards()
         labels['review'] = ('Review')
         # labels['due'] = ('Due')
 
@@ -585,7 +586,7 @@ elif more_overviewStats == 2:
                 <td colspan="4" style="text-align: center; padding-top: 0.6em;">{button:s}</td>
               </tr>
               </table>
-            '''.format(button=button('study', ('Study Now'), id='{}'.format(studyButton_id), extra="autofocus"))
+            '''.format(button=button('study', tr.studying_study_now(), id='{}'.format(studyButton_id), extra="autofocus"))
 
         return output
 
@@ -624,13 +625,13 @@ else:
     </td><td align=center>
     %s</td></tr></table>""" % (
                     bottomHTML_style,
-                    ("New"),
+                    tr.actions_new(),
                     counts[0],
-                    ("Learning"),
+                    tr.scheduling_learning(),
                     counts[1],
-                    ("To Review"),
+                    tr.studying_to_review(),
                     counts[2],
-                    but("study", ("Study Now"), id="{}".format(studyButton_id), extra="autofocus"),
+                    but("study", tr.studying_study_now(), id="{}".format(studyButton_id), extra="autofocus"),
                 )
 
 def _limit(counts):

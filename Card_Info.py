@@ -44,7 +44,12 @@ class StatsSidebar(object):
         dock.setWidget(w)
         if mw.width() < 600:
             mw.resize(QSize(600, mw.height()))
-        mw.addDockWidget(Qt.RightDockWidgetArea, dock)
+        config = mw.addonManager.getConfig(__name__)
+        sidebar_defaultPosition = config['Card Info sidebar_ Default Position']
+        if sidebar_defaultPosition == 1:
+            mw.addDockWidget(Qt.LeftDockWidgetArea, dock)
+        else:
+            mw.addDockWidget(Qt.RightDockWidgetArea, dock)
         return dock
 
     def _remDockable(self, dock):
@@ -202,7 +207,7 @@ class StatsSidebar(object):
         infobar_ease = config['Card Info sidebar_ Ease']
         infobar_reviews = config['Card Info sidebar_ Reviews']
         infobar_lapses = config['Card Info sidebar_ Lapses']
-        infobar_correctPercent = config['Card Info Sidebar_ COrrect Percent']
+        infobar_correctPercent = config['Card Info Sidebar_ Correct Percent']
         infobar_fastestReview = config['Card Info Sidebar_ Fastest Review']
         infobar_slowestReview = config['Card Info Sidebar_ Slowest Review']
         infobar_avgTime = config['Card Info sidebar_ Average Time']
@@ -263,6 +268,8 @@ class StatsSidebar(object):
                 pressed_good = mw.col.db.scalar("select sum(case when ease = 3 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_easy = mw.col.db.scalar("select sum(case when ease = 4 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_all = pressed_again + pressed_hard + pressed_good + pressed_easy
+                if pressed_all < 1:
+                    pressed_all = 1
                 self.addLine("Again", "{} | {:.0f}%".format(str(pressed_again).rjust(4), float(pressed_again/pressed_all)*100))
                 self.addLine("Hard", "{} | {:.0f}%".format(str(pressed_hard).rjust(4), float(pressed_hard/pressed_all)*100))
                 self.addLine("Good", "{} | {:.0f}%".format(str(pressed_good).rjust(4), float(pressed_good/pressed_all)*100))

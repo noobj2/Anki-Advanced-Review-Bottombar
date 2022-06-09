@@ -1,5 +1,13 @@
 <html>
   <div class="background">
+    <h1>2022/2/13</h1>
+    <ul>
+      <li>Added an option to change Card Info Sidebar default position</li>
+      <li>Fixed description button not showing on deck overview screen</li>
+      <li>Fixed a sidebar error caused by rescheduled cards</li>
+    </ul>
+  </div>
+  <div class="background">
     <h1>2022/1/30</h1>
     <ul>
       <li>Changed load settings prompt message (forgot to do it yesterday)</li>

@@ -66,7 +66,7 @@
     "Card Info sidebar_ Ease": true,
     "Card Info sidebar_ Reviews": true,
     "Card Info sidebar_ Lapses": true,
-    "Card Info Sidebar_ COrrect Percent": true,
+    "Card Info Sidebar_ Correct Percent": true,
     "Card Info Sidebar_ Fastest Review": true,
     "Card Info Sidebar_ Slowest Review": true,
     "Card Info sidebar_ Average Time": true,
@@ -104,6 +104,10 @@
     "Tooltip Position": [
         100,
         -100
+    ],
+    "Tooltip Offset": [
+        0,
+        0
     ],
     "ShowAnswer_ Border Color Style": 1,
     "ShowAnswer_ Ease1": 200,

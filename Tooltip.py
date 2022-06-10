@@ -28,6 +28,7 @@ goodHover_color = config['Color_ Good on hover']
 easyHover_color = config['Color_ Easy on hover']
 tooltip_style = config['Tooltip Style']
 tooltip_position = config['Tooltip Position']
+tooltip_offset = config['Tooltip Offset']
 info_position = config["Button_ Position_ Info Button"]
 skip_position = config['Button_ Position_ Skip Button']
 undo_position = config['Button_ Position_ Undo Button']
@@ -56,7 +57,9 @@ else:
     good_backgroundColor = "#33FF2D"
     easy_backgroundColor = "#21C0FF"
 
-def myTooltip(self, ease):  #\\ should I store text, color and position all in this function?? YESSS
+
+# should i store text, color and position all in this function?? YESSS (This is hard for me to understand)
+def myTooltip(self, ease):
     button_count = self.mw.col.sched.answerButtons(self.card)
     if button_count == 2:
         if ease == 1:
@@ -85,8 +88,9 @@ def myTooltip(self, ease):  #\\ should I store text, color and position all in t
             button = ["Easy", easy_backgroundColor, 142, -39]
         else:
             button = ["", "transparent", 20000, 20000]
-    button_width = 60
-    button_height = 26
+    # default button size
+    button_width = 72
+    button_height = 29
     x_offset = button[2]
     y_offset = button[3]
     text = button[0]
@@ -584,9 +588,10 @@ def showTooltip(text, background_color, tooltip_textColor, button_width, button_
     p.setColor(QPalette.Window, QColor(background_color))
     p.setColor(QPalette.WindowText, QColor("transparent"))
     lab.setPalette(p)
+    # Handle button offset.
     if tooltip_style == 0:
-        x_coordinate = int(x_offset+(aw.width()-button_width)/2)
-        y_coordinate = y_offset+aw.height()
+        x_coordinate = int(x_offset + tooltip_offset[0] + (aw.width()-button_width)/2)
+        y_coordinate = y_offset + aw.height() - tooltip_offset[1]
         lab.move(aw.mapToGlobal(QPoint(x_coordinate, y_coordinate)))
     else:
         x_coordinate = min(x_offset, aw.width())

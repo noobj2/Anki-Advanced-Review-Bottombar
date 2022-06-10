@@ -202,7 +202,7 @@ class StatsSidebar(object):
         infobar_ease = config['Card Info sidebar_ Ease']
         infobar_reviews = config['Card Info sidebar_ Reviews']
         infobar_lapses = config['Card Info sidebar_ Lapses']
-        infobar_correctPercent = config['Card Info Sidebar_ COrrect Percent']
+        infobar_correctPercent = config['Card Info Sidebar_ Correct Percent']
         infobar_fastestReview = config['Card Info Sidebar_ Fastest Review']
         infobar_slowestReview = config['Card Info Sidebar_ Slowest Review']
         infobar_avgTime = config['Card Info sidebar_ Average Time']

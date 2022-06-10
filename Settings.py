@@ -14,7 +14,7 @@ import subprocess
 
 def refreshConfig():
     #// Makes the information that it gets from "config" global, so I can use them for loading the current settings in "loadCurrent(self)" function
-    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_interval_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_text_size, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_configEdit, C_overViewStats, C_settingsMenu_palce, C_skipMethod
+    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_interval_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_reviewTooltip_offset, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_text_size, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_position, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_configEdit, C_overViewStats, C_settingsMenu_palce, C_skipMethod
 
     config = mw.addonManager.getConfig(__name__)
 
@@ -37,6 +37,7 @@ def refreshConfig():
     C_reviewTooltipText_color = config['Tooltip Text Color']
     C_reviewTooltip_style = config['Tooltip Style']
     C_reviewTooltip_position = config['Tooltip Position']
+    C_reviewTooltip_offset = config['Tooltip Offset']
 
     C_info = config['Button_   Info Button']
     C_skip = config['Button_   Skip Button']
@@ -93,7 +94,7 @@ def refreshConfig():
     C_sidebar_ease = config['Card Info sidebar_ Ease']
     C_sidebar_numberOfReviews = config['Card Info sidebar_ Reviews']
     C_sidebar_lapses = config['Card Info sidebar_ Lapses']
-    C_infobar_correctPercent = config['Card Info Sidebar_ COrrect Percent']
+    C_infobar_correctPercent = config['Card Info Sidebar_ Correct Percent']
     C_infobar_fastestReview = config['Card Info Sidebar_ Fastest Review']
     C_infobar_slowestReview = config['Card Info Sidebar_ Slowest Review']
     C_sidebar_averageTime = config['Card Info sidebar_ Average Time']
@@ -762,6 +763,8 @@ class SettingsMenu(QDialog):
         begin = self.begin
         end = self.end
         images = self.images
+
+        # start 1 box
         reviewTooltip_label = QLabel("Review Confirmation Tooltip:")
         reviewTooltip_label.setToolTip("{0}Shows a tooltip when you press any of\
         review buttons, showing you what button you have pressed.{1}".format(begin, end))
@@ -777,6 +780,9 @@ class SettingsMenu(QDialog):
         reviewTooltip_holder.addStretch()
         tab2box1 = QGroupBox()
         tab2box1.setLayout(reviewTooltip_holder)
+        # end 1 box
+
+        # start 2 box
         reviewTooltipStyle_label = QLabel("Tooltip Position:")
         reviewTooltipStyle_label.setToolTip("{0}Changes the position of answer tooltip.{1}".format(begin, end))
         reviewTooltipStyle_label.setFixedWidth(180)
@@ -789,6 +795,7 @@ class SettingsMenu(QDialog):
         reviewTooltipStyle_holder.addWidget(reviewTooltipStyle_label)
         reviewTooltipStyle_holder.addWidget(self.reviewTooltip_style)
         reviewTooltipStyle_holder.addStretch()
+
         reviewTooltipTimer_label = QLabel("Tooltip Show Duration:")
         reviewTooltipTimer_label.setToolTip("{0}Changes length of the period that tooltip is shown.<hr>the unit is millisecond, 1000ms = 1s{1} (I know everybody knows this, put it here just in case :|)".format(begin, end))
         reviewTooltipTimer_label.setFixedWidth(180)
@@ -802,6 +809,7 @@ class SettingsMenu(QDialog):
         reviewTooltipTimer_holder.addWidget(self.reviewTooltip_timer)
         reviewTooltipTimer_holder.addWidget(reviewerTooltipTimer_ms)
         reviewTooltipTimer_holder.addStretch()
+
         reviewTooltipTextColor_label = QLabel("Tooltip Text Color:")
         reviewTooltipTextColor_label.setToolTip("{0}Changes color of the text inside tooltips.{1}".format(begin, end))
         reviewTooltipTextColor_label.setFixedWidth(180)
@@ -812,12 +820,16 @@ class SettingsMenu(QDialog):
         reviewTooltipTextColor_holder.addWidget(reviewTooltipTextColor_label)
         reviewTooltipTextColor_holder.addWidget(self.reviewTooltipTextColor_button)
         reviewTooltipTextColor_holder.addStretch()
+
         tab2line2 = QVBoxLayout()
         tab2line2.addLayout(reviewTooltipStyle_holder)
         tab2line2.addLayout(reviewTooltipTimer_holder)
         tab2line2.addLayout(reviewTooltipTextColor_holder)
         tab2box2 = QGroupBox()
         tab2box2.setLayout(tab2line2)
+        # end 2 box
+
+        # start 3 box
         self.reviewTooltipPositionX = QSlider(Qt.Horizontal)
         self.reviewTooltipPositionX.setFixedWidth(200)
         self.reviewTooltipPositionX.setMinimum(0)
@@ -835,11 +847,12 @@ class SettingsMenu(QDialog):
         reviewerTooltipPosition_holder.addWidget(self.reviewTooltipPositionX)
         reviewerTooltipPosition_holder.addWidget(self.reviewTooltipPositionY)
         reviewerTooltipPosition_holder.addStretch()
+
         tab2line3 = QVBoxLayout()
         tab2line3.addLayout(reviewerTooltipPosition_holder)
-        tab2box3 = QGroupBox("Tooltip Position")
+        tab2box3 = QGroupBox("Tooltip Position (Fixed Position)")
         tab2box3.setToolTip("{0}Changes position of the fixed tooltip.<hr>\
-        (<font color=red># NOTE:</font> If your resolution is not 1920 x 1080, it's not accurate, but you\
+        <font color=red># NOTE:</font> If your resulotion is not 1920 x 1080, it's not accurate, but you\
         can find the place that you wanna put the tooltip on, by toying with the sliders\
         and restarting anki till you get the desired result.<br>\
         <font color=red># NOTE:</font> If your resolution is 1920 x 1080 the sliders are accurate for\
@@ -847,21 +860,58 @@ class SettingsMenu(QDialog):
         it's size is for example 500 x 500, the position will not be accurate when you\
         change anki's window size to any other size. and if you decide to resize anki's\
         window, you should set the positions again in order for the tooltip to be in the\
-        position you want.){1}".format(begin, end))
+        position you want.{1}".format(begin, end))
         tab2box3.setLayout(tab2line3)
-        tab2box3.setDisabled(True)
-        if self.reviewTooltip_style.currentIndex() == 1:
-            tab2box3.setEnabled(True)
+        tab2box3.setEnabled(True)
         self.reviewTooltip_off.toggled.connect(tab2box3.setDisabled)
-        self.reviewTooltip_style.currentIndexChanged.connect(tab2box3.setEnabled)
         tab2box2.setDisabled(True)
         if self.reviewTooltip_on.isChecked():
             tab2box2.setEnabled(True)
         self.reviewTooltip_on.toggled.connect(tab2box2.setEnabled)
+        # end 3 box
+
+        # start 4 box
+        self.reviewTooltipOffsetX = QSlider(Qt.Horizontal)
+        self.reviewTooltipOffsetX.setFixedWidth(200)
+        self.reviewTooltipOffsetX.setMinimum(-800)
+        self.reviewTooltipOffsetX.setMaximum(800)
+        self.reviewTooltipOffsetX.setPageStep(100)
+        self.reviewTooltipOffsetX.setSliderPosition(0)
+        reviewerTooltipOffset_holder = QHBoxLayout()
+
+        self.reviewTooltipOffsetY = QSlider(Qt.Vertical)
+        self.reviewTooltipOffsetY.setFixedHeight(200)
+        self.reviewTooltipOffsetY.setMinimum(0)
+        self.reviewTooltipOffsetY.setMaximum(500)
+        self.reviewTooltipOffsetY.setPageStep(100)
+        self.reviewTooltipOffsetY.setSliderPosition(0)
+        reviewerTooltipOffset_holder = QHBoxLayout()
+
+        reviewerTooltipOffset_holder.addWidget(self.reviewTooltipOffsetX)
+        reviewerTooltipOffset_holder.addWidget(self.reviewTooltipOffsetY)
+        reviewerTooltipOffset_holder.addStretch()
+
+        tab2line4 = QVBoxLayout()
+        tab2line4.addLayout(reviewerTooltipOffset_holder)
+        tab2box4 = QGroupBox("Tooltip Position (On Buttons)")
+        tab2box4.setToolTip("{0}Change the offset according to the button..<hr>\
+        <font color=red># NOTE:</font> The centre of the x-axis is the zero point, moving to the left is \
+        offset to the left according to the button and moving to the right is offset to \
+        the right according to the button.{1}".format(begin, end))
+        tab2box4.setLayout(tab2line4)
+        tab2box4.setEnabled(True)
+        self.reviewTooltip_off.toggled.connect(tab2box4.setDisabled)
+        tab2box2.setDisabled(True)
+        if self.reviewTooltip_on.isChecked():
+            tab2box2.setEnabled(True)
+        self.reviewTooltip_on.toggled.connect(tab2box2.setEnabled)
+        # end 4 box
+
         layout = QVBoxLayout()
         layout.addWidget(tab2box1)
         layout.addWidget(tab2box2)
         layout.addWidget(tab2box3)
+        layout.addWidget(tab2box4)
         layout.addStretch()
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
@@ -2022,6 +2072,9 @@ class SettingsMenu(QDialog):
         self.changeButtonColor(self.reviewTooltipTextColor_button, C_reviewTooltipText_color)
         self.reviewTooltipPositionX.setValue(int(C_reviewTooltip_position[0]))
         self.reviewTooltipPositionY.setValue(int(C_reviewTooltip_position[1]))
+        self.reviewTooltipOffsetX.setValue(int(C_reviewTooltip_offset[0]))
+        self.reviewTooltipOffsetY.setValue(int(C_reviewTooltip_offset[1]))
+
         if C_info:
             self.info.setChecked(True)
         if C_skip:
@@ -2334,7 +2387,7 @@ class SettingsMenu(QDialog):
         "Card Info sidebar_ Ease": self.sidebar_ease.isChecked(),
         "Card Info sidebar_ Reviews": self.sidebar_numberOfReviews.isChecked(),
         "Card Info sidebar_ Lapses": self.sidebar_lapses.isChecked(),
-		"Card Info Sidebar_ COrrect Percent": self.sidebar_correctPercent.isChecked(),
+		"Card Info Sidebar_ Correct Percent": self.sidebar_correctPercent.isChecked(),
 		"Card Info Sidebar_ Fastest Review": self.sidebar_fastestReview.isChecked(),
 		"Card Info Sidebar_ Slowest Review": self.sidebar_slowestReview.isChecked(),
         "Card Info sidebar_ Average Time": self.sidebar_averageTime.isChecked(),
@@ -2370,6 +2423,7 @@ class SettingsMenu(QDialog):
         "Tooltip Text Color": self.reviewTooltipText_color,
         "Tooltip Style": self.reviewTooltip_style.currentIndex(),
         "Tooltip Position": [self.reviewTooltipPositionX.value(), self.reviewTooltipPositionY.value()],
+        "Tooltip Offset": [self.reviewTooltipOffsetX.value(), self.reviewTooltipOffsetY.value()],
         "ShowAnswer_ Border Color Style": self.showAnswerBorderColor_style.currentIndex(),
 		"ShowAnswer_ Ease1": self.showAnswerEase1.value(),
 		"ShowAnswer_ Ease2": self.showAnswerEase2.value(),
@@ -2494,7 +2548,7 @@ class SettingsMenu(QDialog):
         "Card Info sidebar_ Ease": self.sidebar_ease.isChecked(),
         "Card Info sidebar_ Reviews": self.sidebar_numberOfReviews.isChecked(),
         "Card Info sidebar_ Lapses": self.sidebar_lapses.isChecked(),
-		"Card Info Sidebar_ COrrect Percent": self.sidebar_correctPercent.isChecked(),
+		"Card Info Sidebar_ Correct Percent": self.sidebar_correctPercent.isChecked(),
 		"Card Info Sidebar_ Fastest Review": self.sidebar_fastestReview.isChecked(),
 		"Card Info Sidebar_ Slowest Review": self.sidebar_slowestReview.isChecked(),
         "Card Info sidebar_ Average Time": self.sidebar_averageTime.isChecked(),
@@ -2530,6 +2584,7 @@ class SettingsMenu(QDialog):
         "Tooltip Text Color": self.reviewTooltipText_color,
         "Tooltip Style": self.reviewTooltip_style.currentIndex(),
         "Tooltip Position": [self.reviewTooltipPositionX.value(), self.reviewTooltipPositionY.value()],
+        "Tooltip Offset": [self.reviewTooltipOffsetX.value(), self.reviewTooltipOffsetY.value()],
         "ShowAnswer_ Border Color Style": self.showAnswerBorderColor_style.currentIndex(),
 		"ShowAnswer_ Ease1": self.showAnswerEase1.value(),
 		"ShowAnswer_ Ease2": self.showAnswerEase2.value(),

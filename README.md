@@ -8,7 +8,7 @@ Advanced Review Bottombar is an Anki add-on to customize and improve Anki's visu
     - [Directly copying the add-on to Anki's add-ons folder](#directly-copying-the-add-on-to-ankis-add-ons-folder)
 - [Features](#features)
   - [Change Style of Buttons](#change-style-of-buttons)
-  - [Change Style of Answer Tooltip](#change-style-of-answer-tooltip)
+  - [Change Styles of Answer Tooltip](#change-style-of-answer-tooltip)
   - [Add, Remove or Change the Position of Bottombar Buttons](#add-remove-or-change-the-position-of-bottombar-buttons)
   - [Customize Button Sizes](#customize-button-sizes)
   - [Customize Button Labels](#customize-button-labels)

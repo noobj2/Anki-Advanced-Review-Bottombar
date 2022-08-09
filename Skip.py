@@ -35,5 +35,8 @@ def try_unburySkipped():
 #// Unbury skipped cards upon exiting review screen
 gui_hooks.reviewer_will_end.append(try_unburySkipped)
 
+#// Unbury skipped cards upon exiting profile
+gui_hooks.profile_will_close.append(try_unburySkipped)
+
 def test():
     showInfo("{}".format(mw.col.sched.version))

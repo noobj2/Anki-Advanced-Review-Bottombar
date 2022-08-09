@@ -706,7 +706,7 @@ class SettingsMenu(QDialog):
         buttonBorderRadius_label.setFixedWidth(180)
         self.buttonBorderRadius = QSpinBox()
         self.buttonBorderRadius.setMinimum(0)
-        self.buttonBorderRadius.setMaximum(50)
+        self.buttonBorderRadius.setMaximum(100)
         self.buttonBorderRadius.setSingleStep(1)
         self.buttonBorderRadius.setFixedWidth(180)
         buttonBorderRadius_px = QLabel("px")
@@ -753,7 +753,7 @@ class SettingsMenu(QDialog):
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab1 = QScrollArea()
-        self.tab1.setFixedWidth(640)
+        self.tab1.setFixedWidth(690)
         self.tab1.setAlignment(Qt.AlignHCenter)
         self.tab1.setWidgetResizable(True)
         self.tab1.setWidget(layout_holder)
@@ -866,7 +866,7 @@ class SettingsMenu(QDialog):
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab2 = QScrollArea()
-        self.tab2.setFixedWidth(640)
+        self.tab2.setFixedWidth(690)
         self.tab2.setAlignment(Qt.AlignHCenter)
         self.tab2.setWidgetResizable(True)
         self.tab2.setWidget(layout_holder)
@@ -1058,7 +1058,7 @@ class SettingsMenu(QDialog):
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab3 = QScrollArea()
-        self.tab3.setFixedWidth(640)
+        self.tab3.setFixedWidth(690)
         self.tab3.setAlignment(Qt.AlignHCenter)
         self.tab3.setWidgetResizable(True)
         self.tab3.setWidget(layout_holder)
@@ -1238,7 +1238,7 @@ class SettingsMenu(QDialog):
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab4 = QScrollArea()
-        self.tab4.setFixedWidth(640)
+        self.tab4.setFixedWidth(690)
         self.tab4.setAlignment(Qt.AlignHCenter)
         self.tab4.setWidgetResizable(True)
         self.tab4.setWidget(layout_holder)
@@ -1384,7 +1384,7 @@ class SettingsMenu(QDialog):
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab5 = QScrollArea()
-        self.tab5.setFixedWidth(640)
+        self.tab5.setFixedWidth(690)
         self.tab5.setAlignment(Qt.AlignHCenter)
         self.tab5.setWidgetResizable(True)
         self.tab5.setWidget(layout_holder)
@@ -1553,7 +1553,7 @@ class SettingsMenu(QDialog):
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab6 = QScrollArea()
-        self.tab6.setFixedWidth(640)
+        self.tab6.setFixedWidth(690)
         self.tab6.setAlignment(Qt.AlignHCenter)
         self.tab6.setWidgetResizable(True)
         self.tab6.setWidget(layout_holder)
@@ -1808,7 +1808,7 @@ class SettingsMenu(QDialog):
         layout_holder.setLayout(layout)
         self.tab7 = QScrollArea()
         #// I use this part to control the initial settings menu width -_-
-        self.tab7.setFixedWidth(645)
+        self.tab7.setFixedWidth(690)
         self.tab7.setAlignment(Qt.AlignHCenter)
         self.tab7.setWidgetResizable(True)
         self.tab7.setWidget(layout_holder)
@@ -1925,7 +1925,7 @@ class SettingsMenu(QDialog):
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab8 = QScrollArea()
-        self.tab8.setFixedWidth(640)
+        self.tab8.setFixedWidth(690)
         self.tab8.setAlignment(Qt.AlignHCenter)
         self.tab8.setWidgetResizable(True)
         self.tab8.setWidget(layout_holder)
@@ -1958,7 +1958,7 @@ class SettingsMenu(QDialog):
 
           <font color="tomato">Encountered a bug or some part is not acting how it's supposed to?<br></font>
           Tell me what your settings were on add-on, what's your anki version or if anki showed you an error log,<br>
-          copy the error log and comment it on <a href="https://ankiweb.net/shared/info/1136455830">Add-ons Page</a> or or <a href="mailto:mamad.jj98@gmail.com">Email me</a> <br>
+          copy the error log and comment it on <a href="https://ankiweb.net/shared/info/1136455830">Add-ons Page</a> or <a href="mailto:mamad.jj98@gmail.com">Email me</a> <br>
           (the more information you give me,<br>
           the sooner i find out what's causing the problem and i fix the bug)<br><br>
 

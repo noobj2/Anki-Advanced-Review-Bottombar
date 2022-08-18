@@ -18,6 +18,7 @@ Advanced Review Bottombar is an Anki add-on to customize and improve Anki's visu
 - [Backup and Restore](#backup-and-restore)
 - [Contribution](#contribution)
 - [License](#license)
+- [Changelog](CHANGELOG.md)
 
 ## Installation
 You can use one of the following ways to install Advanced Review Bottmbar:
@@ -51,8 +52,10 @@ If you're not able to install the add-on using `AnkiWeb` and `.ankiaddon`, you c
 **To install by directly copying add-on files to Anki add-ons folder follow these steps:**
 
 1. Go to [Rleases page](https://github.com/noobj2/Anki-Advanced-Review-Bottombar/releases) and find the version of the add-on that you want.
-2. Click on the `Source code (zip)` file and download it (you might have click on `Assets` to be able to see the `*.ankiaddon` file)
+2. Click on the `Source code (zip)` file and download it (you might have click on `Assets` to be able to see the `Source code (zip)` file)
 3. Extract the zip file and copy the folder inside it to `C:\Users\YOUR_USERNAME\AppData\Roaming\Anki2\addons21`
+
+  - You might need to re-name the extracted folder and delete the version code from the folder name. The folder containing the add-on files should be `Anki-Advanced-Review-Bottombar` instead of `Anki-Advanced-Review-Bottombar.VERSION_TAG`.
 
   - To open Anki add-ons folder you also can go to `Tools > Add-ons` and then click on `View Files`
 

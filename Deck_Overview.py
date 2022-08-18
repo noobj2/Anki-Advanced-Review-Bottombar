@@ -4,7 +4,7 @@ import time
 from datetime import date, timedelta
 from aqt import mw
 from copy import deepcopy
-from aqt.utils import shortcut, showInfo
+from aqt.utils import shortcut, showInfo, tr
 from anki import version
 anki_version = int(version.replace('.', ''))
 if anki_version > 2119:
@@ -66,16 +66,17 @@ def _drawButtons(self):
 #// Deck Overview Bottombar Buttons
 def _renderBottom(self):
     links = [
-        ["O", "opts", ("Options")],
+        ["O", "opts", tr.actions_options()],
     ]
     if self.mw.col.decks.current()["dyn"]:
-        links.append(["R", "refresh", ("Rebuild")])
-        links.append(["E", "empty", ("Empty")])
+        links.append(["R", "refresh", tr.actions_rebuild()])
+        links.append(["E", "empty", tr.studying_empty()])
     else:
-        links.append(["C", "studymore", ("Custom Study")])
+        links.append(["C", "studymore", tr.actions_custom_study()])
         # links.append(["F", "cram", ("Filter/Cram")])
     if self.mw.col.sched.haveBuried():
-        links.append(["U", "unbury", ("Unbury")])
+        links.append(["U", "unbury", tr.studying_unbury()])
+    links.append(["", "description", tr.scheduling_description()])
     buf = "{}".format(bottomHTML_style)
     if style_mainScreenButtons:
         #// style='height: px' -> to prevent changing main screen buttons heights

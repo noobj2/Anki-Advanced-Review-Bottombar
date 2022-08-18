@@ -40,6 +40,10 @@ info_width = config["Button_ Width_ Info Button"]
 skip_width = config["Button_ Width_ Skip Button"]
 more_width = config["Button_ Width_ More Button"]
 undo_width = config["Button_ Width_ Undo Button"]
+again_label = config['Button Label_ Again']
+hard_label = config['Button Label_ Hard']
+good_label = config['Button Label_ Good']
+easy_label = config['Button Label_ Easy']
 if not custom_sizes:
     edit_width = 72
     info_width = 64
@@ -58,34 +62,35 @@ else:
     easy_backgroundColor = "#21C0FF"
 
 
-# should i store text, color and position all in this function?? YESSS (This is hard for me to understand)
+#// should i store text, color and position all in this function?? YESSS
+#// this function stores text, color and position of tooltip -> button = ["TOOLTIP_TEXT", TOOLTIP_COLOR, TOOLTIP_X, TOOLTIP_Y]
 def myTooltip(self, ease):
     button_count = self.mw.col.sched.answerButtons(self.card)
     if button_count == 2:
         if ease == 1:
-            button = ["Again", again_backgroundColor, -1, -39]
+            button = [again_label, again_backgroundColor, -1, -39]
         elif ease == 2:
-            button = ["Good", good_backgroundColor, 70, -39]
+            button = [good_label, good_backgroundColor, 70, -39]
         else:
             button = ["", "transparent", 20000, 20000]
     elif button_count == 3:
             if ease == 1:
-                button = ["Again", again_backgroundColor, -37, -39]
+                button = [again_label, again_backgroundColor, -37, -39]
             elif ease == 2:
-                button = ["Good", good_backgroundColor, 35, -39]
+                button = [good_label, good_backgroundColor, 35, -39]
             elif ease == 3:
-                button = ["Easy", easy_backgroundColor, 107, -39]
+                button = [easy_label, easy_backgroundColor, 107, -39]
             else:
                 button = ["", "transparent", 20000, 20000]
     else:
         if ease == 1:
-            button = ["Again", again_backgroundColor, -73, -39]
+            button = [again_label, again_backgroundColor, -73, -39]
         elif ease == 2:
-            button = ["Hard", hard_backgroundColor, -3, -39]
+            button = [hard_label, hard_backgroundColor, -3, -39]
         elif ease == 3:
-            button = ["Good", good_backgroundColor, 70, -39]
+            button = [good_label, good_backgroundColor, 70, -39]
         elif ease == 4:
-            button = ["Easy", easy_backgroundColor, 142, -39]
+            button = [easy_label, easy_backgroundColor, 142, -39]
         else:
             button = ["", "transparent", 20000, 20000]
     # default button size

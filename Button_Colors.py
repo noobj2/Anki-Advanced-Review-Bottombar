@@ -3,7 +3,6 @@
 
 from aqt.reviewer import Reviewer
 from aqt import mw
-from anki.scheduler.v3 import Scheduler as V3Scheduler
 from . import styles
 
 
@@ -84,13 +83,6 @@ def _answerButtonList(self):
 def _answerButtons(self):
     cnt = self.mw.col.sched.answerButtons(self.card)
     default = self._defaultEase()
-
-    if v3 := self._v3:
-        assert isinstance(self.mw.col.sched, V3Scheduler)
-        labels = self.mw.col.sched.describe_next_states(v3.states)
-    else:
-        labels = None
-
     def but(i, label):
         #// Setting id name for each button based on their ease value
         if cnt == 2:
@@ -131,7 +123,7 @@ def _answerButtons(self):
                 button_id = "easy"
             else:
                 button_id = ""
-        due_plain = self._buttonTime(i, v3_labels=labels)
+        due_plain = self._buttonTime(i)
         inButton_due = ""
         if interval_style == 1:
             if button_id == "again":

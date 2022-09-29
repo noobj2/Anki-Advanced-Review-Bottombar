@@ -1,5 +1,11 @@
 <html>
   <div class="background">
+    <h1>2022/9/29</h1>
+    <ul>
+      <li>Fix/show intervals of custom scheduling (Thanks to <a href="https://github.com/L-M-Sherlock">Jarrett Ye</a>) [Works only on anki versions > 2.1.55]</li>
+    </ul>
+  </div>
+  <div class="background">
     <h1>2022/8/18</h1>
     <ul>
       <li>Added new feature: Tooltip Offset (Added by <a href="https://github.com/devinmugen">@devinmugen</a>)</li>

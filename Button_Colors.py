@@ -197,8 +197,8 @@ def _answerButtons(self):
         else:
             bottombar_table = ""
         return style + button_styles + '''
-<td align=center>{0}
-<button title="Shortcut Key: {1}" data-ease="{1}" onclick='pycmd("ease{1}");' class={2} id={3} {4}>{5}{6}</button>
+<td align=center><br>
+<button title="Shortcut Key: {1}" data-ease="{1}" onclick='pycmd("ease{1}");' class={2} id={3} {4}>{5}{6} {0}</button>
 </td>'''.format(due, i, button_class, button_id, extra, label, inButton_due)
     #// adjusting the answer button table for wide button
     if button_style == 2 or button_style == 3:

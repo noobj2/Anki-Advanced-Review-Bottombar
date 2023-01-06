@@ -294,9 +294,9 @@ def _bottomHTML(self):
 %(right_side2)s
 %(right_side3)s
 %(right_side4)s
-<td width=50 align=right valign=top class=stat style='color: %(time_color)s'><br>
-<button onclick="pycmd('more');" %(more_style)s>%(more_label)s %(downArrow)s <span id=time class=stattxt>
-</span></button>
+<td width=50 align=right valign=top class=stat style='color: %(time_color)s'><span id=time class=stattxt>
+</span><br>
+<button onclick="pycmd('more');" %(more_style)s>%(more_label)s %(downArrow)s</button>
 </td>
 </tr>
 </table>
@@ -350,13 +350,12 @@ def _showAnswerButton(self):
             self.bottom.web.eval("setAutoAlert(%d);" % (c['autoAlert'] * 1000))
     middle = '''
 <table cellspacing=0 cellpadding=0><tr><td class=stat2 align=center>
-<br>
+<span class=stattxt> %(remaining)s </span><br>
 %(middleLeft_side1)s
 %(middleLeft_side2)s
 %(middleLeft_side3)s
 %(middleLeft_side4)s
-<button title="Shortcut key: Space" onclick='pycmd("ans");' %(answer_style)s>%(showAnswer_text)s
-    <span class="stattxt"> %(remaining)s </span></button>
+<button title="Shortcut key: Space" onclick='pycmd("ans");' %(answer_style)s>%(showAnswer_text)s</button>
 %(middleRight_side1)s
 %(middleRight_side2)s
 %(middleRight_side3)s

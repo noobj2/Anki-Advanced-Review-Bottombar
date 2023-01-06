@@ -1,5 +1,11 @@
 <html>
   <div class="background">
+      <h1>2023/01/06</h1>
+      <ul>
+        <li>Fix/show intervals not showing intervals</li>
+      </ul>
+    </div>
+  <div class="background">
     <h1>2022/9/29</h1>
     <ul>
       <li>Fix/show intervals of custom scheduling (Thanks to <a href="https://github.com/L-M-Sherlock">Jarrett Ye</a>) [Works only on anki versions > 2.1.55]</li>

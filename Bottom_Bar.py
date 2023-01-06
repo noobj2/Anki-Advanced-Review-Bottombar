@@ -1,5 +1,5 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2023 Mohamad Janati
 
 import json
 from aqt import mw
@@ -231,42 +231,42 @@ else:
 
 #// setting buttons based on their position
 if leftSide_button1 != "":
-    left_side1 = "<td width=50 align=left valign=top class=stat><br> {} </td>".format(leftSide_button1)
+    left_side1 = "<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {} </td>".format(leftSide_button1)
 else:
     left_side1 = ""
 
 if leftSide_button2 != "":
-    left_side2 = "<td width=50 align=left valign=top class=stat><br> {} </td>".format(leftSide_button2)
+    left_side2 = "<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {} </td>".format(leftSide_button2)
 else:
     left_side2 = ""
 
 if leftSide_button3 != "":
-    left_side3 = "<td width=50 align=left valign=top class=stat><br> {} </td>".format(leftSide_button3)
+    left_side3 = "<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {} </td>".format(leftSide_button3)
 else:
     left_side3 = ""
 
 if leftSide_button4 != "":
-    left_side4 = "<td width=50 align=left valign=top class=stat><br> {} </td>".format(leftSide_button4)
+    left_side4 = "<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {} </td>".format(leftSide_button4)
 else:
     left_side4 = ""
 
 if rightSide_button1 != "":
-    right_side1 = "<td width=50 align=right valign=top class=stat><br> {} </td>".format(rightSide_button1)
+    right_side1 = "<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {} </td>".format(rightSide_button1)
 else:
     right_side1 = ""
 
 if rightSide_button2 != "":
-    right_side2 = "<td width=50 align=right valign=top class=stat><br> {} </td>".format(rightSide_button2)
+    right_side2 = "<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {} </td>".format(rightSide_button2)
 else:
     right_side2 = ""
 
 if rightSide_button3 != "":
-    right_side3 = "<td width=50 align=right valign=top class=stat><br> {} </td>".format(rightSide_button3)
+    right_side3 = "<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {} </td>".format(rightSide_button3)
 else:
     right_side3 = ""
 
 if rightSide_button4 != "":
-    right_side4 = "<td width=50 align=right valign=top class=stat><br> {} </td>".format(rightSide_button4)
+    right_side4 = "<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {} </td>".format(rightSide_button4)
 else:
     right_side4 = ""
 
@@ -279,23 +279,23 @@ def _bottomHTML(self):
     return """%(bottomHTML_style)s
 %(min_buttonSize)s
 <center id=outer>
-<table id=innertable width=100%% cellspacing=0 cellpadding=0>
+<table id=innertable width=100%% cellspacing=0 cellpadding=0 style="padding-top: 15px">
 <tr>
-<td align=left width=50 valign=top class=stat>
-<br>
+<td align=left width=50 valign=top class=stat style="padding-top: 0">
+
 <button title="Shortcut key: E" onclick="pycmd('edit');" %(edit_style)s>%(edit_label)s</button></td>
 %(left_side1)s
 %(left_side2)s
 %(left_side3)s
 %(left_side4)s
-<td align=center valign=top id=middle>
+<td align=center valign=top id=middle style="padding-top: 0px">
 </td>
 %(right_side1)s
 %(right_side2)s
 %(right_side3)s
 %(right_side4)s
-<td width=50 align=right valign=top class=stat style='color: %(time_color)s'><span id=time class=stattxt>
-</span><br>
+<td width=50 align=right valign=top class=stat style='color: %(time_color)s; padding-top: 0px'><span id=time class=stattxt>
+</span>
 <button onclick="pycmd('more');" %(more_style)s>%(more_label)s %(downArrow)s</button>
 </td>
 </tr>
@@ -349,8 +349,8 @@ def _showAnswerButton(self):
         if c.get('autoAlert', 0) > 0:
             self.bottom.web.eval("setAutoAlert(%d);" % (c['autoAlert'] * 1000))
     middle = '''
-<table cellspacing=0 cellpadding=0><tr><td class=stat2 align=center>
-<span class=stattxt> %(remaining)s </span><br>
+<table cellspacing=0 cellpadding=0><tr><td class=stat2 align=center style="padding-top: 0px">
+<span class=stattxt> %(remaining)s </span>
 %(middleLeft_side1)s
 %(middleLeft_side2)s
 %(middleLeft_side3)s

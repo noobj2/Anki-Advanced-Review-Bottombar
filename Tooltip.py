@@ -1,5 +1,5 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2023 Mohamad Janati
 
 
 from aqt.utils import tooltip

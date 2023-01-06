@@ -1,5 +1,5 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2021 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2023 Mohamad Janati
 
 from aqt.reviewer import Reviewer
 from aqt import mw
@@ -197,7 +197,7 @@ def _answerButtons(self):
         else:
             bottombar_table = ""
         return style + button_styles + '''
-<td align=center>{0}
+<td align=center style="padding-top: 0px">{0}
 <button title="Shortcut Key: {1}" data-ease="{1}" onclick='pycmd("ease{1}");' class={2} id={3} {4}>{5}{6}</button>
 </td>'''.format(due, i, button_class, button_id, extra, label, inButton_due)
     #// adjusting the answer button table for wide button

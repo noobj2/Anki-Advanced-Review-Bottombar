@@ -1,3 +1,5 @@
+#// auth_ Mohamad Janati
+#// Copyright (c) 2019-2023 Mohamad Janati
 
 from aqt import mw
 from aqt import gui_hooks

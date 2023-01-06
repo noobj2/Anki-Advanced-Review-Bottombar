@@ -1,5 +1,5 @@
 #// auth_ Mohamad Janati
-#// Copyright (c) 2019-2022 Mohamad Janati (freaking stupid, right? :|)
+#// Copyright (c) 2019-2023 Mohamad Janati
 
 from os.path import  join, dirname
 from datetime import datetime

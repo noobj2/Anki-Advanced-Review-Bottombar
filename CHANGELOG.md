@@ -1,4 +1,17 @@
 <html>
+  <div div class="background">
+    <h1>2023/01/31</h1>
+    <ul>
+      <li>Fixed button intervals inside the button not showing</li>
+      <li>Fixed button intervals being too close to the top of the bottombar</li>
+      <li>Fixed timer not showing</li>
+      <li>Fixed buried card count not showing on the stock style deck overview screen</li>
+      <li>Fixed Card Info Sidebar error on new cards</li>
+      <li>Fixed backup issue on mac</li>
+      <li>Added Feature to hide "Easy" button if the card is not in learning phase (enable in misc tab)</li>
+      <li>Other minor changes and improvements</li>
+    </ul>
+  </div>
   <div class="background">
       <h1>2023/01/06</h1>
       <ul>

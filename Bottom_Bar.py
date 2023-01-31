@@ -111,16 +111,27 @@ Review_linkHandelr_Original = Reviewer._linkHandler
 Reviewer._linkHandler = linkHandler_wrap
 
 #// Choosing styling for review other buttons in reviewer bottombar based on chosen style
+timer_style = """
+.timer_style {
+    position: absolute;
+    white-space: nowrap;
+    font-size: small;
+    right: 0px;
+    transform: translate(-50%, -100%);
+    font-weight: normal;
+    display: inline-block;
+    }
+"""
 if bottombarButtons_style == 0:
-    bottomHTML_style = "<style></style>"
+    bottomHTML_style = "<style>{}</style>".format(timer_style)
 elif bottombarButtons_style == 1:
-    bottomHTML_style = bottombar_neon1
+    bottomHTML_style = "<style>{}{}</style>".format(bottombar_neon1, timer_style)
 elif bottombarButtons_style == 2:
-    bottomHTML_style = bottombar_neon2
+    bottomHTML_style = "<style>{}{}</style>".format(bottombar_neon2, timer_style)
 elif bottombarButtons_style == 3:
-    bottomHTML_style = bottombar_fill1
+    bottomHTML_style = "<style>{}{}</style>".format(bottombar_fill1, timer_style)
 elif bottombarButtons_style == 4:
-    bottomHTML_style = bottombar_fill2
+    bottomHTML_style = "<style>{}{}</style>".format(bottombar_fill2, timer_style)
 
 #// info button | written in a separate functions to preserve the original bottombar
 def info_button():
@@ -279,9 +290,9 @@ def _bottomHTML(self):
     return """%(bottomHTML_style)s
 %(min_buttonSize)s
 <center id=outer>
-<table id=innertable width=100%% cellspacing=0 cellpadding=0 style="padding-top: 15px">
+<table id=innertable width=100%% cellspacing=0 cellpadding=0 style="padding-top: 25px">
 <tr>
-<td align=left width=50 valign=top class=stat style="padding-top: 0">
+<td align=start width=50 valign=top class=stat style="padding-top: 0">
 
 <button title="Shortcut key: E" onclick="pycmd('edit');" %(edit_style)s>%(edit_label)s</button></td>
 %(left_side1)s
@@ -294,7 +305,8 @@ def _bottomHTML(self):
 %(right_side2)s
 %(right_side3)s
 %(right_side4)s
-<td width=50 align=right valign=top class=stat style='color: %(time_color)s; padding-top: 0px'><span id=time class=stattxt>
+<td width=50 align=end valign=top class=stat style='color: %(time_color)s; padding-top: 0px'>
+<span id=time class=timer_style>hey
 </span>
 <button onclick="pycmd('more');" %(more_style)s>%(more_label)s %(downArrow)s</button>
 </td>
@@ -349,7 +361,8 @@ def _showAnswerButton(self):
         if c.get('autoAlert', 0) > 0:
             self.bottom.web.eval("setAutoAlert(%d);" % (c['autoAlert'] * 1000))
     middle = '''
-<table cellspacing=0 cellpadding=0><tr><td class=stat2 align=center style="padding-top: 0px">
+<table cellspacing=0 cellpadding=0>
+<tr><td class=stat2 align=center style="padding-top: 0px">
 <span class=stattxt> %(remaining)s </span>
 %(middleLeft_side1)s
 %(middleLeft_side2)s
@@ -360,7 +373,8 @@ def _showAnswerButton(self):
 %(middleRight_side2)s
 %(middleRight_side3)s
 %(middleRight_side4)s
-</td></tr></table>''' % dict(remaining=self._remaining(), middleLeft_side1=middleLeftSide_button1, middleLeft_side2=middleLeftSide_button2, middleLeft_side3=middleLeftSide_button3, middleLeft_side4=middleLeftSide_button4,
+</td></tr>
+</table>''' % dict(remaining=self._remaining(), middleLeft_side1=middleLeftSide_button1, middleLeft_side2=middleLeftSide_button2, middleLeft_side3=middleLeftSide_button3, middleLeft_side4=middleLeftSide_button4,
     answer_style=showAnswer_style, middleRight_side1=middleRightSide_button1, middleRight_side2=middleRightSide_button2, middleRight_side3=middleRightSide_button3, middleRight_side4=middleRightSide_button4, showAnswer_text=showAnswer_text)
     # wrap it in a table, so it has the same top margin as the ease buttons
     middle = "%s" % middle

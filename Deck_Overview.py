@@ -30,13 +30,13 @@ bottombar_fill2 = styles.bottombar_fill2
 if bottombarButtons_style == 0:
     bottomHTML_style = "<style></style>"
 elif bottombarButtons_style == 1:
-    bottomHTML_style = bottombar_neon1
+    bottomHTML_style = "<style>{}</style>".format(bottombar_neon1)
 elif bottombarButtons_style == 2:
-    bottomHTML_style = bottombar_neon2
+    bottomHTML_style = "<style>{}</style>".format(bottombar_neon2)
 elif bottombarButtons_style == 3:
-    bottomHTML_style = bottombar_fill1
+    bottomHTML_style = "<style>{}</style>".format(bottombar_fill1)
 elif bottombarButtons_style == 4:
-    bottomHTML_style = bottombar_fill2
+    bottomHTML_style = "<style>{}</style>".format(bottombar_fill2)
 
 #// Main Screen Bottombar Buttons
 def _drawButtons(self):
@@ -593,52 +593,57 @@ elif more_overviewStats == 2:
 
 else:
     def _table(self):
-            counts = list(self.mw.col.sched.counts())
-            finished = not sum(counts)
-            if self.mw.col.sched_ver() == 1:
-                for n in range(len(counts)):
-                    if counts[n] >= 1000:
-                        counts[n] = "1000+"
-            but = self.mw.button
-            if finished:
-                return '<div style="white-space: pre-wrap;">%s</div>' % (
-                    self.mw.col.sched.finishedMsg()
-                )
-            else:
-                if style_mainScreenButtons:
-                    #// style='height: px' -> to prevent changing main screen buttons heights
-                    # based on height defined in #main {}
-                    mainScreen_style = """id=main style='height: px' """
-                else:
-                    mainScreen_style = ""
-                if style_mainScreenButtons:
-                    studyButton_id = "main"
-                else:
-                    studyButton_id = "study"
-                return """%s
-    <table width=400 cellpadding=5>
-    <tr><td align=center valign=top>
-    <table cellspacing=5>
-    <tr><td>%s:</td><td><b><span class=new-count>%s</span></b></td></tr>
-    <tr><td>%s:</td><td><b><span class=learn-count>%s</span></b></td></tr>
-    <tr><td>%s:</td><td><b><span class=review-count>%s</span></b></td></tr>
-    </table>
-    </td><td align=center>
-    %s</td></tr></table>""" % (
-                    bottomHTML_style,
-                    ("New"),
-                    counts[0],
-                    ("Learning"),
-                    counts[1],
-                    ("To Review"),
-                    counts[2],
-                    but("study", ("Study Now"), id="{}".format(studyButton_id), extra="autofocus"),
-                )
+        counts = list(self.mw.col.sched.counts())
+        current_did = self.mw.col.decks.get_current_id()
+        deck_node = self.mw.col.sched.deck_due_tree(current_did)
+
+        but = self.mw.button
+        if self.mw.col.v3_scheduler():
+            buried_new = deck_node.new_count - counts[0]
+            buried_learning = deck_node.learn_count - counts[1]
+            buried_review = deck_node.review_count - counts[2]
+        else:
+            buried_new = buried_learning = buried_review = 0
+        buried_label = tr.studying_counts_differ()
+
+        def number_row(title: str, klass: str, count: int, buried_count: int) -> str:
+            buried = f"{buried_count:+}" if buried_count else ""
+            return f"""
+<tr>
+    <td>{title}:</td>
+    <td>
+        <b>
+            <span class={klass}>{count}</span>
+            <span class=bury-count title="{buried_label}">{buried}</span>
+        </b>
+    </td>
+</tr>
+"""
+
+        return f"""
+<table width=400 cellpadding=5>
+<tr><td align=center valign=top>
+<table cellspacing=5>
+{number_row(tr.actions_new(), "new-count", counts[0], buried_new)}
+{number_row(tr.scheduling_learning(), "learn-count", counts[1], buried_learning)}
+{number_row(tr.studying_to_review(), "review-count", counts[2], buried_review)}
+</table>
+</td><td align=center>
+{but("study", tr.studying_study_now(), id="study", extra=" autofocus")}</td></tr></table>"""
+
+    _body = """
+<center>
+<h3>%(deck)s</h3>
+%(shareLink)s
+%(desc)s
+%(table)s
+</center>
+"""
 
 def _limit(counts):
     for i, count in enumerate(counts):
         if count >= 1000:
-	        counts[i] = "1000+"
+          counts[i] = "1000+"
     return counts
 
 

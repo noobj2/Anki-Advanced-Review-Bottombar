@@ -122,7 +122,7 @@ if not custom_colors:
 #// edit_style, info_style, etc. make us able to define classes, ids or add styles to each button
 #// classes and ids should be defined in bottomHTML_style first
 if is_nightMode:
-    bottombar_neon1 = """<style>
+    bottombar_neon1 = """
     #main {
       padding: 5px 20px;
       color: %(text)s;
@@ -138,8 +138,8 @@ if is_nightMode:
       color: black;
       box-shadow: 0 2px 10px 0 %(text)s;
     }
-    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
-    bottombar_neon2 = """<style>
+    """ % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
+    bottombar_neon2 = """
     #main {
       padding: 5px 20px;
       color: black;
@@ -156,8 +156,8 @@ if is_nightMode:
       color: %(text)s;
       box-shadow: none;
     }
-    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
-    bottombar_fill1 = """<style>
+    """ % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
+    bottombar_fill1 = """
     #main {
       padding: 5px 20px;
       border: 1px solid %(border_color)s;
@@ -187,8 +187,8 @@ if is_nightMode:
     #main:hover::before {
       height: 180%%;
     }
-    </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
-    bottombar_fill2 = """<style>
+    """ % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
+    bottombar_fill2 = """
         #main {
           padding: 5px 20px;
           border: 1px solid %(border_color)s;
@@ -218,9 +218,9 @@ if is_nightMode:
         #main:hover::before {
           height: 0%%;
         }
-        </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
+        """ % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
 else:
-    bottombar_neon1 = """<style>
+    bottombar_neon1 = """
     #main {
       padding: 5px 20px;
       color: %(text)s;
@@ -236,8 +236,8 @@ else:
       color: #f0f0f0;
       box-shadow: 0 2px 10px 0 %(text)s;
     }
-    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
-    bottombar_neon2 = """<style>
+    """ % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
+    bottombar_neon2 = """
     #main {
       padding: 5px 20px;
       color: white;
@@ -255,8 +255,8 @@ else:
       color: %(text)s;
       box-shadow: none;
     }
-    </style>""" % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
-    bottombar_fill1 = """<style>
+    """ % dict (text=bottombarButton_textColor, border_color=border_color, border_radius=border_radius, cursor=cursor, transition=transition)
+    bottombar_fill1 = """
     #main {
       padding: 5px 20px;
       border: 1px solid %(border_color)s;
@@ -286,8 +286,8 @@ else:
     #main:hover::before {
       height: 180%%;
     }
-    </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
-    bottombar_fill2 = """<style>
+    """ % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
+    bottombar_fill2 = """
         #main {
           padding: 5px 20px;
           border: 1px solid %(border_color)s;
@@ -317,7 +317,7 @@ else:
         #main:hover::before {
           height: 0%%;
         }
-        </style>""" % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
+        """ % dict(text=bottombarButton_textColor, border_color=border_color, cursor=cursor, transition=transition, border_radius=border_radius)
 
 if custom_buttonSize:
     if bottombarButtons_style == 0:

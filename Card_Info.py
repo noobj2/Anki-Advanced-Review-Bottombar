@@ -253,7 +253,17 @@ class StatsSidebar(object):
                 pressed_again = mw.col.db.scalar("select sum(case when ease = 1 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_good = mw.col.db.scalar("select sum(case when ease = 2 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_easy = mw.col.db.scalar("select sum(case when ease = 3 then 1 else 0 end) from revlog where cid = ?", c.id)
+                if not pressed_again:
+                    pressed_again = 0
+                if not pressed_hard:
+                    pressed_hard = 0
+                if not pressed_good:
+                    pressed_good = 0
+                if not pressed_easy:
+                    pressed_easy = 0
                 pressed_all = pressed_again + pressed_good + pressed_easy
+                if pressed_all == 0:
+                    pressed_all = 1
                 self.addLine("Again", "{} | {:.0f}%".format(str(pressed_again).rjust(4), float(pressed_again/pressed_all)*100))
                 self.addLine("Good", "{} | {:.0f}%".format(str(pressed_good).rjust(4), float(pressed_good/pressed_all)*100))
                 self.addLine("Easy", "{} | {:.0f}%".format(str(pressed_easy).rjust(4), float(pressed_easy/pressed_all)*100))
@@ -262,7 +272,17 @@ class StatsSidebar(object):
                 pressed_hard = mw.col.db.scalar("select sum(case when ease = 2 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_good = mw.col.db.scalar("select sum(case when ease = 3 then 1 else 0 end) from revlog where cid = ?", c.id)
                 pressed_easy = mw.col.db.scalar("select sum(case when ease = 4 then 1 else 0 end) from revlog where cid = ?", c.id)
+                if not pressed_again:
+                    pressed_again = 0
+                if not pressed_hard:
+                    pressed_hard = 0
+                if not pressed_good:
+                    pressed_good = 0
+                if not pressed_easy:
+                    pressed_easy = 0
                 pressed_all = pressed_again + pressed_hard + pressed_good + pressed_easy
+                if pressed_all == 0:
+                    pressed_all = 1
                 self.addLine("Again", "{} | {:.0f}%".format(str(pressed_again).rjust(4), float(pressed_again/pressed_all)*100))
                 self.addLine("Hard", "{} | {:.0f}%".format(str(pressed_hard).rjust(4), float(pressed_hard/pressed_all)*100))
                 self.addLine("Good", "{} | {:.0f}%".format(str(pressed_good).rjust(4), float(pressed_good/pressed_all)*100))

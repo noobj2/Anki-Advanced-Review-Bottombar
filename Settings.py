@@ -6,6 +6,7 @@ from datetime import datetime
 from aqt import mw
 from aqt.qt import *
 from aqt.utils import tooltip, showInfo, askUser, getText
+from anki.utils import isLin, isMac, isWin
 import random
 import os
 import json
@@ -14,7 +15,7 @@ import subprocess
 
 def refreshConfig():
     #// Makes the information that it gets from "config" global, so I can use them for loading the current settings in "loadCurrent(self)" function
-    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_interval_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_reviewTooltip_offset, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_text_size, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_position, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_configEdit, C_overViewStats, C_settingsMenu_palce, C_skipMethod
+    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_interval_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_reviewTooltip_offset, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_text_size, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_position, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_speedFocus, C_configEdit, C_hideEasyIfNotLearning, C_overViewStats, C_settingsMenu_palce, C_skipMethod
 
     config = mw.addonManager.getConfig(__name__)
 
@@ -140,6 +141,7 @@ def refreshConfig():
     C_button_colors = config['  Button Colors']
     C_speedFocus = config['  Speed Focus Add-on']
     C_configEdit = config['  Direct Config Edit']
+    C_hideEasyIfNotLearning = config['  Hide Easy if not in Learning']
     C_overViewStats = config['  More Overview Stats']
     C_settingsMenu_palce = config['  Settings Menu Place']
     C_skipMethod = config['  Skip Method']
@@ -274,61 +276,57 @@ class GetShortcut(QDialog):
     def keyReleaseEvent(self, evt):
         #// reduces the number of held keys upon releasing each key
         self.active -= 1
-        #// I was having fun -_- don't blame me
-        shiftList = ["Who uses \"Shift\" alone as a shortcut key?", "You wanna use \"Shift\" without any other key as your shortcut??\n\n SERIOUSLY?!?!", "You must have forgotten to press another key...\n\n I don't wanna believe that there is someone who uses \"Shift\" without another key as a shortcut", "Dude, you can't just use \"Shift\"\n\n You should combine it with another key", "Are you really trying to use \"Shift\" as your shortcut?!!\n\n C'mon...", "What's so special about \"Shift\" that you wanna use it alone as a shortcut??", "\"Shift\" is scared of being used alone, you should use it with another key :)"]
+        #TODO: key sequence to unpam the shortcut
+        message = "You can't set \"{}\" as a shortcut!"
         if os.name == "nt":
-            altList = ["Who uses \"Alt\" alone as a shortcut key?", "You wanna use \"Alt\" without any other key as your shortcut??\n\n SERIOUSLY?!?!", "You must have forgotten to press another key...\n\n I don't wanna believe that there is someone who uses \"Alt\" without another key as a shortcut", "Dude, you can't just use \"Alt\"\n\n You should combine it with another key", "Are you really trying to use \"Alt\" as your shortcut?!!\n\n C'mon...", "What's so special about \"Alt\" that you wanna use it alone as a shortcut??", "\"Alt\" is scared of being used alone, you should use it with another key :)"]
-            ctrlList = ["Who uses \"Ctrl\" alone as a shortcut key?", "You wanna use \"Ctrl\" without any other key as your shortcut??\n\n SERIOUSLY?!?!", "You must have forgotten to press another key...\n\n I don't wanna believe that there is someone who uses \"Ctrl\" without another key as a shortcut", "Dude, you can't just use \"Ctrl\"\n\n You should combine it with another key", "Are you really trying to use \"Ctrl\" as your shortcut?!!\n\n C'mon...", "What's so special about \"Ctrl\" that you wanna use it alone as a shortcut??", "\"Ctrl\" is scared of being used alone, you should use it with another key :)"]
+            altMessage = message.format("Alt")
+            ctrlMessage = message.format("Ctrl")
         else:
-            altList = ["Who uses \"Option\" alone as a shortcut key?", "You wanna use \"Option\" without any other key as your shortcut??\n\n SERIOUSLY?!?!", "You must have forgotten to press another key...\n\n I don't wanna believe that there is someone who uses \"Option\" without another key as a shortcut", "Dude, you can't just use \"Option\"\n\n You should combine it with another key", "Are you really trying to use \"Option\" as your shortcut?!!\n\n C'mon...", "What's so special about \"Option\" that you wanna use it alone as a shortcut??", "\"Option\" is scared of being used alone, you should use it with another key :)"]
-            ctrlList = ["Who uses \"Command\" alone as a shortcut key?", "You wanna use \"Command\" without any other key as your shortcut??\n\n SERIOUSLY?!?!", "You must have forgotten to press another key...\n\n I don't wanna believe that there is someone who uses \"Command\" without another key as a shortcut", "Dude, you can't just use \"Command\"\n\n You should combine it with another key", "Are you really trying to use \"Command\" as your shortcut?!!\n\n C'mon...", "What's so special about \"Command\" that you wanna use it alone as a shortcut??", "\"Command\" is scared of being used alone, you should use it with another key :)"]
-        shiftAlone = random.choice(shiftList)
-        altAlone = random.choice(altList)
-        ctrlAlone = random.choice(ctrlList)
+            altMessage = message.format("Option")
+            ctrlMessage = message.format("Command")
         if not (self.f1 or self.f2 or self.f3 or self.f4 or self.f5 or self.f6 or self.f7 or self.f8 or self.f9 or self.f10 or self.f11 or self.f12):
             if not self.extra:
-                #// special treats for buttons that everyone knows can't be used as a shortcut on their own -_-
-                if self.alt:
-                    showInfo("{}".format(altAlone), title="Advanced Review Bottombar")
-                elif self.shift:
-                    showInfo("{}".format(shiftAlone), title="Advanced Review Bottombar")
-                elif self.ctrl:
-                    showInfo("{}".format(ctrlAlone), title="Advanced Review Bottombar")
                 #// lets the users that the pressed key is not allowed to be used in a shortcut
+                if self.alt:
+                    showInfo("{}".format(altMessage), title="Advanced Review Bottombar")
+                elif self.shift:
+                    showInfo("{}".format(message.format("Shift")), title="Advanced Review Bottombar")
+                elif self.ctrl:
+                    showInfo("{}".format(ctrlMessage), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Escape:
-                    showInfo("You can't use \"Escape\" as shortcut, try something else", title="Advanced Review Bottombar")
+                    showInfo(message.format("Esc"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Tab:
-                    showInfo("Don't you know \"Tab\" Always does something? Why do you even try to set it as your shortcut?", title="Advanced Review Bottombar")
+                    showInfo(message.format("Tab"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Backspace:
-                    showInfo("Are you really trying to set \"Backspace\" as your shortcut? Seriously?", title="Advanced Review Bottombar")
+                    showInfo(message.format("Backspace"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Enter:
-                    showInfo("Have you ever seen anyone using \"Enter\" as a shortcut??\n\nWhy are you even trying to set it as your shortcut?", title="Advanced Review Bottombar")
+                    showInfo(message.format("Esc"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Return:
-                    showInfo("Have you ever seen anyone using \"Enter\" as a shortcut??\n\nWhy are you even trying to set it as your shortcut?", title="Advanced Review Bottombar")
+                    showInfo(message.format("Enter"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Insert:
-                    showInfo("You can't use \"Insert\" as shortcut, try something else", title="Advanced Review Bottombar")
+                    showInfo(message.format("Insert"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Delete:
-                    showInfo("Who even thinks about using \"Delete\" as shortcut?? WTF man, SERIOUSLY????", title="Advanced Review Bottombar")
+                    showInfo(message.format("Delete"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Pause:
-                    showInfo("You can't use \"Pause/Break\" as shortcut, try something else", title="Advanced Review Bottombar")
+                    showInfo(message.format("Pause/Break"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Home:
-                    showInfo("Do you really think \"Home Key\" is a good key a a shortcut??!", title="Advanced Review Bottombar")
+                    showInfo(message.format("Home Key"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Left:
-                    showInfo("You can't use \"Left\" as shortcut, try something else", title="Advanced Review Bottombar")
+                    showInfo(message.format("Left"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Up:
-                    showInfo("You can't use \"Up\" as shortcut, try something else", title="Advanced Review Bottombar")
+                    showInfo(message.format("Up"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Right:
-                    showInfo("You can't use \"Right\" as shortcut, try something else", title="Advanced Review Bottombar")
+                    showInfo(message.format("Right"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_Down:
-                    showInfo("You can't use \"Down\" as shortcut, try something else", title="Advanced Review Bottombar")
+                    showInfo(message.format("Down"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_PageUp:
-                    showInfo("You can't use \"Page Up\" as shortcut, try something else.\n\nEven if you could, would it really be a SHORTcut?? I mean look at you keyboard...", title="Advanced Review Bottombar")
+                    showInfo(message.format("Page Up"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_PageDown:
-                    showInfo("You can't use \"Page Down\" as shortcut, try something else.\n\nEven if you could, would it really be a SHORTcut?? I mean look at you keyboard...", title="Advanced Review Bottombar")
+                    showInfo(message.format("Page DOwn"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_CapsLock:
-                    showInfo("wHO THINKS IT'S A GOOD IDEA TO USE \"cAPs LoCk\" AS A SHORTCUT???", title="Advanced Review Bottombar")
+                    showInfo(message.format("CAPS Lock"), title="Advanced Review Bottombar")
                 elif evt.key() == Qt.Key_NumLock:
-                    showInfo("Why \"Num Lock\"???\n\n It's THE MOST remote key on keyboard, it can't be a SHORTcut man...", title="Advanced Review Bottombar")
+                    showInfo(message.format("Num Lock"), title="Advanced Review Bottombar")
                 else:
                     showInfo("You can't use that as shortcut, try something else.", title="Advanced Review Bottombar")
                 self.alt = False
@@ -1966,11 +1964,29 @@ class SettingsMenu(QDialog):
         configEdit_holder.addStretch()
         configEdit_box = QGroupBox()
         configEdit_box.setLayout(configEdit_holder)
+
+        hideEasyIfNotLearning_label = QLabel("Hide Easy if not in Learning:")
+        hideEasyIfNotLearning_label.setToolTip("{0} Hides the \"Easy\" Button if the \
+        card is not in learning phase.{1}".format(begin, end))
+        hideEasyIfNotLearning_label.setFixedWidth(180)
+        self.hideEasyIfNotLearning_on = QRadioButton("On")
+        self.hideEasyIfNotLearning_on.setFixedWidth(90)
+        self.hideEasyIfNotLearning_off = QRadioButton("Off")
+        self.hideEasyIfNotLearning_off.setFixedWidth(90)
+        hideEasyIfNotLearning_holder = QHBoxLayout()
+        hideEasyIfNotLearning_holder.addWidget(hideEasyIfNotLearning_label)
+        hideEasyIfNotLearning_holder.addWidget(self.hideEasyIfNotLearning_on)
+        hideEasyIfNotLearning_holder.addWidget(self.hideEasyIfNotLearning_off)
+        hideEasyIfNotLearning_holder.addStretch()
+        hideEasyIfNotLearning_box = QGroupBox()
+        hideEasyIfNotLearning_box.setLayout(hideEasyIfNotLearning_holder)
+
         layout = QVBoxLayout()
         layout.addWidget(general_box)
         layout.addWidget(buttonColors_box)
         layout.addWidget(speedFocus_box)
         layout.addWidget(configEdit_box)
+        layout.addWidget(hideEasyIfNotLearning_box)
         layout.addStretch()
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
@@ -2245,6 +2261,10 @@ class SettingsMenu(QDialog):
             self.configEdit_on.setChecked(True)
         else:
             self.configEdit_off.setChecked(True)
+        if C_hideEasyIfNotLearning:
+            self.hideEasyIfNotLearning_on.setChecked(True)
+        else:
+            self.hideEasyIfNotLearning_off.setChecked(True)
         self.overViewStats.setCurrentIndex(C_overViewStats)
         self.settingsMenu_place.setCurrentIndex(C_settingsMenu_palce)
         self.skipMethod.setCurrentIndex(C_skipMethod)
@@ -2323,6 +2343,7 @@ class SettingsMenu(QDialog):
         "  Button Colors": self.buttonColors_on.isChecked(),
         "  Speed Focus Add-on": self.speedFocus_on.isChecked(),
         "  Direct Config Edit": self.configEdit_on.isChecked(),
+        "  Hide Easy if not in Learning": self.hideEasyIfNotLearning_on.isChecked(),
         "  More Overview Stats": self.overViewStats.currentIndex(),
         "  Settings Menu Place": self.settingsMenu_place.currentIndex(),
         "  Skip Method": self.skipMethod.currentIndex(),
@@ -2437,7 +2458,11 @@ class SettingsMenu(QDialog):
         #// Save settings in a JSON file
         json.dump(conf, f, indent=4)
         #// Open file explorer after saving so users know where the backup file is (and maybe save it somewhere else)
-        subprocess.Popen(f'explorer /select, "{path_to_file}"')
+        if isMac:
+            select_method = ['open', '-R']
+        else:
+            select_method = ['explorer',  '/select,']
+        subprocess.Popen(select_method + [path_to_file])
         f.close()
 
     def onApply(self):
@@ -2484,6 +2509,7 @@ class SettingsMenu(QDialog):
         "  Button Colors": self.buttonColors_on.isChecked(),
         "  Speed Focus Add-on": self.speedFocus_on.isChecked(),
         "  Direct Config Edit": self.configEdit_on.isChecked(),
+        "  Hide Easy if not in Learning": self.hideEasyIfNotLearning_on.isChecked(),
         "  More Overview Stats": self.overViewStats.currentIndex(),
         "  Settings Menu Place": self.settingsMenu_place.currentIndex(),
         "  Skip Method": self.skipMethod.currentIndex(),

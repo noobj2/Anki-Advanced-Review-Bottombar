@@ -1,6 +1,7 @@
 #// auth_ Mohamad Janati
 #// Copyright (c) 2019-2023 Mohamad Janati
 
+import re
 from aqt.reviewer import Reviewer
 from aqt import mw
 from anki.scheduler.v3 import Scheduler as V3Scheduler
@@ -28,6 +29,7 @@ again_label = config['Button Label_ Again']
 hard_label = config['Button Label_ Hard']
 good_label = config['Button Label_ Good']
 easy_label = config['Button Label_ Easy']
+hideEasyIfNotLearning = config['  Hide Easy if not in Learning']
 
 #// getting styles from styles.py
 text_color = styles.text_color
@@ -47,6 +49,12 @@ fill2 = styles.fill2
 
 def _answerButtonList(self):
     cnt = self.mw.col.sched.answerButtons(self.card)
+    #// Card Types: 0-> "Learn", 1-> "Review", 2-> "Relearn", 3-> "Filtered", 4-> "Resched"
+    card_type = self.mw.col.db.all("SELECT type FROM revlog WHERE cid = ?", self.card.id)
+    if card_type:
+        card_type = card_type[-1][0]
+    else:
+        card_type = 0
     if cnt == 2:
         #// button = ((ease, "Label"),)
         again = ((1, " {} ".format(again_label)),)
@@ -64,7 +72,11 @@ def _answerButtonList(self):
         if not hide_good:
             buttons += good
         if not hide_easy:
-            buttons += easy
+            if hideEasyIfNotLearning:
+                if card_type == 0:
+                    buttons += easy
+            else:
+                buttons += easy
         return buttons
     else:
         again = ((1, " {} ".format(again_label)),)
@@ -77,7 +89,11 @@ def _answerButtonList(self):
         if not hide_good:
             buttons += good
         if not hide_easy:
-            buttons += easy
+            if hideEasyIfNotLearning:
+                if card_type == 0:
+                    buttons += easy
+            else:
+                buttons += easy
         return buttons
 
 
@@ -149,8 +165,8 @@ def _answerButtons(self):
                     return
         elif interval_style == 2:
             if due_plain:
-                due = "<br>"
-                inButton_due = " | {}".format(due_plain)
+                due = ""
+                inButton_due = " | {}".format(re.search('(?<=<span class="nobold">)(.*)(?=</span>)', due_plain).group(1))
             else:
                 return
         else:

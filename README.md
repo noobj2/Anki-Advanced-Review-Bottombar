@@ -77,6 +77,7 @@ Using this add-on, you can customize, improve and add new features to different 
 
 ### Change Style of the Answer Tooltip
 ![settings2](github_images/settings2.png)
+
 In this tab you can customize the answer tooltip. Answer tooltip is a visual feedback that shows you the review button that you pressed. The tooltip will be displayed for a short time after you press each review button.
 - Using **Review Confirmation Tooltip** you can enable or disable this feature
 - Using **Tooltip Position** you can choose where you want the tooltip to be displayed after you review each card
@@ -87,6 +88,7 @@ In this tab you can customize the answer tooltip. Answer tooltip is a visual fee
 
 ### Add, Remove or Change the Position of Bottombar Buttons
 ![settings3](github_images/settings3.png)
+
 In this tab, you can change add buttons to the review bottombar, remove buttons, change their position and also change the bottombar buttons' shortcuts.
 - You can decide to show or hide each extra button on the bottombar by enabling or disabling it in the **Extra Buttons** section
 - You can hide each review button in **Hide Buttons** section
@@ -95,6 +97,7 @@ In this tab, you can change add buttons to the review bottombar, remove buttons,
 
 ### Customize Button Sizes
 ![settins4](github_images/settings4.png)
+
 You can change each button's size in the **Button Sizes** tab.
 - You can enable or disable custom button sizes by turning **Custom Button Sizes** on or off
 - You can change each button's size individually in this tab
@@ -107,6 +110,7 @@ You can change the text inside each button in this tab.
 
 ### Add Sidebar to Review Screen
 ![settings6](github_images/settings6.png)
+
 Advanced Review Bottombar adds a sidebar in which you can see information about previous reviews of the cards to the review screen. In this tab, you can customize the sidebar.
 - Using **Card Info Sidebar Theme** you can change the sidebar theme
 - Using **Card Info Sidebar Font** you can change font of the text in sidebar
@@ -116,6 +120,7 @@ Advanced Review Bottombar adds a sidebar in which you can see information about 
 
 ### Customize Button Colors
 ![settings7](github_images/settings7.png)
+
 In this tab you can change color of review buttons, general button, the text inside the button and also set the color shown for each ease range for the show answer border (refer to **Show Answer Border Style** in the **Styles** tab)
 - If you want to use the default colors for the buttons, you can disable **Custom Review Button Colors**; if you do this, the colors will be grayed out and ARBb uses the default colors for the buttons
 - If you want to choose your own colors, you have to first enable **Custom Review Button Colors**
@@ -126,6 +131,7 @@ In this tab you can change color of review buttons, general button, the text ins
 
 ### Miscellaneous
 ![settings8](github_images/settings8.png)
+
 In this tab you can find the settings that don't fall into other categories.
 - In **More Overview Stats**, you can choose the style of the deck overview screen and the amount of information about the deck that's shown there
 - You can also decide if you want the ARBb menu to be in the toolbar or if you want it to be a submenu of the `Tools`

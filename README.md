@@ -104,6 +104,7 @@ You can change each button's size in the **Button Sizes** tab.
 
 ### Customize Button Labels
 ![settings5](github_images/settings5.png)
+
 You can change the text inside each button in this tab.
 - You can translate the buttons to your local language
 - You can also use emojis instead of text for review buttons

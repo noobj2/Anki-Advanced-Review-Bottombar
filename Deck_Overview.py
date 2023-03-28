@@ -75,7 +75,7 @@ def _renderBottom(self):
     else:
         links.append(["C", "studymore", tr.actions_custom_study()])
         # links.append(["F", "cram", ("Filter/Cram")])
-    if self.mw.col.sched.haveBuried():
+    if self.mw.col.sched.have_buried():
         links.append(["U", "unbury", tr.studying_unbury()])
     links.append(["", "description", tr.scheduling_description()])
     buf = "{}".format(bottomHTML_style)
@@ -108,7 +108,7 @@ if more_overviewStats == 1:
         """Returns html table with more statistics than before."""
         sched = self.mw.col.sched
         deck = self.mw.col.decks.current()
-        dconf = self.mw.col.decks.confForDid(deck.get('id'))
+        dconf = self.mw.col.decks.config_dict_for_deck_id(deck.get('id'))
         but = self.mw.button
 
         # Get default counts

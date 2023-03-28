@@ -166,14 +166,16 @@ def _answerButtons(self):
         elif interval_style == 2:
             if due_plain:
                 due = ""
-                inButton_due = " | {}".format(re.search('(?<=<span class="nobold">)(.*)(?=</span>)', due_plain).group(1))
+                txt = self.mw.col.sched.nextIvlStr(self.card, i, True) or ""
+                inButton_due = " | {}".format(txt)
             else:
-                return
+                due = ""
+                inButton_due = ""
         else:
             if due_plain:
                 due = due_plain
             else:
-                return
+                due = ""
         #// Choosing button classes based on what user has chosen in config
         if button_style == 1 or button_style == 3:
             if custom_colors:

@@ -6,7 +6,7 @@ from datetime import datetime
 from aqt import mw
 from aqt.qt import *
 from aqt.utils import tooltip, showInfo, askUser, getText
-from anki.utils import isLin, isMac, isWin
+from anki.utils import is_lin, is_mac, is_win
 import random
 import os
 import json
@@ -276,14 +276,13 @@ class GetShortcut(QDialog):
     def keyReleaseEvent(self, evt):
         #// reduces the number of held keys upon releasing each key
         self.active -= 1
-        #TODO: key sequence to unpam the shortcut
         message = "You can't set \"{}\" as a shortcut!"
-        if os.name == "nt":
-            altMessage = message.format("Alt")
-            ctrlMessage = message.format("Ctrl")
-        else:
+        if is_mac:
             altMessage = message.format("Option")
             ctrlMessage = message.format("Command")
+        else:
+            altMessage = message.format("Alt")
+            ctrlMessage = message.format("Ctrl")
         if not (self.f1 or self.f2 or self.f3 or self.f4 or self.f5 or self.f6 or self.f7 or self.f8 or self.f9 or self.f10 or self.f11 or self.f12):
             if not self.extra:
                 #// lets the users that the pressed key is not allowed to be used in a shortcut
@@ -374,7 +373,7 @@ class GetShortcut(QDialog):
             combination.append(self.extra)
         combination = "+".join(combination)
         #// preventing users from assigning a default Anki shortcut to something else | to avoid conflicts and stuff :|
-        if combination in ["E", " ", "F5", "Ctrl+1", "Ctrl+2", "Ctrl+3", "Ctrl+4", "Shift+*", "=", "-", "Shift+!", "Shift+@", "Ctrl+Delete", "V", "Shift+V", "O", "1", "2", "3", "4", "5", "6", "7", "T", "Y", "A", "S", "D", "F", "B", "I", "/", "F1", "Ctrl+Q", "Ctrl+E", "Ctrl+P", "Ctrl+Shift+I", "Ctrl+Shift+P", "Ctrl+Shift+A", "Ctrl+Shift+:", "Ctrl+Shift+N", "Ctrl+Z"]:
+        if combination in ["E", " ", "F5", "Ctrl+1", "Ctrl+2", "Ctrl+3", "Ctrl+4", "Shift+*", "=", "-", "Shift+!", "Shift+@", "Ctrl+Delete", "V", "Shift+V", "O", "1", "2", "3", "4", "5", "6", "7", "T", "Y", "A", "S", "D", "F", "B", "I", "/", "F1", "Ctrl+Q", "Ctrl+E", "Ctrl+P", "Ctrl+Shift+I", "Ctrl+Shift+P", "Ctrl+Shift+A", "Ctrl+Shift+:", "Ctrl+Shift+N"]:
             if combination == "E":
                 showInfo("\"E\" is default Anki shortcut for \"Edit Current Card\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
             if combination == " ":
@@ -468,6 +467,8 @@ class GetShortcut(QDialog):
             self.active = 0
             combination = []
             return
+        elif combination == "Ctrl+Z":
+            combination = "NOT_SET"
         self.parent.updateShortcut(self.button_variable, combination)
         self.close()
 
@@ -675,13 +676,16 @@ class SettingsMenu(QDialog):
         showAnswerBorderType_holder = QHBoxLayout()
         showAnswerBorderType_holder.addWidget(showAnswerBorderType_label)
         showAnswerBorderType_holder.addWidget(self.showAnswerBorderColor_style)
-        showAnswerBorderType_holder.addStretch()
+        showAnswerBorderType_holder.addStretch()            
         intervalStyle_label = QLabel("Button Interval Style:")
         intervalStyle_label.setToolTip("{0}Changes the style of button intervals.{1}".format(begin, end))
         intervalStyle_label.setFixedWidth(180)
         self.interval_style = QComboBox()
         self.interval_style.addItems(["Stock", "Colored Stock", "Inside the Buttons"])
         self.interval_style.setFixedWidth(180)
+        if not mw.col.conf["estTimes"]:
+            self.interval_style.setDisabled(True)
+            intervalStyle_label.setToolTip("{0}To enable this option you need to enable \"Show next review time above answer buttons\" in \"Tools > Preferences > Review\".{1}".format(begin, end))
         intervalStyle_holder = QHBoxLayout()
         intervalStyle_holder.addWidget(intervalStyle_label)
         intervalStyle_holder.addWidget(self.interval_style)
@@ -1096,6 +1100,7 @@ class SettingsMenu(QDialog):
         buttonShortcutsPart.addLayout(showSkippedShortcut_holder)
         buttonShortcutsPart.addLayout(undoShortcut_holder)
         buttonShortcutsBox = QGroupBox("Button Shortcuts")
+        buttonShortcutsBox.setToolTip("{0}Use \"Ctrl+Z\" to unmap a shortcut.{1}".format(begin, end))
         buttonShortcutsBox.setLayout(buttonShortcutsPart)
         layout = QVBoxLayout()
         layout.addWidget(extraButtonsBox)
@@ -2458,7 +2463,7 @@ class SettingsMenu(QDialog):
         #// Save settings in a JSON file
         json.dump(conf, f, indent=4)
         #// Open file explorer after saving so users know where the backup file is (and maybe save it somewhere else)
-        if isMac:
+        if is_mac:
             select_method = ['open', '-R']
         else:
             select_method = ['explorer',  '/select,']

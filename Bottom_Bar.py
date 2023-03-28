@@ -58,7 +58,6 @@ showAnswerEase2_color = config['ShowAnswer_ Ease2 Color']
 showAnswerEase3_color = config['ShowAnswer_ Ease3 Color']
 showAnswerEase4_color = config['ShowAnswer_ Ease4 Color']
 
-# TODO: set the showSkipped styling and stuff
 edit_style = styles.edit_style
 info_style = styles.info_style
 skip_style = styles.skip_style

@@ -1,4 +1,11 @@
 <html>
+  <div class="background">
+      <h1>2023/03/29</h1>
+      <ul>
+        <li>Fixed error when pressing show answer button</li>
+        <li>Added option to unmap a shortcut (Use "Ctrl+Z")</li>
+      </ul>
+    </div>
   <div div class="background">
     <h1>2023/01/31</h1>
     <ul>

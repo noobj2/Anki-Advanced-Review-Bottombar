@@ -14,7 +14,7 @@ from anki.lang import _
 from anki.utils import fmtTimeSpan
 from anki.stats import CardStats
 from aqt import *
-from anki.utils import htmlToTextLine
+from anki.utils import html_to_text_line
 from anki.collection import _Collection
 from aqt.reviewer import Reviewer
 
@@ -320,12 +320,12 @@ class StatsSidebar(object):
             if infobar_tags:
                 self.addLine("Tags", " | ".join(c.note().tags))
         f = c.note()
-        sort_field = htmlToTextLine(f.fields[self.col.models.sortIdx(f.model())])
+        sort_field = html_to_text_line(f.fields[self.col.models.sortIdx(f.model())])
         if infobar_sortField:
             if len(sort_field) > 40:
                 self.addLine("Sort Field", "[{}<br>{}<br>{}...]".format(sort_field[:20], sort_field[20:41], sort_field[41:58]))
             else:
-                self.addLine("Sort Field", htmlToTextLine(f.fields[self.col.models.sortIdx(f.model())]))
+                self.addLine("Sort Field", html_to_text_line(f.fields[self.col.models.sortIdx(f.model())]))
         self.txt += "</table>"
         return self.txt
 

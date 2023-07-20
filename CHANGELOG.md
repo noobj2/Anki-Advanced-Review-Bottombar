@@ -1,5 +1,9 @@
 <html>
   <div class="background">
+      <h1>v3.3.1 (2023/07/20)</h1>
+      <li>Minor Changes</li>
+    </div>
+  <div class="background">
     <h1>v3.3.0 (2023/07/20)</h1>
     <ul>
       <li>New Feature: Ability to change button's font weight -> Change in Styles tab</li>

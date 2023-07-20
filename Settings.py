@@ -3,6 +3,7 @@
 
 from os.path import join, dirname
 from datetime import datetime
+import webbrowser
 from aqt import mw
 from aqt.qt import *
 from aqt.utils import tooltip, showInfo, askUser, getText
@@ -536,6 +537,14 @@ class SettingsMenu(QDialog):
         buttonbox.addWidget(acceptButton)
         buttonbox.addWidget(rejectButton)
 
+        def open_support_me():
+            url = "https://www.buymeacoffee.com/noobj2"
+            webbrowser.open(url)
+        supportMe_button = QPushButton("❤️ Support Me")
+        supportMe_button.clicked.connect(open_support_me)
+        support_box = QHBoxLayout()
+        support_box.addWidget(supportMe_button)
+
         #// create tabs widget and adds each tab
         tabs = QTabWidget()
         tabs.addTab(self.tab1, "Styles")
@@ -551,6 +560,7 @@ class SettingsMenu(QDialog):
         vbox = QVBoxLayout()
         vbox.addWidget(tabs)
         vbox.addLayout(buttonbox)
+        vbox.addLayout(support_box)
 
         self.setLayout(vbox)
         self.setWindowTitle("Advanced Review Bottombar Settings Menu")

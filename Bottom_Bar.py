@@ -122,20 +122,20 @@ timer_style = """
     }
 """
 if bottombarButtons_style == 0:
-    bottomHTML_style = "<style>{}</style>".format(timer_style)
+    bottomHTML_style = f"<style>{timer_style}</style>"
 elif bottombarButtons_style == 1:
-    bottomHTML_style = "<style>{}{}</style>".format(bottombar_neon1, timer_style)
+    bottomHTML_style = f"<style>{bottombar_neon1}{timer_style}</style>"
 elif bottombarButtons_style == 2:
-    bottomHTML_style = "<style>{}{}</style>".format(bottombar_neon2, timer_style)
+    bottomHTML_style = f"<style>{bottombar_neon2}{timer_style}</style>"
 elif bottombarButtons_style == 3:
-    bottomHTML_style = "<style>{}{}</style>".format(bottombar_fill1, timer_style)
+    bottomHTML_style = f"<style>{bottombar_fill1}{timer_style}</style>"
 elif bottombarButtons_style == 4:
-    bottomHTML_style = "<style>{}{}</style>".format(bottombar_fill2, timer_style)
+    bottomHTML_style = f"<style>{bottombar_fill2}{timer_style}</style>"
 
 #// info button | written in a separate functions to preserve the original bottombar
 def info_button():
     if info:
-        return """<button title="Shortcut key: {}" onclick="pycmd('card_info');" {}>{}</button>""".format(info_shortcut.upper(), info_style, info_label)
+        return f"""<button title="Shortcut key: {info_shortcut.upper()}" onclick="pycmd('card_info');" {info_style}>{info_label}</button>"""
     else:
         return ""
 
@@ -143,14 +143,14 @@ def info_button():
 #// skip button | written in a separate functions to preserve the original bottombar
 def skip_button():
     if skip:
-        return """<button title="Shortcut key: {}" onclick="pycmd('skip');" {}>{}</button>""".format(skip_shortcut.upper(), skip_style, skip_label)
+        return f"""<button title="Shortcut key: {skip_shortcut.upper()}" onclick="pycmd('skip');" {skip_style}>{skip_label}</button>"""
     else:
         return ""
 
 #// Show Skipped button
 def showSkipped_button():
     if showSkipped:
-        return """<button title="Shortcut key: {}" onclick="pycmd('showSkipped');" {}>{}</button>""".format(showSkipped_shortcut.upper(), showSkipped_style, showSkipped_label)
+        return f"""<button title="Shortcut key: {showSkipped_shortcut.upper()}" onclick="pycmd('showSkipped');" {showSkipped_style}>{showSkipped_label}</button>"""
     else:
         return ""
 
@@ -158,7 +158,7 @@ def showSkipped_button():
 #// undo button
 def undo_button():
     if undo:
-        return """<button title="Shortcut key: {}" onclick="pycmd('undo');" {}>{}</button>""".format(undo_shortcut, undo_style, undo_label)
+        return f"""<button title="Shortcut key: {undo_shortcut}" onclick="pycmd('undo');" {undo_style}>{undo_label}</button>"""
     else:
         return ""
 
@@ -241,42 +241,42 @@ else:
 
 #// setting buttons based on their position
 if leftSide_button1 != "":
-    left_side1 = "<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {} </td>".format(leftSide_button1)
+    left_side1 = f"<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {leftSide_button1} </td>"
 else:
     left_side1 = ""
 
 if leftSide_button2 != "":
-    left_side2 = "<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {} </td>".format(leftSide_button2)
+    left_side2 = f"<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {leftSide_button2} </td>"
 else:
     left_side2 = ""
 
 if leftSide_button3 != "":
-    left_side3 = "<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {} </td>".format(leftSide_button3)
+    left_side3 = f"<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {leftSide_button3} </td>"
 else:
     left_side3 = ""
 
 if leftSide_button4 != "":
-    left_side4 = "<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {} </td>".format(leftSide_button4)
+    left_side4 = f"<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {leftSide_button4} </td>"
 else:
     left_side4 = ""
 
 if rightSide_button1 != "":
-    right_side1 = "<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {} </td>".format(rightSide_button1)
+    right_side1 = f"<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {rightSide_button1} </td>"
 else:
     right_side1 = ""
 
 if rightSide_button2 != "":
-    right_side2 = "<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {} </td>".format(rightSide_button2)
+    right_side2 = f"<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {rightSide_button2} </td>"
 else:
     right_side2 = ""
 
 if rightSide_button3 != "":
-    right_side3 = "<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {} </td>".format(rightSide_button3)
+    right_side3 = f"<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {rightSide_button3} </td>"
 else:
     right_side3 = ""
 
 if rightSide_button4 != "":
-    right_side4 = "<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {} </td>".format(rightSide_button4)
+    right_side4 = f"<td width=50 align=right valign=top class=stat style='padding-top: 0px'> {rightSide_button4} </td>"
 else:
     right_side4 = ""
 
@@ -288,7 +288,7 @@ def _bottomHTML(self):
 
     return """%(bottomHTML_style)s
 %(min_buttonSize)s
-<center id=outer>
+<center id=outer style="display: flex; justify-content: center; align-items: center;">
 <table id=innertable width=100%% cellspacing=0 cellpadding=0 style="padding-top: 25px">
 <tr>
 <td align=start width=50 valign=top class=stat style="padding-top: 0">
@@ -343,14 +343,14 @@ def _showAnswerButton(self):
     #// Moved show answer button size from "styles.py" here to make show answer border color based on ease compatible with custom button sizes
     if custom_buttonSize:
         if bottombarButtons_style ==0:
-            showAnswer_style = 'style="height: {}px; width: {}px; font-size: {}px; border-color: {};"'.format(buttons_height, answer_width, text_size, showAnswerBorder_color)
+            showAnswer_style = f'style="height: {buttons_height}px; width: {answer_width}px; font-size: {text_size}px; border-color: {showAnswerBorder_color};"'
         else:
-            showAnswer_style = 'style="height: {}px; width: {}px; font-size: {}px; border-color: {};" id=main'.format(buttons_height, answer_width, text_size, showAnswerBorder_color)
+            showAnswer_style = f'style="height: {buttons_height}px; width: {answer_width}px; font-size: {text_size}px; border-color: {showAnswerBorder_color};" id=main'
     else:
         if bottombarButtons_style == 0:
-            showAnswer_style = "style='border-color: {}' id=ansbut".format(showAnswerBorder_color)  #// removed id=ansbut from its own code for styling
+            showAnswer_style = f"style='border-color: {showAnswerBorder_color}' id=ansbut"  #// removed id=ansbut from its own code for styling
         else:
-            showAnswer_style = "style='border-color: {}' id=main".format(showAnswerBorder_color)
+            showAnswer_style = f"style='border-color: {showAnswerBorder_color}' id=main"
 
     #// removing conflict with speed focus add-on
     if speedFocus_addOn:

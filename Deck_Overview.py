@@ -7,6 +7,7 @@ from aqt import mw
 from copy import deepcopy
 from aqt.utils import shortcut, showInfo, tr
 from anki import version
+from anki.hooks import wrap
 anki_version = int(version.replace('.', ''))
 if anki_version > 2119:
     from aqt.deckbrowser import DeckBrowserBottomBar
@@ -16,10 +17,15 @@ from aqt.overview import Overview
 from . import styles
 
 config = mw.addonManager.getConfig(__name__)
+rebuildEmptyAll = config['  Rebuild Empty All Add-on']
 studyNow_label = config['Button Label_ Study Now']
 more_overviewStats = config['  More Overview Stats']
 bottombarButtons_style = config[' Review_ Bottombar Buttons Style']
 style_mainScreenButtons = config['  Style Main Screen Buttons']
+border_radius = "{}px".format(config[' Review_ Button Border Radius'])
+
+font_weights = [100, 200, 300, 400, 500, 600, 700, 800, 900]
+buttonFontWeight = font_weights[int(config['Button_ Font Weight'])]
 
 bottombar_neon1 = styles.bottombar_neon1
 bottombar_neon2 = styles.bottombar_neon2
@@ -28,28 +34,38 @@ bottombar_fill2 = styles.bottombar_fill2
 
 #// Choosing styling for review other buttons in reviewer bottombar based on chosen style
 if bottombarButtons_style == 0:
-    bottomHTML_style = "<style></style>"
+    bottomHTML_style = """<style>
+      #main {
+        border-radius: %s !important;
+         font-weight: %s;
+      }
+    </style>""" % (border_radius, buttonFontWeight)
 elif bottombarButtons_style == 1:
-    bottomHTML_style = "<style>{}</style>".format(bottombar_neon1)
+    bottomHTML_style = f"""<style>
+    {bottombar_neon1}
+    </style>"""
 elif bottombarButtons_style == 2:
-    bottomHTML_style = "<style>{}</style>".format(bottombar_neon2)
+    bottomHTML_style = f"""<style>
+    {bottombar_neon2}
+    </style>"""
 elif bottombarButtons_style == 3:
-    bottomHTML_style = "<style>{}</style>".format(bottombar_fill1)
+    bottomHTML_style = f"""<style>
+    {bottombar_fill1}
+    </style>"""
 elif bottombarButtons_style == 4:
-    bottomHTML_style = "<style>{}</style>".format(bottombar_fill2)
+    bottomHTML_style = f"""<style>
+    {bottombar_fill2}
+    </style>"""
 
 #// Main Screen Bottombar Buttons
 def _drawButtons(self):
-    buf = "{}".format(bottomHTML_style)
-    if style_mainScreenButtons:
-        #// style='height: px' -> to prevent changing main screen buttons heights
-        # based on height defined in #main {}
-        mainScreen_style = """id=main style='height: px' """
-    else:
-        mainScreen_style = ""
+    buf = f"{bottomHTML_style}"
+    #// style='height: px' -> to prevent changing main screen buttons heights
+    # based on height defined in #main {}
+    mainScreen_style = """id=main style='height: px' """
     drawLinks = deepcopy(self.drawLinks)
     for b in drawLinks:
-        b.insert(0, "{}".format(mainScreen_style))
+        b.insert(0, f"{mainScreen_style}")
         if b[0]:
             b[0] = ("Shortcut key: %s") % shortcut(b[0])
         buf += """
@@ -63,6 +79,17 @@ def _drawButtons(self):
     else:
         self.bottom.draw(buf)
         self.bottom.web.onBridgeCmd = self._linkHandler
+        
+def _addButtons(self):
+    drawLinks = [
+        ["", "rebuildDyn", "Rebuild All"],
+        ["", "emptyDyn", "Empty All"]
+    ]
+    if drawLinks[0] not in self.drawLinks:
+        self.drawLinks += drawLinks
+
+if rebuildEmptyAll:
+    _drawButtons = wrap(_drawButtons, _addButtons, "before")
 
 #// Deck Overview Bottombar Buttons
 def _renderBottom(self):
@@ -78,15 +105,12 @@ def _renderBottom(self):
     if self.mw.col.sched.have_buried():
         links.append(["U", "unbury", tr.studying_unbury()])
     links.append(["", "description", tr.scheduling_description()])
-    buf = "{}".format(bottomHTML_style)
-    if style_mainScreenButtons:
-        #// style='height: px' -> to prevent changing main screen buttons heights
-        # based on height defined in #main {}
-        mainScreen_style = """id=main style='height: px' """
-    else:
-        mainScreen_style = ""
+    buf = f"{bottomHTML_style}"
+    #// style='height: px' -> to prevent changing main screen buttons heights
+    # based on height defined in #main {}
+    mainScreen_style = """id=main style='height: px' """
     for b in links:
-        b.insert(0, "{}".format(mainScreen_style))
+        b.insert(0, f"{mainScreen_style}")
         if b[0]:
             b[0] = ("Shortcut key: %s") % shortcut(b[0])
         buf += """
@@ -217,7 +241,7 @@ if more_overviewStats == 1:
                 studyButton_id = "study"
             html += '''</td>
                 <td align=center nowrap="nowrap">%s</td>
-            </tr></table>''' % (but("study", ("{}".format(studyNow_label)), id="{}".format(studyButton_id), extra="autofocus"))
+            </tr></table>''' % (but("study", (f"{studyNow_label}"), id=f"{studyButton_id}", extra="autofocus"))
 
         return html
 
@@ -310,9 +334,9 @@ elif more_overviewStats == 2:
         cards['daysLeft'] = daysUntilDone
 
         if(daysUntilDone == 1):
-            cards['daysLeft'] = '{} day'.format(daysUntilDone)
+            cards['daysLeft'] = f'{daysUntilDone} day'
         else:
-            cards['daysLeft'] = '{} days'.format(daysUntilDone)
+            cards['daysLeft'] = f'{daysUntilDone} days'
 
         cards_percent = {}
 
@@ -587,7 +611,7 @@ elif more_overviewStats == 2:
                 <td colspan="4" style="text-align: center; padding-top: 0.6em;">{button:s}</td>
               </tr>
               </table>
-            '''.format(button=button('study', ('Study Now'), id='{}'.format(studyButton_id), extra="autofocus"))
+            '''.format(button=button('study', ('Study Now'), id=f'{studyButton_id}', extra="autofocus"))
 
         return output
 
@@ -646,7 +670,7 @@ def _limit(counts):
           counts[i] = "1000+"
     return counts
 
-
-Overview._renderBottom = _renderBottom
-DeckBrowser._drawButtons = _drawButtons
+if style_mainScreenButtons:
+  Overview._renderBottom = _renderBottom
+  DeckBrowser._drawButtons = _drawButtons
 Overview._table = _table

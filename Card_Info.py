@@ -132,37 +132,37 @@ class StatsSidebar(object):
                 easy_color = "#21C0FF"
             if self.mw.col.sched_ver() == 1 and type == 3:
                 if ease == 1:
-                    button = "<div style='color: {};'>Again</div>".format(again_color)
+                    button = f"<div style='color: {again_color};'>Again</div>"
                 elif ease == 2:
-                    button = "<div style='color: {};'>Good</div>".format(good_color)
+                    button = f"<div style='color: {good_color};'>Good</div>"
                 elif ease == 3:
-                    button = "<div style='color: {};'>Good</div>".format(good_color)
+                    button = f"<div style='color: {good_color};'>Good</div>"
                 elif ease == 4:
-                    button = "<div style='color: {};'>Easy</div>".format(easy_color)
+                    button = f"<div style='color: {easy_color};'>Easy</div>"
                 else:
-                    button = "ease: {}".format(ease)
+                    button = f"ease: {ease}"
             elif self.mw.col.sched_ver() == 1 and (type == 0 or type == 2):
                 if ease == 1:
-                    button = "<div style='color: {};'>Again</div>".format(again_color)
+                    button = f"<div style='color: {again_color};'>Again</div>"
                 elif ease == 2:
-                    button = "<div style='color: {};'>Good</div>".format(good_color)
+                    button = f"<div style='color: {good_color};'>Good</div>"
                 elif ease == 3:
-                    button = "<div style='color: {};'>Easy</div>".format(easy_color)
+                    button = f"<div style='color: {easy_color};'>Easy</div>"
                 elif ease == 4:
-                    button = "<div style='color: {};'>Easy</div>".format(easy_color)
+                    button = f"<div style='color: {easy_color};'>Easy</div>"
                 else:
-                    button = "ease: {}".format(ease)
+                    button = f"ease: {ease}"
             else:
                 if ease == 1:
-                    button = "<div style='color: {};'>Again</div>".format(again_color)
+                    button = f"<div style='color: {again_color};'>Again</div>"
                 elif ease == 2:
-                    button = "<div style='color: {};'>Hard</div>".format(hard_color)
+                    button = f"<div style='color: {hard_color};'>Hard</div>"
                 elif ease == 3:
-                    button = "<div style='color: {};'>Good</div>".format(good_color)
+                    button = f"<div style='color: {good_color};'>Good</div>"
                 elif ease == 4:
-                    button = "<div style='color: {};'>Easy</div>".format(easy_color)
+                    button = f"<div style='color: {easy_color};'>Easy</div>"
                 else:
-                    button = "ease: {}".format(ease)
+                    button = f"ease: {ease}"
             s += ("<td align=center>%s</td>" * 5) % (tstr, button, "%s<br>(%s)" %(ivl, int_due), "%d%%" % (factor / 10) if factor else "", cs.time(taken)) + "</tr>"
             if reviewsToShow != 0:
                 if cnt > int(reviewsToShow) - 1:
@@ -175,7 +175,7 @@ class StatsSidebar(object):
             if cnt < card.reps:
                 try:
                     a = int(reviewsToShow)
-                    warning = """<div style="font-family: consolas; font-size: 12px;"><hr> You have limited previous review information number to "{}" reviews.</div>""".format(reviewsToShow)
+                    warning = f"""<div style="font-family: consolas; font-size: 12px;"><hr> You have limited previous review information number to "{reviewsToShow}" reviews.</div>"""
                 except ValueError:
                     warning = """<div style="font-family: consolas; font-size: 12px;"><hr>Some of the history is missing. For more information, please see the browser documentation.</div>"""
         return s + warning
@@ -394,7 +394,7 @@ class StatsSidebar(object):
           padding-bottom: 15px;
           font-weight: bold;
         }</style>"""
-        currentReviewCount = "<div class='title'>Current Card</div><div style='font-family: courier; font-size: 10px;'>Current Review Count: {}</div>".format(review_count)
+        currentReviewCount = f"<div class='title'>Current Card</div><div style='font-family: courier; font-size: 10px;'>Current Review Count: {review_count}</div>"
         if current_card:
             txt += styles
             if infobar_currentReviewCount:
@@ -511,7 +511,7 @@ class StatsSidebar(object):
         from anki import version
         if version.startswith("2.0."):
             return ""
-        return mystyle + "td { font-size: 75%; font-family:" + "{}".format(sidebar_font) + ";}"
+        return mystyle + "td { font-size: 75%; font-family:" + f"{sidebar_font}" + ";}"
 
 
 _cs = StatsSidebar(mw)

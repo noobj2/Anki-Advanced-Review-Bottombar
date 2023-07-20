@@ -17,6 +17,7 @@ hide_good = config['Button_   Hide Good']
 hide_easy = config['Button_   Hide Easy']
 custom_buttonSize = config['Button_  Custom Button Sizes']
 interval_style = config[' Review_ Interval Style']
+wideButton_percent = config[' Review_ Wide Button Percent']
 if custom_buttonSize:
     buttons_height = config['Button_ Height_ All Bottombar Buttons']
     reviewButtons_width = config['Button_ Width_ Review Buttons']
@@ -25,6 +26,8 @@ else:
     buttons_height = ""
     reviewButtons_width = ""
     text_size = ""
+font_weights = [100, 200, 300, 400, 500, 600, 700, 800, 900]
+buttonFontWeight = font_weights[int(config['Button_ Font Weight'])]
 again_label = config['Button Label_ Again']
 hard_label = config['Button Label_ Hard']
 good_label = config['Button Label_ Good']
@@ -57,17 +60,17 @@ def _answerButtonList(self):
         card_type = 0
     if cnt == 2:
         #// button = ((ease, "Label"),)
-        again = ((1, " {} ".format(again_label)),)
-        good = ((2, " {} ".format(good_label)),)
+        again = ((1, f" {again_label} "),)
+        good = ((2, f" {good_label} "),)
         buttons = again
         #// don't add button "good" to returned buttons if it's disabled
         if not hide_good:
             buttons += good
         return buttons
     elif cnt == 3:
-        again = ((1, " {} ".format(again_label)),)
-        good = ((2, " {} ".format(good_label)),)
-        easy = ((3, " {} ".format(easy_label)),)
+        again = ((1, f" {again_label} "),)
+        good = ((2, f" {good_label} "),)
+        easy = ((3, f" {easy_label} "),)
         buttons = again
         if not hide_good:
             buttons += good
@@ -79,10 +82,10 @@ def _answerButtonList(self):
                 buttons += easy
         return buttons
     else:
-        again = ((1, " {} ".format(again_label)),)
-        hard = ((2, " {} ".format(hard_label)),)
-        good = ((3, " {} ".format(good_label)),)
-        easy = ((4, " {} ".format(easy_label)),)
+        again = ((1, f" {again_label} "),)
+        hard = ((2, f" {hard_label} "),)
+        good = ((3, f" {good_label} "),)
+        easy = ((4, f" {easy_label} "),)
         buttons = again
         if not hide_hard:
             buttons += hard
@@ -151,13 +154,13 @@ def _answerButtons(self):
         inButton_due = ""
         if interval_style == 1:
             if button_id == "again":
-                due = "<font color={}>{}</font>".format(again_color, due_plain)
+                due = f"<font color={again_color}>{due_plain}</font>"
             elif button_id == "hard":
-                due = "<font color={}>{}</font>".format(hard_color, due_plain)
+                due = f"<font color={hard_color}>{due_plain}</font>"
             elif button_id == "good":
-                due = "<font color={}>{}</font>".format(good_color, due_plain)
+                due = f"<font color={good_color}>{due_plain}</font>"
             elif button_id == "easy":
-                due = "<font color={}>{}</font>".format(easy_color, due_plain)
+                due = f"<font color={easy_color}>{due_plain}</font>"
             else:
                 if due_plain:
                     due = due_plain
@@ -167,7 +170,7 @@ def _answerButtons(self):
             if due_plain:
                 due = ""
                 txt = self.mw.col.sched.nextIvlStr(self.card, i, True) or ""
-                inButton_due = " | {}".format(txt)
+                inButton_due = f" | {txt}"
             else:
                 due = ""
                 inButton_due = ""
@@ -197,33 +200,33 @@ def _answerButtons(self):
                 style = text_color
         #// Choosing style for active button
         if i == default:
-            extra = "style='{}; height: {}px; width: {}px; font-size: {}px;'".format(active_extra, buttons_height, reviewButtons_width, text_size)
+            extra = f"style='{active_extra}; height: {buttons_height}px; width: {reviewButtons_width}px; font-size: {text_size}px; font-weight: {buttonFontWeight};'"
         else:
-            extra = "style='height: {}px; width: {}px; font-size: {}px;'".format(buttons_height, reviewButtons_width, text_size)
+            extra = f"style='height: {buttons_height}px; width: {reviewButtons_width}px; font-size: {text_size}px; font-weight: {buttonFontWeight};'"
         #// Choosing button styles based on what user has chosen in config
         if button_style == 2 or button_style == 3:
             button_class = "wide"
             #// replacing styling for active button
             if i == default:
-                extra = "style='{}; border-radius: 3px; height: {}px;'".format(active_extra, buttons_height)
+                extra = f"style='{active_extra}; border-radius: 3px; height: {buttons_height}px; font-size: {text_size}px; font-weight: {buttonFontWeight};'"
             else:
-                extra = "style='height: {}px'".format(buttons_height)
+                extra = f"style='height: {buttons_height}px; font-size: {text_size}px; font-weight: {buttonFontWeight};'"
         else:
             button_class = "mybuttons"
         if interval_style == 2:
             bottombar_table = ""
         else:
             bottombar_table = ""
-        return style + button_styles + '''
-<td align=center style="padding-top: 0px">{0}
-<button title="Shortcut Key: {1}" data-ease="{1}" onclick='pycmd("ease{1}");' class={2} id={3} {4}>{5}{6}</button>
-</td>'''.format(due, i, button_class, button_id, extra, label, inButton_due)
+        return style + button_styles + f'''
+<td align=center style="padding-top: 0px">{due}
+<button title="Shortcut Key: {i}" data-ease="{i}" onclick='pycmd("ease{i}");' class={button_class} id={button_id} {extra}>{label}{inButton_due}</button>
+</td>'''
     #// adjusting the answer button table for wide button
     if button_style == 2 or button_style == 3:
-        bottombar_width = "80%"
+        bottombar_width = f"{wideButton_percent}%"
     else:
         bottombar_width = ""
-    buf = "<center><table cellpadding=0 cellspacing=0 width={}><tr>".format(bottombar_width)
+    buf = f"<center><table cellpadding=0 cellspacing=0 width={bottombar_width}><tr>"
     for ease, label in self._answerButtonList():
         buf += but(ease, label)
     buf += "</tr></table>"

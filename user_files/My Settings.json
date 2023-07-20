@@ -1,7 +1,9 @@
 {
     "  Button Colors": true,
     "  Speed Focus Add-on": false,
+    "  Rebuild Empty All Add-on": false,
     "  Direct Config Edit": false,
+    "  Hide Easy if not in Learning": false,
     "  More Overview Stats": 1,
     "  Settings Menu Place": 0,
     "  Skip Method": 0,
@@ -17,6 +19,7 @@
     " Review_ Interval Style": 1,
     " Review_ Button Transition Time": 300,
     " Review_ Button Border Radius": 5,
+    " Review_ Wide Button Percent": 80,
     "Button_   Info Button": true,
     "Button_   Skip Button": false,
     "Button_   Show Skipped Button": false,
@@ -34,6 +37,7 @@
     "Button_ Position_ Show Skipped Button": "middle left",
     "Button_ Position_ Undo Button": "middle right",
     "Button_ Text Size": 21,
+    "Button_ Font Weight": 3,
     "Button_ Height_ All Bottombar Buttons": 51,
     "Button_ Width_ Edit Button": 60,
     "Button_ Width_ Show Answer Button": 100,
@@ -105,7 +109,7 @@
         100,
         -100
     ],
-    "Tooltip Offset":[
+    "Tooltip Offset": [
         0,
         0
     ],

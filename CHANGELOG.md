@@ -1,12 +1,15 @@
 <html>
   <div class="background">
-      <h1>2023/03/29</h1>
-      <ul>
-        <li>Fixed error when pressing show answer button</li>
-        <li>Added option to unmap a shortcut (Use "Ctrl+Z")</li>
-      </ul>
+    <h1>v3.3.0 (2023/07/20)</h1>
+    <ul>
+      <li>New Feature: Ability to change button's font weight -> Change in Styles tab</li>
+      <li>New Feature: Ability to choose how much of the empty space should the wide review buttons take (in percent) -> Change in Styles tab</li>
+      <li>Behavior Change: Border radius now works on all the buttons</li>
+      <li>Behavior Change: Now the review buttons are centered (when resizing the the anki window, the review buttons will stay at the center of the</li>
+      <li>Behavior Change: Disabling "Style Main Screen Buttons" will now let other add-ons modify the Deck Overview and Main Screen buttons</li>
+      <li>Fixed: Conflict with rebuild/empty all Add-on (enable it in the Misc tab | the buttons added by this add-on will also be themed)</li>
+    </ul>
     </div>
-  <div div class="background">
     <h1>2023/01/31</h1>
     <ul>
       <li>Fixed button intervals inside the button not showing</li>

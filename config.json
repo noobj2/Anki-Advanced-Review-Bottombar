@@ -1,6 +1,7 @@
 {
   "  Button Colors": true,
   "  Speed Focus Add-on": false,
+  "  Rebuild Empty All Add-on": false,
   "  Direct Config Edit": false,
   "  Hide Easy if not in Learning": false,
   "  More Overview Stats": false,
@@ -17,6 +18,7 @@
   " Review_ Cursor Style": 0,
   " Review_ Button Transition Time": 500,
   " Review_ Button Border Radius": 5,
+  " Review_ Wide Button Percent": 80,
   " Review_ Interval Style": 0,
   "Button_   Info Button": true,
   "Button_   Skip Button": true,
@@ -44,6 +46,7 @@
   "Button_ Width_ Review Buttons": 150,
   "Button_ Width_ Undo Button": 150,
   "Button_ Text Size": 14,
+  "Button_ Font Weight": 3,
   "Button Label_ Study Now": "Study Now",
   "Button Label_ Edit": "Edit",
   "Button Label_ Show Answer": "Show Answer",

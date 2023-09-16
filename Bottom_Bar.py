@@ -382,7 +382,6 @@ def _showAnswerButton(self):
     else:
         maxTime = 0
     self.bottom.web.eval("showQuestion(%s,%d);" % (json.dumps(middle), maxTime))
-    self.bottom.web.adjustHeightToFit()
 
 
 #// replacing/wrapping functions

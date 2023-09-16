@@ -16,7 +16,7 @@ import subprocess
 
 def refreshConfig():
     #// Makes the information that it gets from "config" global, so I can use them for loading the current settings in "loadCurrent(self)" function
-    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_interval_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_wideButton_percent, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_reviewTooltip_offset, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_text_size, C_buttonFontWeight, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_position, C_sidebar_theme, C_sidebar_font, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_addOn_speedFocus, C_addOn_rebuildEmptyAll, C_configEdit, C_hideEasyIfNotLearning, C_overViewStats, C_settingsMenu_palce, C_skipMethod
+    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_interval_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_wideButton_percent, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_reviewTooltip_offset, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_text_size, C_buttonFontWeight, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_theme, C_sidebar_font, C_sidebar_hideCurrentCard, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_addOn_speedFocus, C_addOn_rebuildEmptyAll, C_configEdit, C_hideEasyIfNotLearning, C_overViewStats, C_settingsMenu_palce, C_skipMethod
 
     config = mw.addonManager.getConfig(__name__)
 
@@ -86,6 +86,7 @@ def refreshConfig():
 
     C_sidebar_theme = config['Card Info sidebar_ theme']
     C_sidebar_font = config['Card Info sidebar_ Font']
+    C_sidebar_hideCurrentCard = config['Card Info sidebar_ Hide Current Card']
     C_sidebar_PreviousCards = config['Card Info sidebar_ Number of previous cards to show']
     C_sidebar_reviewsToShow = config['Card Info sidebar_ number of reviews to show for a card']
     C_sidebar_currentReviewCount = config['Card Info sidebar_ Current Review Count']
@@ -536,12 +537,8 @@ class SettingsMenu(QDialog):
         buttonbox.addStretch()
         buttonbox.addWidget(acceptButton)
         buttonbox.addWidget(rejectButton)
-
-        def open_support_me():
-            url = "https://www.buymeacoffee.com/noobj2"
-            webbrowser.open(url)
         supportMe_button = QPushButton("❤️ Support Me")
-        supportMe_button.clicked.connect(open_support_me)
+        supportMe_button.clicked.connect(lambda: webbrowser.open('https://www.buymeacoffee.com/noobj2'))
         support_box = QHBoxLayout()
         support_box.addWidget(supportMe_button)
 
@@ -1514,6 +1511,17 @@ class SettingsMenu(QDialog):
         sidebarFont_holder.addWidget(sidebarFont_label)
         sidebarFont_holder.addWidget(self.sidebar_font)
         sidebarFont_holder.addStretch()
+        sidebarHideCurrentCard_label = QLabel("Hide Current Card:")
+        sidebarHideCurrentCard_label.setToolTip("{0}If Enabled, the info for the current card in review will not\
+        be shown on the sidebar.{1}".format(begin, end))
+        sidebarHideCurrentCard_label.setFixedWidth(195)
+        self.sidebar_hideCurrentCard = QComboBox()
+        self.sidebar_hideCurrentCard.addItems(["Disabled", "Enabled"])
+        self.sidebar_hideCurrentCard.setMinimumWidth(200)
+        sidebarHideCurrentCard_holder = QHBoxLayout()
+        sidebarHideCurrentCard_holder.addWidget(sidebarHideCurrentCard_label)
+        sidebarHideCurrentCard_holder.addWidget(self.sidebar_hideCurrentCard)
+        sidebarHideCurrentCard_holder.addStretch()
         sidebarPreviousCards_label = QLabel("Number of Previous Cards To Show:")
         sidebarPreviousCards_label.setToolTip("{0} Changes number of previous cards that show on the card\
         info sidebar.</font> {1}".format(begin, end))
@@ -1539,6 +1547,7 @@ class SettingsMenu(QDialog):
         tab5line1 = QVBoxLayout()
         tab5line1.addLayout(sideBarTheme_holder)
         tab5line1.addLayout(sidebarFont_holder)
+        tab5line1.addLayout(sidebarHideCurrentCard_holder)
         tab5line1.addLayout(sidebarPreviousCards_holder)
         tab5line1.addLayout(sidebarReviewsToShow_holder)
         tab5box1 = QGroupBox()
@@ -2225,6 +2234,7 @@ class SettingsMenu(QDialog):
         self.buttonLabel_easy.setText(C_buttonLabel_easy)
         self.sidebar_theme.setCurrentIndex(C_sidebar_theme)
         self.sidebar_font.setCurrentFont(QFont(C_sidebar_font))
+        self.sidebar_hideCurrentCard.setCurrentIndex(C_sidebar_hideCurrentCard)
         self.sidebar_PreviousCards.setValue(int(C_sidebar_PreviousCards))
         self.sidebar_reviewsToShow.setValue(int(C_sidebar_reviewsToShow))
         if C_sidebar_currentReviewCount:
@@ -2457,6 +2467,7 @@ class SettingsMenu(QDialog):
         "Button Label_ Hard": self.buttonLabel_hard.text(),
         "Button Label_ Good": self.buttonLabel_good.text(),
         "Button Label_ Easy": self.buttonLabel_easy.text(),
+        "Card Info sidebar_ Hide Current Card": self.sidebar_hideCurrentCard.currentIndex(),
         "Card Info sidebar_ Number of previous cards to show": self.sidebar_PreviousCards.value(),
         "Card Info sidebar_ theme": self.sidebar_theme.currentIndex(),
         "Card Info sidebar_ Created": self.sidebar_dateCreated.isChecked(),
@@ -2626,6 +2637,7 @@ class SettingsMenu(QDialog):
         "Button Label_ Hard": self.buttonLabel_hard.text(),
         "Button Label_ Good": self.buttonLabel_good.text(),
         "Button Label_ Easy": self.buttonLabel_easy.text(),
+        "Card Info sidebar_ Hide Current Card": self.sidebar_hideCurrentCard.currentIndex(),
         "Card Info sidebar_ Number of previous cards to show": self.sidebar_PreviousCards.value(),
         "Card Info sidebar_ theme": self.sidebar_theme.currentIndex(),
         "Card Info sidebar_ Created": self.sidebar_dateCreated.isChecked(),

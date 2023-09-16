@@ -1,5 +1,10 @@
 <html>
   <div class="background">
+    <h1>v3.4.0 (2023/09/17)</h1>
+    <li>New Feature: Added a feature to hide the info about the current card in the card info sidebar | you can enable the feature in the Sidebar tab</li>
+    <li>Improvement: The add on now respects Anki's hide bottombar feature</li>
+  </div>
+  <div class="background">
       <h1>v3.3.1 (2023/07/20)</h1>
       <li>Minor Changes</li>
     </div>

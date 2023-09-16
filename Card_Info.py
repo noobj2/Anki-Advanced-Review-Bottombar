@@ -375,6 +375,7 @@ class StatsSidebar(object):
 
     def _update(self):
         config = mw.addonManager.getConfig(__name__)
+        hide_current_card = config['Card Info sidebar_ Hide Current Card']
         infobar_currentReviewCount = config['Card Info sidebar_ Current Review Count']
         try:
             sidebar_PreviousCards = int(config['Card Info sidebar_ Number of previous cards to show'])
@@ -395,7 +396,7 @@ class StatsSidebar(object):
           font-weight: bold;
         }</style>"""
         currentReviewCount = f"<div class='title'>Current Card</div><div style='font-family: courier; font-size: 10px;'>Current Review Count: {review_count}</div>"
-        if current_card:
+        if current_card and not hide_current_card:
             txt += styles
             if infobar_currentReviewCount:
                 txt += currentReviewCount

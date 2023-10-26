@@ -593,7 +593,7 @@ class SettingsMenu(QDialog):
         reviewButtonDesigns_window.setWindowTitle("Advanced Review Bottombar [Review Button Designs]")
         reviewButtonDesigns_window.setWindowIcon(QIcon(images + "/icon.png"))
         reviewButtonDesigns_window.setLayout(reviewButtonDesigns_layout)
-        reviewButtonDesigns_button.clicked.connect(lambda: reviewButtonDesigns_window.exec_())
+        reviewButtonDesigns_button.clicked.connect(lambda: reviewButtonDesigns_window.exec())
         buttonStyle_holder = QHBoxLayout()
         buttonStyle_holder.addWidget(buttonStyle_label)
         buttonStyle_holder.addWidget(self.button_style)
@@ -623,7 +623,7 @@ class SettingsMenu(QDialog):
         otherBottombarButtonDesigns_window.setWindowTitle("Advanced Review Bottombar [Other Bottombar Buttons Designs]")
         otherBottombarButtonDesigns_window.setWindowIcon(QIcon(images + "/icon.png"))
         otherBottombarButtonDesigns_window.setLayout(otherBottombarButtonDesigns_layout)
-        otherBottombarButtonDesigns_button.clicked.connect(lambda: otherBottombarButtonDesigns_window.exec_())
+        otherBottombarButtonDesigns_button.clicked.connect(lambda: otherBottombarButtonDesigns_window.exec())
         bottombarButtonsStyle_holder = QHBoxLayout()
         bottombarButtonsStyle_holder.addWidget(bottombaButtonsStyle_label)
         bottombarButtonsStyle_holder.addWidget(self.bottombarButtons_style)
@@ -797,7 +797,7 @@ class SettingsMenu(QDialog):
         layout_holder.setLayout(layout)
         self.tab1 = QScrollArea()
         self.tab1.setFixedWidth(690)
-        self.tab1.setAlignment(Qt.AlignHCenter)
+        self.tab1.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab1.setWidgetResizable(True)
         self.tab1.setWidget(layout_holder)
 
@@ -872,14 +872,14 @@ class SettingsMenu(QDialog):
         # end 2 box
 
         # start 3 box
-        self.reviewTooltipPositionX = QSlider(Qt.Horizontal)
+        self.reviewTooltipPositionX = QSlider()
         self.reviewTooltipPositionX.setFixedWidth(200)
         self.reviewTooltipPositionX.setMinimum(0)
         self.reviewTooltipPositionX.setMaximum(1850)
         self.reviewTooltipPositionX.setPageStep(100)
         self.reviewTooltipPositionX.setSliderPosition(0)
         reviewerTooltipPosition_holder = QHBoxLayout()
-        self.reviewTooltipPositionY = QSlider(Qt.Vertical)
+        self.reviewTooltipPositionY = QSlider()
         self.reviewTooltipPositionY.setFixedHeight(200)
         self.reviewTooltipPositionY.setMinimum(-950)
         self.reviewTooltipPositionY.setMaximum(0)
@@ -913,7 +913,7 @@ class SettingsMenu(QDialog):
         # end 3 box
 
         # start 4 box
-        self.reviewTooltipOffsetX = QSlider(Qt.Horizontal)
+        self.reviewTooltipOffsetX = QSlider()
         self.reviewTooltipOffsetX.setFixedWidth(200)
         self.reviewTooltipOffsetX.setMinimum(-800)
         self.reviewTooltipOffsetX.setMaximum(800)
@@ -921,7 +921,7 @@ class SettingsMenu(QDialog):
         self.reviewTooltipOffsetX.setSliderPosition(0)
         reviewerTooltipOffset_holder = QHBoxLayout()
 
-        self.reviewTooltipOffsetY = QSlider(Qt.Vertical)
+        self.reviewTooltipOffsetY = QSlider()
         self.reviewTooltipOffsetY.setFixedHeight(200)
         self.reviewTooltipOffsetY.setMinimum(0)
         self.reviewTooltipOffsetY.setMaximum(500)
@@ -959,7 +959,7 @@ class SettingsMenu(QDialog):
         layout_holder.setLayout(layout)
         self.tab2 = QScrollArea()
         self.tab2.setFixedWidth(690)
-        self.tab2.setAlignment(Qt.AlignHCenter)
+        self.tab2.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab2.setWidgetResizable(True)
         self.tab2.setWidget(layout_holder)
 
@@ -1152,7 +1152,7 @@ class SettingsMenu(QDialog):
         layout_holder.setLayout(layout)
         self.tab3 = QScrollArea()
         self.tab3.setFixedWidth(690)
-        self.tab3.setAlignment(Qt.AlignHCenter)
+        self.tab3.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab3.setWidgetResizable(True)
         self.tab3.setWidget(layout_holder)
 
@@ -1332,7 +1332,7 @@ class SettingsMenu(QDialog):
         layout_holder.setLayout(layout)
         self.tab4 = QScrollArea()
         self.tab4.setFixedWidth(690)
-        self.tab4.setAlignment(Qt.AlignHCenter)
+        self.tab4.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab4.setWidgetResizable(True)
         self.tab4.setWidget(layout_holder)
 
@@ -1478,7 +1478,7 @@ class SettingsMenu(QDialog):
         layout_holder.setLayout(layout)
         self.tab5 = QScrollArea()
         self.tab5.setFixedWidth(690)
-        self.tab5.setAlignment(Qt.AlignHCenter)
+        self.tab5.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab5.setWidgetResizable(True)
         self.tab5.setWidget(layout_holder)
 
@@ -1660,7 +1660,7 @@ class SettingsMenu(QDialog):
         layout_holder.setLayout(layout)
         self.tab6 = QScrollArea()
         self.tab6.setFixedWidth(690)
-        self.tab6.setAlignment(Qt.AlignHCenter)
+        self.tab6.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab6.setWidgetResizable(True)
         self.tab6.setWidget(layout_holder)
 
@@ -1915,7 +1915,7 @@ class SettingsMenu(QDialog):
         self.tab7 = QScrollArea()
         #// I use this part to control the initial settings menu width -_-
         self.tab7.setFixedWidth(690)
-        self.tab7.setAlignment(Qt.AlignHCenter)
+        self.tab7.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab7.setWidgetResizable(True)
         self.tab7.setWidget(layout_holder)
 
@@ -2055,7 +2055,7 @@ class SettingsMenu(QDialog):
         layout_holder.setLayout(layout)
         self.tab8 = QScrollArea()
         self.tab8.setFixedWidth(690)
-        self.tab8.setAlignment(Qt.AlignHCenter)
+        self.tab8.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab8.setWidgetResizable(True)
         self.tab8.setWidget(layout_holder)
         self.tab1.setDisabled(True)
@@ -2101,7 +2101,7 @@ class SettingsMenu(QDialog):
         about_scroll = QScrollArea()
         about_scroll.setWidget(about)
         changeLog_window = QDialog()
-        changeLog_window.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint | Qt.WindowMinimizeButtonHint)
+        changeLog_window.setWindowFlags(Qt.WindowType.WindowCloseButtonHint | Qt.WindowType.WindowMaximizeButtonHint | Qt.WindowType.WindowMinimizeButtonHint)
         changeLog_window.setWindowTitle("Changelog")
         changeLog_window.setWindowIcon(QIcon(images + "\icon.png"))
         changeLog_button = QPushButton("Show Changelog")
@@ -2110,14 +2110,14 @@ class SettingsMenu(QDialog):
         changeLog_layout = QVBoxLayout()
         changeLog_layout.addWidget(self.changeLog_webView)
         changeLog_window.setLayout(changeLog_layout)
-        changeLog_button.clicked.connect(lambda: changeLog_window.exec_())
+        changeLog_button.clicked.connect(lambda: changeLog_window.exec())
         layout = QVBoxLayout()
         layout.addWidget(about_scroll)
         layout.addWidget(changeLog_button)
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab9 = QScrollArea()
-        self.tab9.setAlignment(Qt.AlignHCenter)
+        self.tab9.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab9.setWidgetResizable(True)
         self.tab9.setWidget(layout_holder)
 

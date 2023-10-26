@@ -584,14 +584,14 @@ def showTooltip(text, background_color, tooltip_textColor, button_width, button_
     </table>
     """.format(tooltip_textColor, text)
     lab = CustomLabel(table, aw)
-    lab.setFrameStyle(QFrame.Panel)
+    lab.setFrameStyle(QFrame.Shape.Panel)
     lab.setLineWidth(2)
     lab.setFixedWidth(button_width)
     lab.setFixedHeight(button_height)
-    lab.setWindowFlags(Qt.ToolTip)
+    lab.setWindowFlags(Qt.WindowType.ToolTip)
     p = QPalette()
-    p.setColor(QPalette.Window, QColor(background_color))
-    p.setColor(QPalette.WindowText, QColor("transparent"))
+    p.setColor(QPalette.ColorRole.Window, QColor(background_color))
+    p.setColor(QPalette.ColorRole.WindowText, QColor("transparent"))
     lab.setPalette(p)
     # Handle button offset.
     if tooltip_style == 0:

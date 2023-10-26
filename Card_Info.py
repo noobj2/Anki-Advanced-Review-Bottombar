@@ -39,12 +39,12 @@ class StatsSidebar(object):
                 QDockWidget.closeEvent(self, evt)
         dock = DockableWithClose(title, mw)
         dock.setObjectName(title)
-        dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
-        dock.setFeatures(QDockWidget.AllDockWidgetFeatures)
+        dock.setAllowedAreas(Qt.DockWidgetArea.LeftDockWidgetArea | Qt.DockWidgetArea.RightDockWidgetArea)
+        # dock.setFeatures(QDockWidget.AllDockWidgetFeatures)
         dock.setWidget(w)
         if mw.width() < 600:
             mw.resize(QSize(600, mw.height()))
-        mw.addDockWidget(Qt.RightDockWidgetArea, dock)
+        mw.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, dock)
         return dock
 
     def _remDockable(self, dock):

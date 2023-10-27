@@ -1,8 +1,13 @@
 <html>
   <div class="background">
-    <h1>v3.4.1 (2023/10/27)</h1>
-    <li>Compatability fix for Anki v23.10</li>
-  </div>
+      <h1>v3.4.1 (2023/10/27)</h1>
+      <li>
+        Compatability fix for Anki v23.10 (Thanks to<a
+          href="https://github.com/khonkhortisan"
+          >Kyle Mills</a
+        >)
+      </li>
+    </div>
   <div class="background">
     <h1>v3.4.0 (2023/09/17)</h1>
     <li>New Feature: Added a feature to hide the info about the current card in the card info sidebar | you can enable the feature in the Sidebar tab</li>

@@ -872,14 +872,14 @@ class SettingsMenu(QDialog):
         # end 2 box
 
         # start 3 box
-        self.reviewTooltipPositionX = QSlider()
+        self.reviewTooltipPositionX = QSlider(Qt.Orientation.Horizontal)
         self.reviewTooltipPositionX.setFixedWidth(200)
         self.reviewTooltipPositionX.setMinimum(0)
         self.reviewTooltipPositionX.setMaximum(1850)
         self.reviewTooltipPositionX.setPageStep(100)
         self.reviewTooltipPositionX.setSliderPosition(0)
         reviewerTooltipPosition_holder = QHBoxLayout()
-        self.reviewTooltipPositionY = QSlider()
+        self.reviewTooltipPositionY = QSlider(Qt.Orientation.Vertical)
         self.reviewTooltipPositionY.setFixedHeight(200)
         self.reviewTooltipPositionY.setMinimum(-950)
         self.reviewTooltipPositionY.setMaximum(0)
@@ -913,7 +913,7 @@ class SettingsMenu(QDialog):
         # end 3 box
 
         # start 4 box
-        self.reviewTooltipOffsetX = QSlider()
+        self.reviewTooltipOffsetX = QSlider(Qt.Orientation.Horizontal)
         self.reviewTooltipOffsetX.setFixedWidth(200)
         self.reviewTooltipOffsetX.setMinimum(-800)
         self.reviewTooltipOffsetX.setMaximum(800)
@@ -921,7 +921,7 @@ class SettingsMenu(QDialog):
         self.reviewTooltipOffsetX.setSliderPosition(0)
         reviewerTooltipOffset_holder = QHBoxLayout()
 
-        self.reviewTooltipOffsetY = QSlider()
+        self.reviewTooltipOffsetY = QSlider(Qt.Orientation.Vertical)
         self.reviewTooltipOffsetY.setFixedHeight(200)
         self.reviewTooltipOffsetY.setMinimum(0)
         self.reviewTooltipOffsetY.setMaximum(500)

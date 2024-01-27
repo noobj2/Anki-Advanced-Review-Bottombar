@@ -248,35 +248,35 @@ class GetShortcut(QDialog):
         if evt.key() > 30 and evt.key() < 127:
             self.extra = chr(evt.key())
         #// stores the pressed key in a variable, so we could later add it in a list and use it as a key combination
-        elif evt.key() == Qt.Key_Control:
+        elif evt.key() == Qt.Key.Key_Control:
             self.ctrl = True
-        elif evt.key() == Qt.Key_Alt:
+        elif evt.key() == Qt.Key.Key_Alt:
             self.alt = True
-        elif evt.key() == Qt.Key_Shift:
+        elif evt.key() == Qt.Key.Key_Shift:
             self.shift = True
-        elif evt.key() == Qt.Key_F1:
+        elif evt.key() == Qt.Key.Key_F1:
             self.f1 = True
-        elif evt.key() == Qt.Key_F2:
+        elif evt.key() == Qt.Key.Key_F2:
             self.f2 = True
-        elif evt.key() == Qt.Key_F3:
+        elif evt.key() == Qt.Key.Key_F3:
             self.f3 = True
-        elif evt.key() == Qt.Key_F4:
+        elif evt.key() == Qt.Key.Key_F4:
             self.f4 = True
-        elif evt.key() == Qt.Key_F5:
+        elif evt.key() == Qt.Key.Key_F5:
             self.f5 = True
-        elif evt.key() == Qt.Key_F6:
+        elif evt.key() == Qt.Key.Key_F6:
             self.f6 = True
-        elif evt.key() == Qt.Key_F7:
+        elif evt.key() == Qt.Key.Key_F7:
             self.f7 = True
-        elif evt.key() == Qt.Key_F8:
+        elif evt.key() == Qt.Key.Key_F8:
             self.f8 = True
-        elif evt.key() == Qt.Key_F9:
+        elif evt.key() == Qt.Key.Key_F9:
             self.f9 = True
-        elif evt.key() == Qt.Key_F10:
+        elif evt.key() == Qt.Key.Key_F10:
             self.f10 = True
-        elif evt.key() == Qt.Key_F11:
+        elif evt.key() == Qt.Key.Key_F11:
             self.f11 = True
-        elif evt.key() == Qt.Key_F12:
+        elif evt.key() == Qt.Key.Key_F12:
             self.f12 = True
 
     def keyReleaseEvent(self, evt):

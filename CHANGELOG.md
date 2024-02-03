@@ -2,7 +2,7 @@
   <div class="background">
     <h1>v3.4.2 (2024/2/3)</h1>
     <li>Fixed not being able to set shortcuts in settings</li>
-    <li>Fixed Card info side bar not displaying FSRS Difficutly correctly</li>
+    <li>Fixed Card info side bar not displaying FSRS Difficulty correctly</li>
   </div>
   <div class="background">
       <h1>v3.4.1 (2023/10/27)</h1>

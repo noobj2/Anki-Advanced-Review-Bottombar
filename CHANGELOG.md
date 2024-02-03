@@ -1,5 +1,10 @@
 <html>
   <div class="background">
+    <h1>v3.4.2 (2024/2/3)</h1>
+    <li>Fixed not being able to set shortcuts in settings</li>
+    <li>Fixed Card info side bar not displaying FSRS Difficutly correctly</li>
+  </div>
+  <div class="background">
       <h1>v3.4.1 (2023/10/27)</h1>
       <li>
         Compatability fix for Anki v23.10 (Thanks to<a

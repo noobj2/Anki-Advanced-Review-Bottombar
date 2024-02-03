@@ -14,6 +14,7 @@ from anki.lang import _
 from anki.utils import fmtTimeSpan
 from anki.stats import CardStats
 from aqt import *
+from aqt.utils import showInfo
 from anki.utils import html_to_text_line
 from anki.collection import _Collection
 from aqt.reviewer import Reviewer
@@ -76,7 +77,7 @@ class StatsSidebar(object):
         self.mw.progress.timer(100, self.hide, False)
 
     # modified _revlogData function
-    def _revlogData_mod(self, card, cs):
+    def _revlogData_mod(self, card, card_stats):
         config = mw.addonManager.getConfig(__name__)
         sidebar_font = config['Card Info sidebar_ Font']
         reviewsToShow = config['Card Info sidebar_ number of reviews to show for a card']
@@ -123,7 +124,7 @@ class StatsSidebar(object):
             elif ivl > 0:
                 ivl = fmtTimeSpan(ivl * 86400, short=True)
             else:
-                ivl = cs.time(-ivl)
+                ivl = card_stats.time(-ivl)
 
             if not custom_colors:
                 again_color = "#FF1111"
@@ -163,7 +164,17 @@ class StatsSidebar(object):
                     button = f"<div style='color: {easy_color};'>Easy</div>"
                 else:
                     button = f"ease: {ease}"
-            s += ("<td align=center>%s</td>" * 5) % (tstr, button, "%s<br>(%s)" %(ivl, int_due), "%d%%" % (factor / 10) if factor else "", cs.time(taken)) + "</tr>"
+            if not factor:
+                factor_text = ''
+            else:
+                factor = factor / 10
+                if factor <= 110:
+                    factor_text = f"{factor} | D:{round(factor - 10)}"
+                else:
+                    factor_text = f"{factor} | {round(factor)}"
+            s += ("<td align=center>%s</td>" * 5) % (tstr, button, "%s<br>(%s)" %(ivl, int_due), "%s%%" % factor_text, card_stats.time(taken)) + "</tr>"
+            # Stability stat for future updates
+            # showInfo(f"{self.mw.col.compute_memory_state(card.id)}")
             if reviewsToShow != 0:
                 if cnt > int(reviewsToShow) - 1:
                     break
@@ -386,7 +397,7 @@ class StatsSidebar(object):
         txt = ""
         r = self.mw.reviewer
         d = self.mw.col
-        cs = CardStats(d, r.card)
+        card_stats = CardStats(d, r.card)
         current_card = r.card
         review_count = len(self.mw.reviewer._answeredIds)
         styles = """<style>
@@ -404,7 +415,7 @@ class StatsSidebar(object):
                 txt += "<div class='title'>Current Card</div>"
             txt += d.cardStats_mod(current_card)
             txt += "<p>"
-            txt += r._revlogData_mod(current_card, cs)
+            txt += r._revlogData_mod(current_card, card_stats)
             card2 = r.lastCard()
             if card2 and sidebar_PreviousCards > 1:
                 if sidebar_PreviousCards == 2:
@@ -413,7 +424,7 @@ class StatsSidebar(object):
                     txt += "<hr><div class='title'>Card 2</div>"
                 txt += d.cardStats_mod(card2)
                 txt += "<p>"
-                txt += r._revlogData_mod(card2, cs)
+                txt += r._revlogData_mod(card2, card_stats)
                 if sidebar_PreviousCards < 3:
                     if infobar_currentReviewCount:
                         txt += currentReviewCount
@@ -422,7 +433,7 @@ class StatsSidebar(object):
                     txt += "<hr><div class='title''>Card 3</div>"
                     txt += d.cardStats_mod(card3)
                     txt += "<p>"
-                    txt += r._revlogData_mod(card3, cs)
+                    txt += r._revlogData_mod(card3, card_stats)
                     if sidebar_PreviousCards < 4:
                         if infobar_currentReviewCount:
                             txt += currentReviewCount
@@ -431,7 +442,7 @@ class StatsSidebar(object):
                         txt += "<hr><div class='title''>Card 4</div>"
                         txt += d.cardStats_mod(card4)
                         txt += "<p>"
-                        txt += r._revlogData_mod(card4, cs)
+                        txt += r._revlogData_mod(card4, card_stats)
                         if infobar_currentReviewCount:
                             txt += currentReviewCount
         if not txt:
@@ -447,7 +458,7 @@ class StatsSidebar(object):
                 txt += "<div class='title'>Last Card</div>"
                 txt += d.cardStats_mod(card2)
                 txt += "<p>"
-                txt += r._revlogData_mod(card2, cs)
+                txt += r._revlogData_mod(card2, card_stats)
                 if sidebar_PreviousCards < 3:
                     if infobar_currentReviewCount:
                         txt += currentReviewCount
@@ -456,7 +467,7 @@ class StatsSidebar(object):
                     txt += "<hr><div class='title''>Card 2</div>"
                     txt += d.cardStats_mod(card3)
                     txt += "<p>"
-                    txt += r._revlogData_mod(card3, cs)
+                    txt += r._revlogData_mod(card3, card_stats)
                     if sidebar_PreviousCards < 4:
                         if infobar_currentReviewCount:
                             txt += currentReviewCount
@@ -465,7 +476,7 @@ class StatsSidebar(object):
                         txt += "<hr><div class='title''>Card 3</div>"
                         txt += d.cardStats_mod(card4)
                         txt += "<p>"
-                        txt += r._revlogData_mod(card4, cs)
+                        txt += r._revlogData_mod(card4, card_stats)
                         if infobar_currentReviewCount:
                             txt += currentReviewCount
         style = self._style()
@@ -515,8 +526,8 @@ class StatsSidebar(object):
         return mystyle + "td { font-size: 75%; font-family:" + f"{sidebar_font}" + ";}"
 
 
-_cs = StatsSidebar(mw)
+_card_stats = StatsSidebar(mw)
 
 
 def cardStats(on):
-    _cs.toggle()
+    _card_stats.toggle()

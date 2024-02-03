@@ -80,7 +80,7 @@ def _shortcutKeys_wrap(self, _old):
     else:
         original.append((skip_shortcut, lambda: self.nextCard()))
     original.extend([
-    (info_shortcut, lambda: Card_Info._cs.toggle()),
+    (info_shortcut, lambda: Card_Info._card_stats.toggle()),
     (undo_shortcut, lambda: mw.onUndo())
     ])
     return original
@@ -90,7 +90,7 @@ def _shortcutKeys_wrap(self, _old):
 def linkHandler_wrap(reviewer, url):
     sched_ver = mw.col.sched.version
     if url == "card_info":
-        Card_Info._cs.toggle()
+        Card_Info._card_stats.toggle()
     elif url == "skip":
         if sched_ver > 2 or skipMethod == 1:
             burySkipped()

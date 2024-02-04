@@ -169,9 +169,9 @@ class StatsSidebar(object):
             else:
                 factor = factor / 10
                 if factor <= 110:
-                    factor_text = f"{factor} | D:{round(factor - 10)}"
+                    factor_text = f"D:{round(factor - 10)}"
                 else:
-                    factor_text = f"{factor} | {round(factor)}"
+                    factor_text = f"{round(factor)}"
             s += ("<td align=center>%s</td>" * 5) % (tstr, button, "%s<br>(%s)" %(ivl, int_due), "%s%%" % factor_text, card_stats.time(taken)) + "</tr>"
             # Stability stat for future updates
             # showInfo(f"{self.mw.col.compute_memory_state(card.id)}")

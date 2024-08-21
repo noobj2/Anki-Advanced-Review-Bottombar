@@ -4,6 +4,7 @@
 import re
 from aqt.reviewer import Reviewer
 from aqt import mw
+from aqt.utils import showInfo
 from anki.scheduler.v3 import Scheduler as V3Scheduler
 from . import styles
 
@@ -150,17 +151,17 @@ def _answerButtons(self):
                 button_id = "easy"
             else:
                 button_id = ""
-        due_plain = self._buttonTime(i, v3_labels=labels)
+        due_plain = re.search(r'<span.*>(.*?)</span>', self._buttonTime(i, v3_labels=labels)).group(1)
         inButton_due = ""
         if interval_style == 1:
             if button_id == "again":
-                due = f"<font color={again_color}>{due_plain}</font>"
+                due = f"<span class='nobold' style='color:{again_color}; font-size: {text_size}px;'>{due_plain}</span>"
             elif button_id == "hard":
-                due = f"<font color={hard_color}>{due_plain}</font>"
+                due = f"<span class='nobold' style='color:{hard_color}; font-size: {text_size}px;'>{due_plain}</span>"
             elif button_id == "good":
-                due = f"<font color={good_color}>{due_plain}</font>"
+                due = f"<span class='nobold' style='color:{good_color}; font-size: {text_size}px;'>{due_plain}</span>"
             elif button_id == "easy":
-                due = f"<font color={easy_color}>{due_plain}</font>"
+                due = f"<span class='nobold' style='color:{easy_color}; font-size: {text_size}px;'>{due_plain}</span>"
             else:
                 if due_plain:
                     due = due_plain
@@ -169,14 +170,13 @@ def _answerButtons(self):
         elif interval_style == 2:
             if due_plain:
                 due = ""
-                txt = self.mw.col.sched.nextIvlStr(self.card, i, True) or ""
-                inButton_due = f" | {txt}"
+                inButton_due = f" | {due_plain}"
             else:
                 due = ""
                 inButton_due = ""
         else:
             if due_plain:
-                due = due_plain
+                due = f"<span class='nobold' style='font-size: {text_size}px;'>{due_plain}</span>"
             else:
                 due = ""
         #// Choosing button classes based on what user has chosen in config

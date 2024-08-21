@@ -46,6 +46,12 @@ buttons_height = config['Button_ Height_ All Bottombar Buttons']
 answer_width = config['Button_ Width_ Show Answer Button']
 text_size = config['Button_ Text Size']
 
+if custom_buttonSize:
+    bottomBar_top_padding = text_size + 10
+else:
+    text_size = ''
+    bottomBar_top_padding = 25
+
 custom_bottombarButtonBorderColor = config['Color_ Custom Bottombar Button Border Color']
 bottombarButtonBorder_color = config['Color_ Bottombar Button Border Color']
 showAnswerBorderColor_style = config['ShowAnswer_ Border Color Style']
@@ -286,39 +292,37 @@ def _bottomHTML(self):
     if custom_bottombarButtonBorderColor:
         time_color = bottombarButtonBorder_color
 
-    return """%(bottomHTML_style)s
+    return f"""%(bottomHTML_style)s
 %(min_buttonSize)s
 <center id=outer style="display: flex; justify-content: center; align-items: center;">
-<table id=innertable width=100%% cellspacing=0 cellpadding=0 style="padding-top: 25px">
+<table id=innertable width=100%% cellspacing=0 cellpadding=0 style="padding-top: {bottomBar_top_padding}px">
 <tr>
 <td align=start width=50 valign=top class=stat style="padding-top: 0">
 
-<button title="Shortcut key: E" onclick="pycmd('edit');" %(edit_style)s>%(edit_label)s</button></td>
-%(left_side1)s
-%(left_side2)s
-%(left_side3)s
-%(left_side4)s
+<button title="Shortcut key: E" onclick="pycmd('edit');" {edit_style}>{edit_label}</button></td>
+{left_side1}
+{left_side2}
+{left_side3}
+{left_side4}
 <td align=center valign=top id=middle style="padding-top: 0px">
 </td>
-%(right_side1)s
-%(right_side2)s
-%(right_side3)s
-%(right_side4)s
-<td width=50 align=end valign=top class=stat style='color: %(time_color)s; padding-top: 0px'>
+{right_side1}
+{right_side2}
+{right_side3}
+{right_side4}
+<td width=50 align=end valign=top class=stat style='color: {time_color}; padding-top: 0px'>
 <span id=time class=timer_style>hey
 </span>
-<button onclick="pycmd('more');" %(more_style)s>%(more_label)s %(downArrow)s</button>
+<button onclick="pycmd('more');" {more_style}>{more_label} %(downArrow)s</button>
 </td>
 </tr>
 </table>
 </center>
 <script>
 time = %(time)d;
-%(SF_bottomHTML)s
+{SF_bottomHTML}
 </script>
-""" % dict(bottomHTML_style=bottomHTML_style, min_buttonSize=min_buttonSize, rem=self._remaining(), downArrow=downArrow(), time=self.card.time_taken() // 1000,
-    edit_style=edit_style, edit_label=edit_label, left_side1=left_side1, left_side2=left_side2, left_side3=left_side3, left_side4=left_side4, right_side1=right_side1,
-    right_side2=right_side2, right_side3=right_side3, right_side4=right_side4, more_style=more_style, more_label=more_label, SF_bottomHTML=SF_bottomHTML, time_color=time_color)
+""" % dict(bottomHTML_style=bottomHTML_style, min_buttonSize=min_buttonSize, rem=self._remaining(), downArrow=downArrow(), time=self.card.time_taken() // 1000)
 
 #// Show Answer Button
 def _showAnswerButton(self):
@@ -359,24 +363,21 @@ def _showAnswerButton(self):
             self.bottom.web.eval("setAutoAnswer(%d);" % (c['autoAnswer'] * 1000))
         if c.get('autoAlert', 0) > 0:
             self.bottom.web.eval("setAutoAlert(%d);" % (c['autoAlert'] * 1000))
-    middle = '''
+    middle = f'''
 <table cellspacing=0 cellpadding=0>
 <tr><td class=stat2 align=center style="padding-top: 0px">
-<span class=stattxt> %(remaining)s </span>
-%(middleLeft_side1)s
-%(middleLeft_side2)s
-%(middleLeft_side3)s
-%(middleLeft_side4)s
-<button title="Shortcut key: Space" onclick='pycmd("ans");' %(answer_style)s>%(showAnswer_text)s</button>
-%(middleRight_side1)s
-%(middleRight_side2)s
-%(middleRight_side3)s
-%(middleRight_side4)s
+<span class=stattxt style="font-size: {text_size}px;"> %(remaining)s </span>
+{middleLeftSide_button1}
+{middleLeftSide_button2}
+{middleLeftSide_button3}
+{middleLeftSide_button4}
+<button title="Shortcut key: Space" onclick='pycmd("ans");' {showAnswer_style}>{showAnswer_text}</button>
+{middleRightSide_button1}
+{middleRightSide_button2}
+{middleRightSide_button3}
+{middleRightSide_button4}
 </td></tr>
-</table>''' % dict(remaining=self._remaining(), middleLeft_side1=middleLeftSide_button1, middleLeft_side2=middleLeftSide_button2, middleLeft_side3=middleLeftSide_button3, middleLeft_side4=middleLeftSide_button4,
-    answer_style=showAnswer_style, middleRight_side1=middleRightSide_button1, middleRight_side2=middleRightSide_button2, middleRight_side3=middleRightSide_button3, middleRight_side4=middleRightSide_button4, showAnswer_text=showAnswer_text)
-    # wrap it in a table, so it has the same top margin as the ease buttons
-    middle = "%s" % middle
+</table>''' % dict(remaining=self._remaining())
     if self.card.should_show_timer():
         maxTime = self.card.time_limit() / 1000
     else:

@@ -1,5 +1,9 @@
 <html>
   <div class="background">
+    <h1>v3.5.1 (2024/8/22)</h1>
+    <li>Bug fixes</li>
+  </div>
+  <div class="background">
     <h1>v3.5.0 (2024/8/21)</h1>
     <li>Made remaining card count and button due date font sizes use the same font size as the button text</li>
   </div>

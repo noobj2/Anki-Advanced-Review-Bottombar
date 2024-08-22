@@ -151,7 +151,11 @@ def _answerButtons(self):
                 button_id = "easy"
             else:
                 button_id = ""
-        due_plain = re.search(r'<span.*>(.*?)</span>', self._buttonTime(i, v3_labels=labels)).group(1)
+        due_plain = re.search(r'<span.*>(.*?)</span>', self._buttonTime(i, v3_labels=labels))
+        if due_plain is None:
+            due_plain = ""
+        else:
+            due_plain = due_plain.group(1)
         inButton_due = ""
         if interval_style == 1:
             if button_id == "again":

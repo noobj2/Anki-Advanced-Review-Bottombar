@@ -15,6 +15,13 @@ def burySkipped():
     mw.checkpoint(_("Bury"))
     mw.col.sched.buryCards([mw.reviewer.card.id])
     mw.reset()
+	
+#// Suspend card
+def suspendSkipped():
+    # optional: Liste der „geskippten“ Karten weiterführen wie bei bury, aber nicht zwingend
+    mw.checkpoint(_("Suspend"))
+    mw.col.sched.suspendCards([mw.reviewer.card.id])
+    mw.reset()
 
 #// Unbury skipped cards
 def unburySkipped():

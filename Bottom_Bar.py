@@ -1,5 +1,5 @@
-#// auth_ Mohamad Janati
-#// Copyright (c) 2019-2023 Mohamad Janati
+#// auth_ Noobj2
+#// Copyright (c) 2019-2025 Noobj2 
 
 import json
 from aqt import mw
@@ -14,9 +14,10 @@ from .Skip import test
 from .Skip import burySkipped
 from .Skip import suspendSkipped
 from .Skip import try_unburySkipped
+from .Skip import try_unsuspendSkipped
 
 
-#// getting config information
+# getting config information
 config = mw.addonManager.getConfig(__name__)
 speedFocus_addOn = config['  Speed Focus Add-on']
 bottombarButtons_style = config[' Review_ Bottombar Buttons Style']
@@ -77,14 +78,15 @@ bottombar_neon2 = styles.bottombar_neon2
 bottombar_fill1 = styles.bottombar_fill1
 bottombar_fill2 = styles.bottombar_fill2
 
-#// adding shortcuts to _shortcutKeys function in anki
+# adding shortcuts to _shortcutKeys function in anki
 def _shortcutKeys_wrap(self, _old):
     original = _old(self)
     sched_ver = mw.col.sched.version
 
-    # Entscheide Aktion anhand Skip Method:
+    # Decide aciton based on skip method
     if skipMethod == 2:
         original.append((skip_shortcut, lambda: suspendSkipped()))
+        original.append((showSkipped_shortcut, lambda: try_unsuspendSkipped()))
     elif skipMethod == 1 or sched_ver > 2:
         original.append((skip_shortcut, lambda: burySkipped()))
         original.append((showSkipped_shortcut, lambda: try_unburySkipped()))
@@ -98,7 +100,7 @@ def _shortcutKeys_wrap(self, _old):
     return original
 
 
-#// adding button links to link handler function
+# adding button links to link handler function
 def linkHandler_wrap(reviewer, url):
     sched_ver = mw.col.sched.version
     if url == "card_info":
@@ -111,7 +113,9 @@ def linkHandler_wrap(reviewer, url):
         else:
             reviewer.nextCard()
     elif url == "showSkipped":
-        if sched_ver > 2 or skipMethod == 1:
+        if skipMethod == 2:
+            try_unsuspendSkipped()
+        elif skipMethod == 1 or sched_ver > 2:
             try_unburySkipped()
         else:
             showInfo("Your skip method is not \"Bury\" Hence you don't have any skipped cards that can be shown using this button.")
@@ -123,7 +127,7 @@ def linkHandler_wrap(reviewer, url):
 Review_linkHandelr_Original = Reviewer._linkHandler
 Reviewer._linkHandler = linkHandler_wrap
 
-#// Choosing styling for review other buttons in reviewer bottombar based on chosen style
+# Choosing styling for review other buttons in reviewer bottombar based on chosen style
 timer_style = """
 .timer_style {
     position: absolute;
@@ -146,7 +150,7 @@ elif bottombarButtons_style == 3:
 elif bottombarButtons_style == 4:
     bottomHTML_style = f"<style>{bottombar_fill2}{timer_style}</style>"
 
-#// info button | written in a separate functions to preserve the original bottombar
+# info button | written in a separate functions to preserve the original bottombar
 def info_button():
     if info:
         return f"""<button title="Shortcut key: {info_shortcut.upper()}" onclick="pycmd('card_info');" {info_style}>{info_label}</button>"""
@@ -154,14 +158,14 @@ def info_button():
         return ""
 
 
-#// skip button | written in a separate functions to preserve the original bottombar
+# skip button | written in a separate functions to preserve the original bottombar
 def skip_button():
     if skip:
         return f"""<button title="Shortcut key: {skip_shortcut.upper()}" onclick="pycmd('skip');" {skip_style}>{skip_label}</button>"""
     else:
         return ""
 
-#// Show Skipped button
+# Show Skipped button
 def showSkipped_button():
     if showSkipped:
         return f"""<button title="Shortcut key: {showSkipped_shortcut.upper()}" onclick="pycmd('showSkipped');" {showSkipped_style}>{showSkipped_label}</button>"""
@@ -169,7 +173,7 @@ def showSkipped_button():
         return ""
 
 
-#// undo button
+# undo button
 def undo_button():
     if undo:
         return f"""<button title="Shortcut key: {undo_shortcut}" onclick="pycmd('undo');" {undo_style}>{undo_label}</button>"""
@@ -177,7 +181,7 @@ def undo_button():
         return ""
 
 
-#// Button Positions
+# Button Positions
 leftSide_button1 = ""
 leftSide_button2 = ""
 leftSide_button3 = ""
@@ -231,7 +235,7 @@ elif undo_position == "right":
 else:
     middleLeftSide_button4 = undo_button()
 
-#// Speed focus remove conflicts
+# Speed focus remove conflicts
 if speedFocus_addOn:
     SF_bottomHTML = """
 var autoAnswerTimeout = 0;
@@ -253,7 +257,7 @@ var setAutoAlert = function(ms) {
 else:
     SF_bottomHTML = ""
 
-#// setting buttons based on their position
+# setting buttons based on their position
 if leftSide_button1 != "":
     left_side1 = f"<td width=50 align=left valign=top class=stat style='padding-top: 0px'> {leftSide_button1} </td>"
 else:
@@ -294,7 +298,7 @@ if rightSide_button4 != "":
 else:
     right_side4 = ""
 
-#// Review Screen Bottombar HTML
+# Review Screen Bottombar HTML
 def _bottomHTML(self):
     time_color = ""
     if custom_bottombarButtonBorderColor:
@@ -332,7 +336,7 @@ time = %(time)d;
 </script>
 """ % dict(bottomHTML_style=bottomHTML_style, min_buttonSize=min_buttonSize, rem=self._remaining(), downArrow=downArrow(), time=self.card.time_taken() // 1000)
 
-#// Show Answer Button
+# Show Answer Button
 def _showAnswerButton(self):
     showAnswer_text = showAnswer_label
     highEase_tooltip = ""
@@ -352,7 +356,7 @@ def _showAnswerButton(self):
     else:
         showAnswerBorder_color = ""
 
-    #// Moved show answer button size from "styles.py" here to make show answer border color based on ease compatible with custom button sizes
+    # Moved show answer button size from "styles.py" here to make show answer border color based on ease compatible with custom button sizes
     if custom_buttonSize:
         if bottombarButtons_style ==0:
             showAnswer_style = f'style="height: {buttons_height}px; width: {answer_width}px; font-size: {text_size}px; border-color: {showAnswerBorder_color};"'
@@ -360,11 +364,11 @@ def _showAnswerButton(self):
             showAnswer_style = f'style="height: {buttons_height}px; width: {answer_width}px; font-size: {text_size}px; border-color: {showAnswerBorder_color};" id=main'
     else:
         if bottombarButtons_style == 0:
-            showAnswer_style = f"style='border-color: {showAnswerBorder_color}' id=ansbut"  #// removed id=ansbut from its own code for styling
+            showAnswer_style = f"style='border-color: {showAnswerBorder_color}' id=ansbut"  # removed id=ansbut from its own code for styling
         else:
             showAnswer_style = f"style='border-color: {showAnswerBorder_color}' id=main"
 
-    #// removing conflict with speed focus add-on
+    # removing conflict with speed focus add-on
     if speedFocus_addOn:
         c = self.mw.col.decks.confForDid(self.card.odid or self.card.did)
         if c.get('autoAnswer', 0) > 0:
@@ -393,7 +397,7 @@ def _showAnswerButton(self):
     self.bottom.web.eval("showQuestion(%s,%d);" % (json.dumps(middle), maxTime))
 
 
-#// replacing/wrapping functions
+# replacing/wrapping functions
 Reviewer._shortcutKeys = wrap(Reviewer._shortcutKeys, _shortcutKeys_wrap, 'around')
 Reviewer._showAnswerButton = _showAnswerButton
 Reviewer._bottomHTML =  _bottomHTML

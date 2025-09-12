@@ -1,7 +1,3 @@
-#// auth_ Mohamad Janati
-#// Copyright (c) 2019-2023 Mohamad Janati
-
-
 from aqt.utils import tooltip
 from anki.hooks import wrap
 import aqt

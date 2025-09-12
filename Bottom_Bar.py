@@ -12,6 +12,7 @@ from . import Card_Info
 from . import styles
 from .Skip import test
 from .Skip import burySkipped
+from .Skip import suspendSkipped
 from .Skip import try_unburySkipped
 
 
@@ -80,14 +81,19 @@ bottombar_fill2 = styles.bottombar_fill2
 def _shortcutKeys_wrap(self, _old):
     original = _old(self)
     sched_ver = mw.col.sched.version
-    if sched_ver > 2 or skipMethod == 1:
+
+    # Entscheide Aktion anhand Skip Method:
+    if skipMethod == 2:
+        original.append((skip_shortcut, lambda: suspendSkipped()))
+    elif skipMethod == 1 or sched_ver > 2:
         original.append((skip_shortcut, lambda: burySkipped()))
         original.append((showSkipped_shortcut, lambda: try_unburySkipped()))
     else:
         original.append((skip_shortcut, lambda: self.nextCard()))
+
     original.extend([
-    (info_shortcut, lambda: Card_Info._card_stats.toggle()),
-    (undo_shortcut, lambda: mw.onUndo())
+        (info_shortcut, lambda: Card_Info._card_stats.toggle()),
+        (undo_shortcut, lambda: mw.onUndo())
     ])
     return original
 
@@ -98,7 +104,9 @@ def linkHandler_wrap(reviewer, url):
     if url == "card_info":
         Card_Info._card_stats.toggle()
     elif url == "skip":
-        if sched_ver > 2 or skipMethod == 1:
+        if skipMethod == 2:
+            suspendSkipped()
+        elif skipMethod == 1 or sched_ver > 2:
             burySkipped()
         else:
             reviewer.nextCard()

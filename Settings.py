@@ -1948,10 +1948,10 @@ class SettingsMenu(QDialog):
         skipMethod_label = QLabel("Skip Method:")
         skipMethod_label.setToolTip("{0}Changes Skip method.\n\"Next Card\" just skips the card and the skipped cards will be shown again randomly\
         while \"Bury\" buries the skipped cards and the skipped cards will get unburied when you finish reviewing normal cards. You\
-        can manually unbury skipped cards by pressing the \"Show Skipped\" button or by pressing the shortcut key that you've chosen for the button.{1}".format(begin, end))
+        can manually unbury skipped cards by pressing the \"Show Skipped\" button or by pressing the shortcut key that you've chosen for the button. Alternatively, you can also suspend cards directly using the button.{1}".format(begin, end))
         skipMethod_label.setFixedWidth(180)
         self.skipMethod = QComboBox()
-        self.skipMethod.addItems(["Next Card", "Bury"])
+        self.skipMethod.addItems(["Next Card", "Bury", "Suspend"])
         self.skipMethod.setFixedWidth(150)
         skipMethod_holder = QHBoxLayout()
         skipMethod_holder.addWidget(skipMethod_label)

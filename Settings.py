@@ -1,5 +1,5 @@
-#// auth_ Mohamad Janati
-#// Copyright (c) 2019-2023 Mohamad Janati
+#// auth_ Noobj2
+#// Copyright (c) 2019-2025 Noobj2
 
 from os.path import join, dirname
 from datetime import datetime
@@ -202,9 +202,9 @@ class GetShortcut(QDialog):
         QDialog.__init__(self, parent=parent)
         self.parent = parent
         self.button_variable = button_variable
-        #// when recording a shortcut, there is 0 active (pushed) key at first | by pressing each key, this increases by +1
+        # when recording a shortcut, there is 0 active (pushed) key at first | by pressing each key, this increases by +1
         self.active = 0
-        #// and the state of all the accepted keys on the keyboard is "False" | by pressing each key, the state for that button changes to "True"
+        # and the state of all the accepted keys on the keyboard is "False" | by pressing each key, the state for that button changes to "True"
         self.ctrl = False
         self.alt = False
         self.shift = False
@@ -225,7 +225,7 @@ class GetShortcut(QDialog):
         self.getShortcutWindow()
 
     def getShortcutWindow(self):
-        #// Sets up the screen that asks you to press the shortcut you want to assign
+        # Sets up the screen that asks you to press the shortcut you want to assign
         text = QLabel('<div style="font-size: 15px">Press the new shortcut key...</div>')
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(text)
@@ -233,12 +233,12 @@ class GetShortcut(QDialog):
         self.setWindowTitle('Set Shortcut')
 
     def keyPressEvent(self, evt):
-        #// increases the active keys count upon pressing each key
+        # increases the active keys count upon pressing each key
         self.active += 1
-        #// limits the allowed keys to keyboard keys
+        # limits the allowed keys to keyboard keys
         if evt.key() > 30 and evt.key() < 127:
             self.extra = chr(evt.key())
-        #// stores the pressed key in a variable, so we could later add it in a list and use it as a key combination
+        # stores the pressed key in a variable, so we could later add it in a list and use it as a key combination
         elif evt.key() == Qt.Key.Key_Control:
             self.ctrl = True
         elif evt.key() == Qt.Key.Key_Alt:
@@ -271,7 +271,7 @@ class GetShortcut(QDialog):
             self.f12 = True
 
     def keyReleaseEvent(self, evt):
-        #// reduces the number of held keys upon releasing each key
+        # reduces the number of held keys upon releasing each key
         self.active -= 1
         message = "You can't set \"{}\" as a shortcut!"
         if is_mac:
@@ -282,7 +282,7 @@ class GetShortcut(QDialog):
             ctrlMessage = message.format("Ctrl")
         if not (self.f1 or self.f2 or self.f3 or self.f4 or self.f5 or self.f6 or self.f7 or self.f8 or self.f9 or self.f10 or self.f11 or self.f12):
             if not self.extra:
-                #// lets the users that the pressed key is not allowed to be used in a shortcut
+                # lets the users that the pressed key is not allowed to be used in a shortcut
                 if self.alt:
                     showInfo(f"{altMessage}".format(), title="Advanced Review Bottombar")
                 elif self.shift:
@@ -334,7 +334,7 @@ class GetShortcut(QDialog):
                 combination = []
                 return
 
-        #// the (empty) list for storing keys and then turning them into a shortcut
+        # the (empty) list for storing keys and then turning them into a shortcut
         combination = []
         if self.ctrl:
             combination.append("Ctrl")
@@ -369,7 +369,7 @@ class GetShortcut(QDialog):
         if self.extra:
             combination.append(self.extra)
         combination = "+".join(combination)
-        #// preventing users from assigning a default Anki shortcut to something else | to avoid conflicts and stuff :|
+        # preventing users from assigning a default Anki shortcut to something else | to avoid conflicts and stuff :|
         if combination in ["E", " ", "F5", "Ctrl+1", "Ctrl+2", "Ctrl+3", "Ctrl+4", "Shift+*", "=", "-", "Shift+!", "Shift+@", "Ctrl+Delete", "V", "Shift+V", "O", "1", "2", "3", "4", "5", "6", "7", "T", "Y", "A", "S", "D", "F", "B", "I", "/", "F1", "Ctrl+Q", "Ctrl+E", "Ctrl+P", "Ctrl+Shift+I", "Ctrl+Shift+P", "Ctrl+Shift+A", "Ctrl+Shift+:", "Ctrl+Shift+N"]:
             if combination == "E":
                 showInfo("\"E\" is default Anki shortcut for \"Edit Current Card\" You can't use this shortcut.", type="warning", title="Advanced Review Bottombar")
@@ -512,7 +512,7 @@ class SettingsMenu(QDialog):
         self.create_about_tab()
         self.loadCurrent()
 
-        #// Create the bottom row of settings menu
+        # Create the bottom row of settings menu
         loadSettingsButton = QPushButton("&Load Settings")
         loadSettingsButton.clicked.connect(self.onLoadSettings)
         saveSettingsButton = QPushButton("&Backup Settings")
@@ -528,12 +528,8 @@ class SettingsMenu(QDialog):
         buttonbox.addStretch()
         buttonbox.addWidget(acceptButton)
         buttonbox.addWidget(rejectButton)
-        supportMe_button = QPushButton("❤️ Support Me")
-        supportMe_button.clicked.connect(lambda: webbrowser.open('https://www.buymeacoffee.com/noobj2'))
-        support_box = QHBoxLayout()
-        support_box.addWidget(supportMe_button)
 
-        #// create tabs widget and adds each tab
+        # create tabs widget and adds each tab
         tabs = QTabWidget()
         tabs.addTab(self.tab1, "Styles")
         tabs.addTab(self.tab2, "Answer Tooltip")
@@ -548,7 +544,6 @@ class SettingsMenu(QDialog):
         vbox = QVBoxLayout()
         vbox.addWidget(tabs)
         vbox.addLayout(buttonbox)
-        vbox.addLayout(support_box)
 
         self.setLayout(vbox)
         self.setWindowTitle("Advanced Review Bottombar Settings Menu")
@@ -1916,7 +1911,7 @@ class SettingsMenu(QDialog):
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
         self.tab7 = QScrollArea()
-        #// I use this part to control the initial settings menu width -_-
+        # I use this part to control the initial settings menu width -_-
         self.tab7.setFixedWidth(690)
         self.tab7.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.tab7.setWidgetResizable(True)
@@ -2125,8 +2120,8 @@ class SettingsMenu(QDialog):
         self.tab9.setWidget(layout_holder)
 
     def loadChangeLog(self):
-        #// For some weird reason, using dirname(__file__) inside the .format() thingy doesn't seem to be working on macOS
-        #// Can't confirm tho -_- since I can't test my add-on on Mac
+        # For some weird reason, using dirname(__file__) inside the .format() thingy doesn't seem to be working on macOS
+        # Can't confirm tho -_- since I can't test my add-on on Mac
         addon_path = dirname(__file__)
         file = "{}/changelog.html".format(addon_path)
         with open(file, 'r') as f:
@@ -2346,14 +2341,14 @@ class SettingsMenu(QDialog):
 
     def onLoadSettings(self):
         addon_path = dirname(__file__)
-        #// Open a file browser to choose the settings file (returns a tuple) the first item in the tuple is the settings file location
+        # Open a file browser to choose the settings file (returns a tuple) the first item in the tuple is the settings file location
         fileName_tuple = QFileDialog.getOpenFileName(self, 'Open file', r'{}\user_files'.format(addon_path))
-        #// If user cancels the operation and no file is chosen, then return without doing anything
+        # If user cancels the operation and no file is chosen, then return without doing anything
         if not fileName_tuple[0]:
             return
-        #// Select the settings file from the tuple
+        # Select the settings file from the tuple
         settingsFile = fileName_tuple[0]
-        #// Open and read the JSON File
+        # Open and read the JSON File
         settings = open("{}".format(settingsFile), "r")
         conf = json.load(settings)
         settingsFile_name = os.path.basename(settingsFile)
@@ -2371,7 +2366,7 @@ class SettingsMenu(QDialog):
 
     def onSaveSettings(self):
         addon_path = dirname(__file__)
-        #// Choose a name for the backup file
+        # Choose a name for the backup file
         file_name = "ARBb {}".format(datetime.now().strftime("%d-%b-%Y %H-%M-%S"))
         userfiles_path = os.path.join(addon_path, "user_files")
         path_to_file = os.path.join(userfiles_path, "{}.json".format(file_name))
@@ -2539,9 +2534,9 @@ class SettingsMenu(QDialog):
         "ShowAnswer_ Ease3 Color": self.showAnswerEase3_color,
         "ShowAnswer_ Ease4 Color": self.showAnswerEase4_color
       }
-        #// Save settings in a JSON file
+        # Save settings in a JSON file
         json.dump(conf, f, indent=4)
-        #// Open file explorer after saving so users know where the backup file is (and maybe save it somewhere else)
+        # Open file explorer after saving so users know where the backup file is (and maybe save it somewhere else)
         if is_mac:
             select_method = ['open', '-R']
         else:
@@ -2804,7 +2799,7 @@ class SettingsMenu(QDialog):
 
 def open_settings():
     settings = SettingsMenu()
-    #// For styling settings menu -_-
+    # For styling settings menu -_-
     # settings.setStyle(QStyleFactory.create("Fusion"))
     settings.exec()
 
@@ -2817,7 +2812,6 @@ def setupMenu():
         mw.ARBB_menu.addAction(settings)
         mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.ARBB_menu)
     settings.triggered.connect(open_settings)
-    settings.setShortcut(QKeySequence('Shift+A'))
 setupMenu()
 
 if not C_configEdit:

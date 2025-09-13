@@ -15,196 +15,187 @@ import subprocess
 
 
 def refreshConfig():
-    #// Makes the information that it gets from "config" global, so I can use them for loading the current settings in "loadCurrent(self)" function
-    global C_style_mainScreenButtons, C_button_style, C_hover_effect, C_active_indicator, C_bottombarButtons_style, C_cursor_style, C_interval_style, C_showAnswerBorderColor_style, C_buttonTransition_time, C_buttonBorderRadius, C_wideButton_percent, C_reviewTooltip, C_reviewTooltip_timer, C_reviewTooltipText_color, C_reviewTooltip_style, C_reviewTooltip_position, C_reviewTooltip_offset, C_info, C_skip, C_showSkipped, C_undo, C_hideHard, C_hideGood, C_hideEasy, C_right_info, C_middleRight_info, C_middleLeft_info, C_left_info, C_right_skip, C_middleRight_skip, C_middleLeft_skip, C_left_skip, C_right_showSkipped, C_middleRight_showSkipped, C_middleLeft_showSkipped, C_left_showSkipped, C_right_undo, C_middleRight_undo, C_middleLeft_undo, C_left_undo, C_skip_shortcut, C_showSkipped_shortcut, C_info_shortcut, C_undo_shortcut, C_custom_sizes, C_text_size, C_buttonFontWeight, C_buttons_height, C_reviewButtons_width, C_edit_width, C_answer_width, C_more_width, C_info_width, C_skip_width, C_showSkipped_width, C_undo_width, C_buttonLabel_studyNow, C_buttonLabel_edit, C_buttonLabel_showAnswer, C_buttonLabel_more, C_buttonLabel_info, C_buttonLabel_skip, C_buttonLabel_showSkipped, C_buttonLabel_undo, C_buttonLabel_again, C_buttonLabel_hard, C_buttonLabel_good, C_buttonLabel_easy, C_sidebar_theme, C_sidebar_font, C_sidebar_hideCurrentCard, C_sidebar_PreviousCards, C_sidebar_reviewsToShow, C_sidebar_currentReviewCount, C_sidebar_reviewsToShow, C_sidebar_dateCreated, C_sidebar_dateEdited, C_sidebar_firstReview, C_sidebar_latestReview, C_sidebar_due, C_sidebar_interval, C_sidebar_ease, C_sidebar_numberOfReviews, C_sidebar_lapses, C_infobar_correctPercent, C_infobar_fastestReview, C_infobar_slowestReview, C_sidebar_averageTime, C_sidebar_totalTime, C_sidebar_cardType, C_sidebar_noteType, C_sidebar_deck, C_sidebar_tags, C_infobar_noteID, C_infobar_cardID, C_sidebar_sortField, C_sidebar_autoOpen, C_sidebar_warningNote, C_custom_reviewButtonColors, C_custom_reviewButtonTextColor, C_custom_activeIndicatorColor, C_custom_bottombarButtonTextColor, C_custom_bottombarButtonBorderColor, C_reviewButtonText_color, C_activeIndicator_color, C_bottombarButtonText_color, C_bottombarButtonBorder_color, C_again_color, C_againHover_color, C_hard_color, C_hardHover_color, C_good_color, C_goodHover_color, C_easy_color, C_easyHover_color, C_button_colors, C_showAnswerEase1, C_showAnswerEase2, C_showAnswerEase3, C_showAnswerEase4, C_showAnswerEase1_color, C_showAnswerEase2_color, C_showAnswerEase3_color, C_showAnswerEase4_color, C_addOn_speedFocus, C_addOn_rebuildEmptyAll, C_configEdit, C_hideEasyIfNotLearning, C_overViewStats, C_settingsMenu_palce, C_skipMethod
-
+    # move away from the long list of global variables to a single config dict
     config = mw.addonManager.getConfig(__name__)
+    global_variables = {}
 
-    #// Gets the information from the config and assigns them to the "C_" variables, so I can make them global | "C_" is added to the name of the parts of the settings variables to avoid confusion :D
-    #// Just delete the "C_" from the name to find related parts of the settings (C_style_mainScreenButtons -> style_mainScreenButtons)
-    C_style_mainScreenButtons = config['  Style Main Screen Buttons']
+    # direct mapping: config key -> module global name
+    mapping = {
+        "  Style Main Screen Buttons": "C_style_mainScreenButtons",
+        " Review_ Buttons Style": "C_button_style",
+        " Review_ Hover Effect": "C_hover_effect",
+        " Review_ Active Button Indicator": "C_active_indicator",
+        " Review_ Bottombar Buttons Style": "C_bottombarButtons_style",
+        " Review_ Cursor Style": "C_cursor_style",
+        " Review_ Interval Style": "C_interval_style",
+        " Review_ Button Transition Time": "C_buttonTransition_time",
+        " Review_ Button Border Radius": "C_buttonBorderRadius",
+        " Review_ Wide Button Percent": "C_wideButton_percent",
+        "Tooltip": "C_reviewTooltip",
+        "Tooltip Timer": "C_reviewTooltip_timer",
+        "Tooltip Text Color": "C_reviewTooltipText_color",
+        "Tooltip Style": "C_reviewTooltip_style",
+        "Tooltip Position": "C_reviewTooltip_position",
+        "Tooltip Offset": "C_reviewTooltip_offset",
+        "Button_   Info Button": "C_info",
+        "Button_   Skip Button": "C_skip",
+        "Button_   Show Skipped Button": "C_showSkipped",
+        "Button_   Undo Button": "C_undo",
+        "Button_   Hide Hard": "C_hideHard",
+        "Button_   Hide Good": "C_hideGood",
+        "Button_   Hide Easy": "C_hideEasy",
+        "Button_ Position_ Info Button": "C_info_position",
+        "Button_ Position_ Skip Button": "C_skip_position",
+        "Button_ Position_ Show Skipped Button": "C_showSkipped_position",
+        "Button_ Position_ Undo Button": "C_undo_position",
+        "Button_ Shortcut_ Skip Button": "C_skip_shortcut",
+        "Button_ Shortcut_ Show Skipped Button": "C_showSkipped_shortcut",
+        "Button_ Shortcut_ Info Button": "C_info_shortcut",
+        "Button_ Shortcut_ Undo Button": "C_undo_shortcut",
+        "Button_  Custom Button Sizes": "C_custom_sizes",
+        "Button_ Text Size": "C_text_size",
+        "Button_ Font Weight": "C_buttonFontWeight",
+        "Button_ Height_ All Bottombar Buttons": "C_buttons_height",
+        "Button_ Width_ Review Buttons": "C_reviewButtons_width",
+        "Button_ Width_ Edit Button": "C_edit_width",
+        "Button_ Width_ Show Answer Button": "C_answer_width",
+        "Button_ Width_ More Button": "C_more_width",
+        "Button_ Width_ Info Button": "C_info_width",
+        "Button_ Width_ Skip Button": "C_skip_width",
+        "Button_ Width_ Show Skipped Button": "C_showSkipped_width",
+        "Button_ Width_ Undo Button": "C_undo_width",
+        "Button Label_ Study Now": "C_buttonLabel_studyNow",
+        "Button Label_ Edit": "C_buttonLabel_edit",
+        "Button Label_ Show Answer": "C_buttonLabel_showAnswer",
+        "Button Label_ More": "C_buttonLabel_more",
+        "Button Label_ Info": "C_buttonLabel_info",
+        "Button Label_ Skip": "C_buttonLabel_skip",
+        "Button Label_ Show Skipped": "C_buttonLabel_showSkipped",
+        "Button Label_ Undo": "C_buttonLabel_undo",
+        "Button Label_ Again": "C_buttonLabel_again",
+        "Button Label_ Hard": "C_buttonLabel_hard",
+        "Button Label_ Good": "C_buttonLabel_good",
+        "Button Label_ Easy": "C_buttonLabel_easy",
+        "Card Info sidebar_ theme": "C_sidebar_theme",
+        "Card Info sidebar_ Font": "C_sidebar_font",
+        "Card Info sidebar_ Hide Current Card": "C_sidebar_hideCurrentCard",
+        "Card Info sidebar_ Number of previous cards to show": "C_sidebar_PreviousCards",
+        "Card Info sidebar_ number of reviews to show for a card": "C_sidebar_reviewsToShow",
+        "Card Info sidebar_ Current Review Count": "C_sidebar_currentReviewCount",
+        "Card Info sidebar_ Created": "C_sidebar_dateCreated",
+        "Card Info sidebar_ Edited": "C_sidebar_dateEdited",
+        "Card Info sidebar_ First Review": "C_sidebar_firstReview",
+        "Card Info sidebar_ Latest Review": "C_sidebar_latestReview",
+        "Card Info sidebar_ Due": "C_sidebar_due",
+        "Card Info sidebar_ FSRS Stability": "C_sidebar_fsrsStability",
+        "Card Info sidebar_ FSRS Difficulty": "C_sidebar_fsrsDifficulty",
+        "Card Info sidebar_ FSRS Retrievability": "C_sidebar_fsrsRetrievability",
+        "Card Info sidebar_ Interval": "C_sidebar_interval",
+        "Card Info sidebar_ Ease": "C_sidebar_ease",
+        "Card Info sidebar_ Reviews": "C_sidebar_numberOfReviews",
+        "Card Info sidebar_ Lapses": "C_sidebar_lapses",
+        "Card Info Sidebar_ Correct Percent": "C_infobar_correctPercent",
+        "Card Info Sidebar_ Fastest Review": "C_infobar_fastestReview",
+        "Card Info Sidebar_ Slowest Review": "C_infobar_slowestReview",
+        "Card Info sidebar_ Average Time": "C_sidebar_averageTime",
+        "Card Info sidebar_ Total Time": "C_sidebar_totalTime",
+        "Card Info sidebar_ Card Type": "C_sidebar_cardType",
+        "Card Info sidebar_ Note Type": "C_sidebar_noteType",
+        "Card Info sidebar_ Deck": "C_sidebar_deck",
+        "Card Info sidebar_ Tags": "C_sidebar_tags",
+        "Card Info Sidebar_ Note ID": "C_infobar_noteID",
+        "Card Info Sidebar_ Card ID": "C_infobar_cardID",
+        "Card Info sidebar_ Sort Field": "C_sidebar_sortField",
+        "Card Info sidebar_ Auto Open": "C_sidebar_autoOpen",
+        "Card Info sidebar_ warning note": "C_sidebar_warningNote",
+        " Review_ Custom Colors": "C_custom_reviewButtonColors",
+        " Review_ Custom Review Button Text Color": "C_custom_reviewButtonTextColor",
+        " Review_ Custom Active Indicator Color": "C_custom_activeIndicatorColor",
+        "Color_ Custom Bottombar Button Text Color": "C_custom_bottombarButtonTextColor",
+        "Color_ Custom Bottombar Button Border Color": "C_custom_bottombarButtonBorderColor",
+        "Color_  General Text Color": "C_reviewButtonText_color",
+        "Color_ Active Button Indicator": "C_activeIndicator_color",
+        "Color_ Bottombar Button Text Color": "C_bottombarButtonText_color",
+        "Color_ Bottombar Button Border Color": "C_bottombarButtonBorder_color",
+        "Color_ Again": "C_again_color",
+        "Color_ Again on hover": "C_againHover_color",
+        "Color_ Hard": "C_hard_color",
+        "Color_ Hard on hover": "C_hardHover_color",
+        "Color_ Good": "C_good_color",
+        "Color_ Good on hover": "C_goodHover_color",
+        "Color_ Easy": "C_easy_color",
+        "Color_ Easy on hover": "C_easyHover_color",
+        "ShowAnswer_ Border Color Style": "C_showAnswerBorderColor_style",
+        "ShowAnswer_ Ease1": "C_showAnswerEase1",
+        "ShowAnswer_ Ease2": "C_showAnswerEase2",
+        "ShowAnswer_ Ease3": "C_showAnswerEase3",
+        "ShowAnswer_ Ease4": "C_showAnswerEase4",
+        "ShowAnswer_ Ease1 Color": "C_showAnswerEase1_color",
+        "ShowAnswer_ Ease2 Color": "C_showAnswerEase2_color",
+        "ShowAnswer_ Ease3 Color": "C_showAnswerEase3_color",
+        "ShowAnswer_ Ease4 Color": "C_showAnswerEase4_color",
+        "  Button Colors": "C_button_colors",
+        "  Direct Config Edit": "C_configEdit",
+        "  Hide Easy if not in Learning": "C_hideEasyIfNotLearning",
+        "  More Overview Stats": "C_overViewStats",
+        "  Settings Menu Place": "C_settingsMenu_palce",
+        "  Skip Method": "C_skipMethod",
+        "  Speed Focus Add-on": "C_addOn_speedFocus",
+        "  Rebuild Empty All Add-on": "C_addOn_rebuildEmptyAll",
+    }
 
-    C_button_style = config[' Review_ Buttons Style']
-    C_hover_effect = config[' Review_ Hover Effect']
-    C_active_indicator = config[' Review_ Active Button Indicator']
-    C_bottombarButtons_style = config[' Review_ Bottombar Buttons Style']
-    C_cursor_style = config[' Review_ Cursor Style']
-    C_interval_style = config[' Review_ Interval Style']
-    C_buttonTransition_time = config[' Review_ Button Transition Time']
-    # Button Border Radius is used for all buttons, not just the review buttons
-    C_buttonBorderRadius = config[' Review_ Button Border Radius']
-    C_wideButton_percent = config[' Review_ Wide Button Percent']
+    for cfg_key, varname in mapping.items():
+        global_variables[varname] = config.get(cfg_key)
 
-    C_reviewTooltip = config['Tooltip']
-    C_reviewTooltip_timer = config['Tooltip Timer']
-    C_reviewTooltipText_color = config['Tooltip Text Color']
-    C_reviewTooltip_style = config['Tooltip Style']
-    C_reviewTooltip_position = config['Tooltip Position']
-    C_reviewTooltip_offset = config['Tooltip Offset']
-
-    C_info = config['Button_   Info Button']
-    C_skip = config['Button_   Skip Button']
-    C_showSkipped = config['Button_   Show Skipped Button']
-    C_undo = config['Button_   Undo Button']
-    C_hideHard = config['Button_   Hide Hard']
-    C_hideGood = config['Button_   Hide Good']
-    C_hideEasy = config['Button_   Hide Easy']
-    C_info_position = config['Button_ Position_ Info Button']
-    C_skip_position = config['Button_ Position_ Skip Button']
-    C_showSkipped_position = config['Button_ Position_ Show Skipped Button']
-    C_undo_position = config['Button_ Position_ Undo Button']
-    C_skip_shortcut = config ['Button_ Shortcut_ Skip Button']
-    C_showSkipped_shortcut = config ['Button_ Shortcut_ Show Skipped Button']
-    C_info_shortcut = config['Button_ Shortcut_ Info Button']
-    C_undo_shortcut = config['Button_ Shortcut_ Undo Button']
-
-    C_custom_sizes = config ['Button_  Custom Button Sizes']
-    C_text_size = config['Button_ Text Size']
-    C_buttonFontWeight = config['Button_ Font Weight']
-    C_buttons_height = config['Button_ Height_ All Bottombar Buttons']
-    C_reviewButtons_width = config['Button_ Width_ Review Buttons']
-    C_edit_width = config['Button_ Width_ Edit Button']
-    C_answer_width = config['Button_ Width_ Show Answer Button']
-    C_more_width = config['Button_ Width_ More Button']
-    C_info_width = config['Button_ Width_ Info Button']
-    C_skip_width = config['Button_ Width_ Skip Button']
-    C_showSkipped_width = config['Button_ Width_ Show Skipped Button']
-    C_undo_width = config['Button_ Width_ Undo Button']
-
-    C_buttonLabel_studyNow = config['Button Label_ Study Now']
-    C_buttonLabel_edit = config['Button Label_ Edit']
-    C_buttonLabel_showAnswer = config['Button Label_ Show Answer']
-    C_buttonLabel_more = config['Button Label_ More']
-    C_buttonLabel_info = config['Button Label_ Info']
-    C_buttonLabel_skip = config['Button Label_ Skip']
-    C_buttonLabel_showSkipped = config['Button Label_ Show Skipped']
-    C_buttonLabel_undo = config['Button Label_ Undo']
-    C_buttonLabel_again = config['Button Label_ Again']
-    C_buttonLabel_hard = config['Button Label_ Hard']
-    C_buttonLabel_good = config['Button Label_ Good']
-    C_buttonLabel_easy = config['Button Label_ Easy']
-
-    C_sidebar_theme = config['Card Info sidebar_ theme']
-    C_sidebar_font = config['Card Info sidebar_ Font']
-    C_sidebar_hideCurrentCard = config['Card Info sidebar_ Hide Current Card']
-    C_sidebar_PreviousCards = config['Card Info sidebar_ Number of previous cards to show']
-    C_sidebar_reviewsToShow = config['Card Info sidebar_ number of reviews to show for a card']
-    C_sidebar_currentReviewCount = config['Card Info sidebar_ Current Review Count']
-    C_sidebar_dateCreated = config['Card Info sidebar_ Created']
-    C_sidebar_dateEdited = config['Card Info sidebar_ Edited']
-    C_sidebar_firstReview = config['Card Info sidebar_ First Review']
-    C_sidebar_latestReview = config['Card Info sidebar_ Latest Review']
-    C_sidebar_due = config['Card Info sidebar_ Due']
-    C_sidebar_interval = config['Card Info sidebar_ Interval']
-    C_sidebar_ease = config['Card Info sidebar_ Ease']
-    C_sidebar_numberOfReviews = config['Card Info sidebar_ Reviews']
-    C_sidebar_lapses = config['Card Info sidebar_ Lapses']
-    C_infobar_correctPercent = config['Card Info Sidebar_ Correct Percent']
-    C_infobar_fastestReview = config['Card Info Sidebar_ Fastest Review']
-    C_infobar_slowestReview = config['Card Info Sidebar_ Slowest Review']
-    C_sidebar_averageTime = config['Card Info sidebar_ Average Time']
-    C_sidebar_totalTime = config['Card Info sidebar_ Total Time']
-    C_sidebar_cardType = config['Card Info sidebar_ Card Type']
-    C_sidebar_noteType = config['Card Info sidebar_ Note Type']
-    C_sidebar_deck = config['Card Info sidebar_ Deck']
-    C_sidebar_tags = config['Card Info sidebar_ Tags']
-    C_infobar_noteID = config['Card Info Sidebar_ Note ID']
-    C_infobar_cardID = config['Card Info Sidebar_ Card ID']
-    C_sidebar_sortField = config['Card Info sidebar_ Sort Field']
-    C_sidebar_autoOpen = config['Card Info sidebar_ Auto Open']
-    C_sidebar_warningNote = config['Card Info sidebar_ warning note']
-
-    C_custom_reviewButtonColors = config[' Review_ Custom Colors']
-    C_custom_reviewButtonTextColor = config[' Review_ Custom Review Button Text Color']
-    C_custom_activeIndicatorColor = config[' Review_ Custom Active Indicator Color']
-    C_custom_bottombarButtonTextColor = config['Color_ Custom Bottombar Button Text Color']
-    C_custom_bottombarButtonBorderColor = config['Color_ Custom Bottombar Button Border Color']
-    C_reviewButtonText_color = config['Color_  General Text Color']
-    C_activeIndicator_color = config['Color_ Active Button Indicator']
-    C_bottombarButtonText_color = config['Color_ Bottombar Button Text Color']
-    C_bottombarButtonBorder_color = config['Color_ Bottombar Button Border Color']
-    C_again_color = config['Color_ Again']
-    C_againHover_color = config['Color_ Again on hover']
-    C_hard_color = config['Color_ Hard']
-    C_hardHover_color = config['Color_ Hard on hover']
-    C_good_color = config['Color_ Good']
-    C_goodHover_color = config['Color_ Good on hover']
-    C_easy_color = config['Color_ Easy']
-    C_easyHover_color = config['Color_ Easy on hover']
-
-    C_showAnswerBorderColor_style = config['ShowAnswer_ Border Color Style']
-    C_showAnswerEase1 = config['ShowAnswer_ Ease1']
-    C_showAnswerEase2 = config['ShowAnswer_ Ease2']
-    C_showAnswerEase3 = config['ShowAnswer_ Ease3']
-    C_showAnswerEase4 = config['ShowAnswer_ Ease4']
-    C_showAnswerEase1_color = config['ShowAnswer_ Ease1 Color']
-    C_showAnswerEase2_color = config['ShowAnswer_ Ease2 Color']
-    C_showAnswerEase3_color = config['ShowAnswer_ Ease3 Color']
-    C_showAnswerEase4_color = config['ShowAnswer_ Ease4 Color']
-
-    C_button_colors = config['  Button Colors']
-    C_configEdit = config['  Direct Config Edit']
-    C_hideEasyIfNotLearning = config['  Hide Easy if not in Learning']
-    C_overViewStats = config['  More Overview Stats']
-    C_settingsMenu_palce = config['  Settings Menu Place']
-    C_skipMethod = config['  Skip Method']
-
-    C_addOn_speedFocus = config['  Speed Focus Add-on']
-    C_addOn_rebuildEmptyAll = config['  Rebuild Empty All Add-on']
-
-    #// it's easier to store extra button positions as text in config | but here in the settings, I hate to turn it into true/false as each checkbox is disabled/enabled like that :|
-    #// Every checkbox is disabled by default
-    C_right_info = False
-    C_middleRight_info = False
-    C_middleLeft_info = False
-    C_left_info = False
-    C_right_skip = False
-    C_middleRight_skip = False
-    C_middleLeft_skip = False
-    C_left_showSkipped = False
-    C_right_showSkipped = False
-    C_middleRight_showSkipped = False
-    C_middleLeft_showSkipped = False
-    C_left_showSkipped = False
-    C_right_undo = False
-    C_middleRight_undo = False
-    C_middleLeft_undo = False
-    C_left_undo = False
-
-    #// here we enable (make it "True") the correct checkbox based on the config value
-    #// All of this is for loading the current settings in "loadCurrent(self)" function
-    if C_info_position == "right":
-        C_right_info = True
-    elif C_info_position == "middle right":
-        C_middleRight_info = True
-    elif C_info_position == "middle left":
-        C_middleLeft_info = True
+    # compute extra button position booleans for backward compatibility
+    pos_flags = {
+        "C_right_info": False, "C_middleRight_info": False, "C_middleLeft_info": False, "C_left_info": False,
+        "C_right_skip": False, "C_middleRight_skip": False, "C_middleLeft_skip": False, "C_left_skip": False,
+        "C_right_showSkipped": False, "C_middleRight_showSkipped": False, "C_middleLeft_showSkipped": False, "C_left_showSkipped": False,
+        "C_right_undo": False, "C_middleRight_undo": False, "C_middleLeft_undo": False, "C_left_undo": False,
+    }
+    ip = global_variables.get("C_info_position", "")
+    if ip == "right":
+        pos_flags["C_right_info"] = True
+    elif ip == "middle right":
+        pos_flags["C_middleRight_info"] = True
+    elif ip == "middle left":
+        pos_flags["C_middleLeft_info"] = True
     else:
-        C_left_info = True
-    if C_skip_position == "right":
-        C_right_skip = True
-    elif C_skip_position == "middle right":
-        C_middleRight_skip = True
-    elif C_skip_position == "middle left":
-        C_middleLeft_skip = True
+        pos_flags["C_left_info"] = True
+    sp = global_variables.get("C_skip_position", "")
+    if sp == "right":
+        pos_flags["C_right_skip"] = True
+    elif sp == "middle right":
+        pos_flags["C_middleRight_skip"] = True
+    elif sp == "middle left":
+        pos_flags["C_middleLeft_skip"] = True
     else:
-        C_left_skip = True
-    if C_showSkipped_position == "right":
-        C_right_showSkipped = True
-    elif C_showSkipped_position == "middle right":
-        C_middleRight_showSkipped = True
-    elif C_showSkipped_position == "middle left":
-        C_middleLeft_showSkipped = True
+        pos_flags["C_left_skip"] = True
+    ssp = global_variables.get("C_showSkipped_position", "")
+    if ssp == "right":
+        pos_flags["C_right_showSkipped"] = True
+    elif ssp == "middle right":
+        pos_flags["C_middleRight_showSkipped"] = True
+    elif ssp == "middle left":
+        pos_flags["C_middleLeft_showSkipped"] = True
     else:
-        C_left_showSkipped = True
-    if C_undo_position == "right":
-        C_right_undo = True
-    elif C_undo_position == "middle right":
-        C_middleRight_undo = True
-    elif C_undo_position == "middle left":
-        C_middleLeft_undo = True
+        pos_flags["C_left_showSkipped"] = True
+    up = global_variables.get("C_undo_position", "")
+    if up == "right":
+        pos_flags["C_right_undo"] = True
+    elif up == "middle right":
+        pos_flags["C_middleRight_undo"] = True
+    elif up == "middle left":
+        pos_flags["C_middleLeft_undo"] = True
     else:
-        C_left_undo = True
+        pos_flags["C_left_undo"] = True
+
+    global_variables.update(pos_flags)
+
+    # expose a single config dict for future refactor and update module globals so existing code keeps working
+    globals().update(global_variables)
+    globals()["ARBB_CONFIG"] = global_variables
 
 class GetShortcut(QDialog):
     def __init__(self, parent, button_variable):
@@ -510,15 +501,15 @@ class SettingsMenu(QDialog):
         self.showAnswerEase4_color = C_showAnswerEase4_color
     def mainWindow(self):
         images = self.images
-        self.createFirstTab()
-        self.createSecondTab()
+        self.create_styles_tab()
+        self.create_tooltip_tab()
         self.createThirdTab()
-        self.createFourthTab()
-        self.createFifthTab()
-        self.createSixthTab()
-        self.createSeventhTab()
-        self.createEighthTab()
-        self.createNinthTab()
+        self.create_buttonSizes_tab()
+        self.create_buttonLabels_tab()
+        self.create_sidebar_tab()
+        self.create_colors_tab()
+        self.create_misc_tab()
+        self.create_about_tab()
         self.loadCurrent()
 
         #// Create the bottom row of settings menu
@@ -549,7 +540,7 @@ class SettingsMenu(QDialog):
         tabs.addTab(self.tab3, "Bottombar Buttons")
         tabs.addTab(self.tab4, "Button Sizes")
         tabs.addTab(self.tab5, "Button Labels")
-        tabs.addTab(self.tab6, "Sidebar")
+        tabs.addTab(self.sidebar_tab, "Sidebar")
         tabs.addTab(self.tab7, "Colors")
         tabs.addTab(self.tab8, "Misc")
         tabs.addTab(self.tab9, "About")
@@ -563,7 +554,7 @@ class SettingsMenu(QDialog):
         self.setWindowTitle("Advanced Review Bottombar Settings Menu")
         self.setWindowIcon(QIcon(images + "/icon.png"))
 
-    def createFirstTab(self):
+    def create_styles_tab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -801,7 +792,7 @@ class SettingsMenu(QDialog):
         self.tab1.setWidgetResizable(True)
         self.tab1.setWidget(layout_holder)
 
-    def createSecondTab(self):
+    def create_tooltip_tab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -1156,7 +1147,7 @@ class SettingsMenu(QDialog):
         self.tab3.setWidgetResizable(True)
         self.tab3.setWidget(layout_holder)
 
-    def createFourthTab(self):
+    def create_buttonSizes_tab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -1336,7 +1327,7 @@ class SettingsMenu(QDialog):
         self.tab4.setWidgetResizable(True)
         self.tab4.setWidget(layout_holder)
 
-    def createFifthTab(self):
+    def create_buttonLabels_tab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -1482,7 +1473,7 @@ class SettingsMenu(QDialog):
         self.tab5.setWidgetResizable(True)
         self.tab5.setWidget(layout_holder)
 
-    def createSixthTab(self):
+    def create_sidebar_tab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -1544,91 +1535,102 @@ class SettingsMenu(QDialog):
         sidebarReviewsToShow_holder.addWidget(sidebarReviewsToShow_label)
         sidebarReviewsToShow_holder.addWidget(self.sidebar_reviewsToShow)
         sidebarReviewsToShow_holder.addStretch()
-        tab5line1 = QVBoxLayout()
-        tab5line1.addLayout(sideBarTheme_holder)
-        tab5line1.addLayout(sidebarFont_holder)
-        tab5line1.addLayout(sidebarHideCurrentCard_holder)
-        tab5line1.addLayout(sidebarPreviousCards_holder)
-        tab5line1.addLayout(sidebarReviewsToShow_holder)
-        tab5box1 = QGroupBox()
-        tab5box1.setLayout(tab5line1)
+        sidebarTab_line1 = QVBoxLayout()
+        sidebarTab_line1.addLayout(sideBarTheme_holder)
+        sidebarTab_line1.addLayout(sidebarFont_holder)
+        sidebarTab_line1.addLayout(sidebarHideCurrentCard_holder)
+        sidebarTab_line1.addLayout(sidebarPreviousCards_holder)
+        sidebarTab_line1.addLayout(sidebarReviewsToShow_holder)
+        sidebarTab_box1 = QGroupBox()
+        sidebarTab_box1.setLayout(sidebarTab_line1)
         self.sidebar_currentReviewCount = QCheckBox("Current Review Count")
         self.sidebar_currentReviewCount.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_dateCreated = QCheckBox('Date Created')
         self.sidebar_dateCreated.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_dateEdited = QCheckBox('Dated Edited')
         self.sidebar_dateEdited.setFixedWidth(SIDEBAR_ITEM_WIDTH)
-        tab5subline1 = QHBoxLayout()
-        tab5subline1.addWidget(self.sidebar_currentReviewCount)
-        tab5subline1.addWidget(self.sidebar_dateCreated)
-        tab5subline1.addWidget(self.sidebar_dateEdited)
-        tab5subline1.addStretch()
+        sidebarTab_subline1 = QHBoxLayout()
+        sidebarTab_subline1.addWidget(self.sidebar_currentReviewCount)
+        sidebarTab_subline1.addWidget(self.sidebar_dateCreated)
+        sidebarTab_subline1.addWidget(self.sidebar_dateEdited)
+        sidebarTab_subline1.addStretch()
         self.sidebar_firstReview = QCheckBox('First Review')
         self.sidebar_firstReview.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_latestReview = QCheckBox('Latest Review')
         self.sidebar_latestReview.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_due = QCheckBox('Due')
         self.sidebar_due.setFixedWidth(SIDEBAR_ITEM_WIDTH)
-        tab5subline2 = QHBoxLayout()
-        tab5subline2.addWidget(self.sidebar_firstReview)
-        tab5subline2.addWidget(self.sidebar_latestReview)
-        tab5subline2.addWidget(self.sidebar_due)
-        tab5subline2.addStretch()
+        sidebarTab_subline2 = QHBoxLayout()
+        sidebarTab_subline2.addWidget(self.sidebar_firstReview)
+        sidebarTab_subline2.addWidget(self.sidebar_latestReview)
+        sidebarTab_subline2.addWidget(self.sidebar_due)
+        sidebarTab_subline2.addStretch()
+        sidebarTab_subline3 = QHBoxLayout()
+        self.sidebar_fsrsStability = QCheckBox('FSRS Stability')
+        self.sidebar_fsrsStability.setFixedWidth(SIDEBAR_ITEM_WIDTH)
+        self.sidebar_fsrsDifficulty = QCheckBox('FSRS Difficulty')
+        self.sidebar_fsrsDifficulty.setFixedWidth(SIDEBAR_ITEM_WIDTH)
+        self.sidebar_fsrsRetrievability = QCheckBox('FSRS Retrievability')
+        self.sidebar_fsrsRetrievability.setFixedWidth(SIDEBAR_ITEM_WIDTH)
+        sidebarTab_subline3.addWidget(self.sidebar_fsrsStability)
+        sidebarTab_subline3.addWidget(self.sidebar_fsrsDifficulty)
+        sidebarTab_subline3.addWidget(self.sidebar_fsrsRetrievability)
+        sidebarTab_subline3.addStretch()
         self.sidebar_interval = QCheckBox('Interval')
         self.sidebar_interval.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_ease = QCheckBox('Ease')
         self.sidebar_ease.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_numberOfReviews = QCheckBox('Number of Reviews')
         self.sidebar_numberOfReviews.setFixedWidth(SIDEBAR_ITEM_WIDTH)
-        tab5subline3 = QHBoxLayout()
-        tab5subline3.addWidget(self.sidebar_interval)
-        tab5subline3.addWidget(self.sidebar_ease)
-        tab5subline3.addWidget(self.sidebar_numberOfReviews)
-        tab5subline3.addStretch()
+        sidebarTab_subline4 = QHBoxLayout()
+        sidebarTab_subline4.addWidget(self.sidebar_interval)
+        sidebarTab_subline4.addWidget(self.sidebar_ease)
+        sidebarTab_subline4.addWidget(self.sidebar_numberOfReviews)
+        sidebarTab_subline4.addStretch()
         self.sidebar_lapses = QCheckBox('Lapses')
         self.sidebar_lapses.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_averageTime = QCheckBox('Average Time')
         self.sidebar_averageTime.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_totalTime = QCheckBox('Total Time')
         self.sidebar_totalTime.setFixedWidth(SIDEBAR_ITEM_WIDTH)
-        tab5subline4 = QHBoxLayout()
-        tab5subline4.addWidget(self.sidebar_lapses)
-        tab5subline4.addWidget(self.sidebar_averageTime)
-        tab5subline4.addWidget(self.sidebar_totalTime)
-        tab5subline4.addStretch()
+        sidebarTab_subline5 = QHBoxLayout()
+        sidebarTab_subline5.addWidget(self.sidebar_lapses)
+        sidebarTab_subline5.addWidget(self.sidebar_averageTime)
+        sidebarTab_subline5.addWidget(self.sidebar_totalTime)
+        sidebarTab_subline5.addStretch()
         self.sidebar_cardType = QCheckBox('Card Type')
         self.sidebar_cardType.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_noteType = QCheckBox('Note Type')
         self.sidebar_noteType.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_deck = QCheckBox('Deck')
         self.sidebar_deck.setFixedWidth(SIDEBAR_ITEM_WIDTH)
-        tab5subline5 = QHBoxLayout()
-        tab5subline5.addWidget(self.sidebar_cardType)
-        tab5subline5.addWidget(self.sidebar_noteType)
-        tab5subline5.addWidget(self.sidebar_deck)
-        tab5subline5.addStretch()
+        sidebarTab_subline6 = QHBoxLayout()
+        sidebarTab_subline6.addWidget(self.sidebar_cardType)
+        sidebarTab_subline6.addWidget(self.sidebar_noteType)
+        sidebarTab_subline6.addWidget(self.sidebar_deck)
+        sidebarTab_subline6.addStretch()
         self.sidebar_tags = QCheckBox('Tags')
         self.sidebar_tags.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_sortField = QCheckBox('Sort Field')
         self.sidebar_sortField.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_warningNote = QCheckBox('Warning Note')
         self.sidebar_warningNote.setFixedWidth(SIDEBAR_ITEM_WIDTH)
-        tab5subline6 = QHBoxLayout()
-        tab5subline6.addWidget(self.sidebar_tags)
-        tab5subline6.addWidget(self.sidebar_sortField)
-        tab5subline6.addWidget(self.sidebar_warningNote)
-        tab5subline6.addStretch()
+        sidebarTab_subline7 = QHBoxLayout()
+        sidebarTab_subline7.addWidget(self.sidebar_tags)
+        sidebarTab_subline7.addWidget(self.sidebar_sortField)
+        sidebarTab_subline7.addWidget(self.sidebar_warningNote)
+        sidebarTab_subline7.addStretch()
         self.sidebar_correctPercent = QCheckBox('Correct Percentage')
         self.sidebar_correctPercent.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_fastestReview = QCheckBox('Fastest Review')
         self.sidebar_fastestReview.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_slowestReview = QCheckBox('Slowest Review')
         self.sidebar_slowestReview.setFixedWidth(SIDEBAR_ITEM_WIDTH)
-        tab5subline7 = QHBoxLayout()
-        tab5subline7.addWidget(self.sidebar_correctPercent)
-        tab5subline7.addWidget(self.sidebar_fastestReview)
-        tab5subline7.addWidget(self.sidebar_slowestReview)
-        tab5subline7.addStretch()
+        sidebarTab_subline8 = QHBoxLayout()
+        sidebarTab_subline8.addWidget(self.sidebar_correctPercent)
+        sidebarTab_subline8.addWidget(self.sidebar_fastestReview)
+        sidebarTab_subline8.addWidget(self.sidebar_slowestReview)
+        sidebarTab_subline8.addStretch()
         self.sidebar_noteID = QCheckBox('Note ID')
         self.sidebar_noteID.setFixedWidth(SIDEBAR_ITEM_WIDTH)
         self.sidebar_cardID = QCheckBox('Card ID')
@@ -1636,35 +1638,36 @@ class SettingsMenu(QDialog):
         self.sidebar_autoOpen = QCheckBox('Auto Open')
         self.sidebar_autoOpen.setToolTip("Opens sidebar automatically when you review a card")
         self.sidebar_autoOpen.setFixedWidth(SIDEBAR_ITEM_WIDTH)
-        tab5subline8 = QHBoxLayout()
-        tab5subline8.addWidget(self.sidebar_noteID)
-        tab5subline8.addWidget(self.sidebar_cardID)
-        tab5subline8.addWidget(self.sidebar_autoOpen)
-        tab5subline8.addStretch()
-        tab5line2 = QVBoxLayout()
-        tab5line2.addLayout(tab5subline1)
-        tab5line2.addLayout(tab5subline2)
-        tab5line2.addLayout(tab5subline3)
-        tab5line2.addLayout(tab5subline4)
-        tab5line2.addLayout(tab5subline5)
-        tab5line2.addLayout(tab5subline6)
-        tab5line2.addLayout(tab5subline7)
-        tab5line2.addLayout(tab5subline8)
-        tab5box2 = QGroupBox()
-        tab5box2.setLayout(tab5line2)
+        sidebarTab_subline9 = QHBoxLayout()
+        sidebarTab_subline9.addWidget(self.sidebar_noteID)
+        sidebarTab_subline9.addWidget(self.sidebar_cardID)
+        sidebarTab_subline9.addWidget(self.sidebar_autoOpen)
+        sidebarTab_subline9.addStretch()
+        sidebarTab_line2 = QVBoxLayout()
+        sidebarTab_line2.addLayout(sidebarTab_subline1)
+        sidebarTab_line2.addLayout(sidebarTab_subline2)
+        sidebarTab_line2.addLayout(sidebarTab_subline3)
+        sidebarTab_line2.addLayout(sidebarTab_subline4)
+        sidebarTab_line2.addLayout(sidebarTab_subline5)
+        sidebarTab_line2.addLayout(sidebarTab_subline6)
+        sidebarTab_line2.addLayout(sidebarTab_subline7)
+        sidebarTab_line2.addLayout(sidebarTab_subline8)
+        sidebarTab_line2.addLayout(sidebarTab_subline9)
+        sidebarTab_box2 = QGroupBox()
+        sidebarTab_box2.setLayout(sidebarTab_line2)
         layout = QVBoxLayout()
-        layout.addWidget(tab5box1)
-        layout.addWidget(tab5box2)
+        layout.addWidget(sidebarTab_box1)
+        layout.addWidget(sidebarTab_box2)
         layout.addStretch()
         layout_holder = QWidget()
         layout_holder.setLayout(layout)
-        self.tab6 = QScrollArea()
-        self.tab6.setFixedWidth(690)
-        self.tab6.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        self.tab6.setWidgetResizable(True)
-        self.tab6.setWidget(layout_holder)
+        self.sidebar_tab = QScrollArea()
+        self.sidebar_tab.setFixedWidth(690)
+        self.sidebar_tab.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.sidebar_tab.setWidgetResizable(True)
+        self.sidebar_tab.setWidget(layout_holder)
 
-    def createSeventhTab(self):
+    def create_colors_tab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -1919,7 +1922,7 @@ class SettingsMenu(QDialog):
         self.tab7.setWidgetResizable(True)
         self.tab7.setWidget(layout_holder)
 
-    def createEighthTab(self):
+    def create_misc_tab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -2063,7 +2066,7 @@ class SettingsMenu(QDialog):
             self.tab1.setEnabled(True)
         self.buttonColors_on.toggled.connect(self.tab1.setEnabled)
 
-    def createNinthTab(self):
+    def create_about_tab(self):
         begin = self.begin
         end = self.end
         images = self.images
@@ -2249,6 +2252,12 @@ class SettingsMenu(QDialog):
             self.sidebar_latestReview.setChecked(True)
         if C_sidebar_due:
             self.sidebar_due.setChecked(True)
+        if C_sidebar_fsrsStability:
+            self.sidebar_fsrsStability.setChecked(True)
+        if C_sidebar_fsrsDifficulty:
+            self.sidebar_fsrsDifficulty.setChecked(True)
+        if C_sidebar_fsrsRetrievability:
+            self.sidebar_fsrsRetrievability.setChecked(True)
         if C_sidebar_interval:
             self.sidebar_interval.setChecked(True)
         if C_sidebar_ease:
@@ -2364,7 +2373,8 @@ class SettingsMenu(QDialog):
         addon_path = dirname(__file__)
         #// Choose a name for the backup file
         file_name = "ARBb {}".format(datetime.now().strftime("%d-%b-%Y %H-%M-%S"))
-        path_to_file = "{}\\user_files\\{}.json".format(addon_path, file_name)
+        userfiles_path = os.path.join(addon_path, "user_files")
+        path_to_file = os.path.join(userfiles_path, "{}.json".format(file_name))
         f = open(path_to_file, "w")
 
         if self.left_skip.isChecked():
@@ -2475,21 +2485,24 @@ class SettingsMenu(QDialog):
         "Card Info sidebar_ First Review": self.sidebar_firstReview.isChecked(),
         "Card Info sidebar_ Latest Review": self.sidebar_latestReview.isChecked(),
         "Card Info sidebar_ Due": self.sidebar_due.isChecked(),
+        "Card Info sidebar_ FSRS Stability": self.sidebar_fsrsStability.isChecked(),
+        "Card Info sidebar_ FSRS Difficulty": self.sidebar_fsrsDifficulty.isChecked(),
+        "Card Info sidebar_ FSRS Retrievability": self.sidebar_fsrsRetrievability.isChecked(),
         "Card Info sidebar_ Interval": self.sidebar_interval.isChecked(),
         "Card Info sidebar_ Ease": self.sidebar_ease.isChecked(),
         "Card Info sidebar_ Reviews": self.sidebar_numberOfReviews.isChecked(),
         "Card Info sidebar_ Lapses": self.sidebar_lapses.isChecked(),
-		"Card Info Sidebar_ Correct Percent": self.sidebar_correctPercent.isChecked(),
-		"Card Info Sidebar_ Fastest Review": self.sidebar_fastestReview.isChecked(),
-		"Card Info Sidebar_ Slowest Review": self.sidebar_slowestReview.isChecked(),
+        "Card Info Sidebar_ Correct Percent": self.sidebar_correctPercent.isChecked(),
+        "Card Info Sidebar_ Fastest Review": self.sidebar_fastestReview.isChecked(),
+        "Card Info Sidebar_ Slowest Review": self.sidebar_slowestReview.isChecked(),
         "Card Info sidebar_ Average Time": self.sidebar_averageTime.isChecked(),
         "Card Info sidebar_ Total Time": self.sidebar_totalTime.isChecked(),
         "Card Info sidebar_ Card Type": self.sidebar_cardType.isChecked(),
         "Card Info sidebar_ Note Type": self.sidebar_noteType.isChecked(),
         "Card Info sidebar_ Deck": self.sidebar_deck.isChecked(),
         "Card Info sidebar_ Tags": self.sidebar_tags.isChecked(),
-		"Card Info Sidebar_ Note ID": self.sidebar_noteID.isChecked(),
-		"Card Info Sidebar_ Card ID": self.sidebar_cardID.isChecked(),
+        "Card Info Sidebar_ Note ID": self.sidebar_noteID.isChecked(),
+        "Card Info Sidebar_ Card ID": self.sidebar_cardID.isChecked(),
         "Card Info sidebar_ Sort Field": self.sidebar_sortField.isChecked(),
         "Card Info sidebar_ Current Review Count": self.sidebar_currentReviewCount.isChecked(),
         "Card Info sidebar_ Font": self.sidebar_font.currentFont().family(),
@@ -2498,10 +2511,10 @@ class SettingsMenu(QDialog):
         "Card Info sidebar_ warning note": self.sidebar_warningNote.isChecked(),
         "Color_  General Text Color": self.reviewButtonText_color,
         "Color_ Active Button Indicator": self.activeIndicator_color,
-    	"Color_ Bottombar Button Text Color": self.bottombarButtonText_color,
-    	"Color_ Bottombar Button Border Color": self.bottombarButtonBorder_color,
-    	"Color_ Custom Bottombar Button Text Color": self.custom_bottombarButtonTextColor.isChecked(),
-    	"Color_ Custom Bottombar Button Border Color": self.custom_bottombarButtonBorderColor.isChecked(),
+        "Color_ Bottombar Button Text Color": self.bottombarButtonText_color,
+        "Color_ Bottombar Button Border Color": self.bottombarButtonBorder_color,
+        "Color_ Custom Bottombar Button Text Color": self.custom_bottombarButtonTextColor.isChecked(),
+        "Color_ Custom Bottombar Button Border Color": self.custom_bottombarButtonBorderColor.isChecked(),
         "Color_ Again": self.again_color,
         "Color_ Again on hover": self.againHover_color,
         "Color_ Hard": self.hard_color,
@@ -2517,14 +2530,14 @@ class SettingsMenu(QDialog):
         "Tooltip Position": [self.reviewTooltipPositionX.value(), self.reviewTooltipPositionY.value()],
         "Tooltip Offset": [self.reviewTooltipOffsetX.value(), self.reviewTooltipOffsetY.value()],
         "ShowAnswer_ Border Color Style": self.showAnswerBorderColor_style.currentIndex(),
-		"ShowAnswer_ Ease1": self.showAnswerEase1.value(),
-		"ShowAnswer_ Ease2": self.showAnswerEase2.value(),
-		"ShowAnswer_ Ease3": self.showAnswerEase3.value(),
-		"ShowAnswer_ Ease4": self.showAnswerEase4.value(),
-		"ShowAnswer_ Ease1 Color": self.showAnswerEase1_color,
-		"ShowAnswer_ Ease2 Color": self.showAnswerEase2_color,
-		"ShowAnswer_ Ease3 Color": self.showAnswerEase3_color,
-		"ShowAnswer_ Ease4 Color": self.showAnswerEase4_color
+        "ShowAnswer_ Ease1": self.showAnswerEase1.value(),
+        "ShowAnswer_ Ease2": self.showAnswerEase2.value(),
+        "ShowAnswer_ Ease3": self.showAnswerEase3.value(),
+        "ShowAnswer_ Ease4": self.showAnswerEase4.value(),
+        "ShowAnswer_ Ease1 Color": self.showAnswerEase1_color,
+        "ShowAnswer_ Ease2 Color": self.showAnswerEase2_color,
+        "ShowAnswer_ Ease3 Color": self.showAnswerEase3_color,
+        "ShowAnswer_ Ease4 Color": self.showAnswerEase4_color
       }
         #// Save settings in a JSON file
         json.dump(conf, f, indent=4)
@@ -2645,21 +2658,24 @@ class SettingsMenu(QDialog):
         "Card Info sidebar_ First Review": self.sidebar_firstReview.isChecked(),
         "Card Info sidebar_ Latest Review": self.sidebar_latestReview.isChecked(),
         "Card Info sidebar_ Due": self.sidebar_due.isChecked(),
+        "Card Info sidebar_ FSRS Stability": self.sidebar_fsrsStability.isChecked(),
+        "Card Info sidebar_ FSRS Difficulty": self.sidebar_fsrsDifficulty.isChecked(),
+        "Card Info sidebar_ FSRS Retrievability": self.sidebar_fsrsRetrievability.isChecked(),
         "Card Info sidebar_ Interval": self.sidebar_interval.isChecked(),
         "Card Info sidebar_ Ease": self.sidebar_ease.isChecked(),
         "Card Info sidebar_ Reviews": self.sidebar_numberOfReviews.isChecked(),
         "Card Info sidebar_ Lapses": self.sidebar_lapses.isChecked(),
-		"Card Info Sidebar_ Correct Percent": self.sidebar_correctPercent.isChecked(),
-		"Card Info Sidebar_ Fastest Review": self.sidebar_fastestReview.isChecked(),
-		"Card Info Sidebar_ Slowest Review": self.sidebar_slowestReview.isChecked(),
+        "Card Info Sidebar_ Correct Percent": self.sidebar_correctPercent.isChecked(),
+        "Card Info Sidebar_ Fastest Review": self.sidebar_fastestReview.isChecked(),
+        "Card Info Sidebar_ Slowest Review": self.sidebar_slowestReview.isChecked(),
         "Card Info sidebar_ Average Time": self.sidebar_averageTime.isChecked(),
         "Card Info sidebar_ Total Time": self.sidebar_totalTime.isChecked(),
         "Card Info sidebar_ Card Type": self.sidebar_cardType.isChecked(),
         "Card Info sidebar_ Note Type": self.sidebar_noteType.isChecked(),
         "Card Info sidebar_ Deck": self.sidebar_deck.isChecked(),
         "Card Info sidebar_ Tags": self.sidebar_tags.isChecked(),
-		"Card Info Sidebar_ Note ID": self.sidebar_noteID.isChecked(),
-		"Card Info Sidebar_ Card ID": self.sidebar_cardID.isChecked(),
+        "Card Info Sidebar_ Note ID": self.sidebar_noteID.isChecked(),
+        "Card Info Sidebar_ Card ID": self.sidebar_cardID.isChecked(),
         "Card Info sidebar_ Sort Field": self.sidebar_sortField.isChecked(),
         "Card Info sidebar_ Current Review Count": self.sidebar_currentReviewCount.isChecked(),
         "Card Info sidebar_ Font": self.sidebar_font.currentFont().family(),
@@ -2668,10 +2684,10 @@ class SettingsMenu(QDialog):
         "Card Info sidebar_ warning note": self.sidebar_warningNote.isChecked(),
         "Color_  General Text Color": self.reviewButtonText_color,
         "Color_ Active Button Indicator": self.activeIndicator_color,
-    	"Color_ Bottombar Button Text Color": self.bottombarButtonText_color,
-    	"Color_ Bottombar Button Border Color": self.bottombarButtonBorder_color,
-    	"Color_ Custom Bottombar Button Text Color": self.custom_bottombarButtonTextColor.isChecked(),
-    	"Color_ Custom Bottombar Button Border Color": self.custom_bottombarButtonBorderColor.isChecked(),
+        "Color_ Bottombar Button Text Color": self.bottombarButtonText_color,
+        "Color_ Bottombar Button Border Color": self.bottombarButtonBorder_color,
+        "Color_ Custom Bottombar Button Text Color": self.custom_bottombarButtonTextColor.isChecked(),
+        "Color_ Custom Bottombar Button Border Color": self.custom_bottombarButtonBorderColor.isChecked(),
         "Color_ Again": self.again_color,
         "Color_ Again on hover": self.againHover_color,
         "Color_ Hard": self.hard_color,
@@ -2687,14 +2703,14 @@ class SettingsMenu(QDialog):
         "Tooltip Position": [self.reviewTooltipPositionX.value(), self.reviewTooltipPositionY.value()],
         "Tooltip Offset": [self.reviewTooltipOffsetX.value(), self.reviewTooltipOffsetY.value()],
         "ShowAnswer_ Border Color Style": self.showAnswerBorderColor_style.currentIndex(),
-		"ShowAnswer_ Ease1": self.showAnswerEase1.value(),
-		"ShowAnswer_ Ease2": self.showAnswerEase2.value(),
-		"ShowAnswer_ Ease3": self.showAnswerEase3.value(),
-		"ShowAnswer_ Ease4": self.showAnswerEase4.value(),
-		"ShowAnswer_ Ease1 Color": self.showAnswerEase1_color,
-		"ShowAnswer_ Ease2 Color": self.showAnswerEase2_color,
-		"ShowAnswer_ Ease3 Color": self.showAnswerEase3_color,
-		"ShowAnswer_ Ease4 Color": self.showAnswerEase4_color
+        "ShowAnswer_ Ease1": self.showAnswerEase1.value(),
+        "ShowAnswer_ Ease2": self.showAnswerEase2.value(),
+        "ShowAnswer_ Ease3": self.showAnswerEase3.value(),
+        "ShowAnswer_ Ease4": self.showAnswerEase4.value(),
+        "ShowAnswer_ Ease1 Color": self.showAnswerEase1_color,
+        "ShowAnswer_ Ease2 Color": self.showAnswerEase2_color,
+        "ShowAnswer_ Ease3 Color": self.showAnswerEase3_color,
+        "ShowAnswer_ Ease4 Color": self.showAnswerEase4_color
       }
         mw.addonManager.writeConfig(__name__, conf)
         showInfo("<div style='color: red;\

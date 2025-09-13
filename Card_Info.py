@@ -18,6 +18,7 @@ from aqt.utils import showInfo
 from anki.utils import html_to_text_line
 from anki.collection import _Collection
 from aqt.reviewer import Reviewer
+from google.protobuf.json_format import MessageToDict
 
 
 #// sidebar functions
@@ -30,7 +31,7 @@ class StatsSidebar(object):
         addHook("showQuestion", self._update)
         addHook("reviewCleanup", self._update)
         if sidebar_autoOpen:
-                addHook("showQuestion", self.show)
+            addHook("showQuestion", self.show)
 
     def _addDockable(self, title, w):
         class DockableWithClose(QDockWidget):
@@ -87,7 +88,13 @@ class StatsSidebar(object):
         hard_color = config['Color_ Hard']
         good_color = config['Color_ Good']
         easy_color = config['Color_ Easy']
+        # deck = aqt.mw.col.decks.get(card.did) or dict()
+        # config = aqt.mw.col.decks.get_config(deck.get("conf", -1)) or dict()
+        # showInfo(f"{config}")
+        proto_info = aqt.mw.col.card_stats_data(card.id)
+        info = MessageToDict(proto_info)
         entries = self.mw.col.db.all("select id/1000.0, ease, ivl, factor, time/1000.0, type from revlog where cid = ?", card.id)
+        # showInfo(f"info: {info}\nentries: {entries}")
         if not entries:
             return ""
         s = "<div style='text-align: center; font-family: arial; font-weight: bold;'> Reviews </div>"
@@ -209,6 +216,9 @@ class StatsSidebar(object):
         infobar_firstReview = config['Card Info sidebar_ First Review']
         infobar_latestReview = config['Card Info sidebar_ Latest Review']
         infobar_due = config['Card Info sidebar_ Due']
+        infobar_fsrsStability = config['Card Info sidebar_ FSRS Stability']
+        infobar_fsrsDifficulty = config['Card Info sidebar_ FSRS Difficulty']
+        infobar_fsrsRetrievability = config['Card Info sidebar_ FSRS Retrievability']
         infobar_interval = config['Card Info sidebar_ Interval']
         infobar_ease = config['Card Info sidebar_ Ease']
         infobar_reviews = config['Card Info sidebar_ Reviews']
@@ -227,6 +237,9 @@ class StatsSidebar(object):
         infobar_sortField = config['Card Info sidebar_ Sort Field']
 
         c = self.card
+        proto_info = aqt.mw.col.card_stats_data(c.id)
+        info = MessageToDict(proto_info)
+        # showInfo(f"{info}")
         fmt = lambda x, **kwargs: fmtTimeSpan(x, short=True, **kwargs)
         self.txt = "<table width=100%>"
         if infobar_created:
@@ -253,6 +266,16 @@ class StatsSidebar(object):
             if next:
                 if infobar_due:
                     self.addLine("Due", next)
+            if 'memoryState' in info:
+                if infobar_fsrsStability and info['memoryState']['stability'] is not None:
+                    fsrs_stability = info['memoryState']['stability']
+                    self.addLine("Stability", f"{fsrs_stability:.0f} {'days' if fsrs_stability > 1 else 'day'}")
+                if infobar_fsrsDifficulty and info['memoryState']['difficulty'] is not None:
+                    fsrs_difficulty = info['memoryState']['difficulty']
+                    self.addLine("Difficulty", f"{fsrs_difficulty*10:.2f}%" if fsrs_difficulty is not None else "N/A")
+            if infobar_fsrsRetrievability and 'fsrsRetrievability' in info:
+                fsrs_retrievability = info['fsrsRetrievability']
+                self.addLine("Retrievability", f"{fsrs_retrievability*100:.2f}%" if fsrs_retrievability is not None else "N/A")
             if c.queue == 2:
                 if infobar_interval:
                     self.addLine("Interval", fmt(c.ivl * 86400))

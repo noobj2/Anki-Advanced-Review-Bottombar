@@ -138,6 +138,7 @@ def myTooltip(self, ease):
         edit_width = config["Button_ Width_ Edit Button"]
         info_width = config["Button_ Width_ Info Button"]
         skip_width = config["Button_ Width_ Skip Button"]
+        showSkipped_width = config["Button_ Width_ Show Skipped Button"]
         more_width = config["Button_ Width_ More Button"]
         undo_width = config["Button_ Width_ Undo Button"]
         tooltip_height = buttons_height + 10

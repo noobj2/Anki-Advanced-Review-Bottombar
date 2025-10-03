@@ -106,6 +106,8 @@
   "Color_ Easy": "#188AB8",
   "Color_ Easy on hover": "#21C0FF",
   "Tooltip": true,
+  "Tooltip Height": 100,
+  "Tooltip Width": 300,
   "Tooltip Timer": 500,
   "Tooltip Text Color": "#000",
   "Tooltip Style": 0,

@@ -32,6 +32,8 @@ def refreshConfig():
         " Review_ Button Border Radius": "C_buttonBorderRadius",
         " Review_ Wide Button Percent": "C_wideButton_percent",
         "Tooltip": "C_reviewTooltip",
+        "Tooltip Height": "C_reviewTooltip_height",
+        "Tooltip Width": "C_reviewTooltip_width",
         "Tooltip Timer": "C_reviewTooltip_timer",
         "Tooltip Text Color": "C_reviewTooltipText_color",
         "Tooltip Style": "C_reviewTooltip_style",
@@ -824,6 +826,43 @@ class SettingsMenu(QDialog):
         reviewTooltipStyle_holder.addWidget(self.reviewTooltip_style)
         reviewTooltipStyle_holder.addStretch()
 
+        reviewTooltipHeight_label = QLabel("Tooltip Height:")
+        reviewTooltipHeight_label.setToolTip("{0}Changes height of the tooltip.{1}".format(begin, end))
+        reviewTooltipHeight_label.setFixedWidth(180)
+        self.reviewTooltip_height = QSpinBox()
+        self.reviewTooltip_height.setFixedWidth(180)
+        self.reviewTooltip_height.setMinimum(10)
+        self.reviewTooltip_height.setMaximum(800)
+        reviewerTooltipHeight_px = QLabel("px")
+        reviewTooltipHeight_holder = QHBoxLayout()
+        reviewTooltipHeight_holder.addWidget(reviewTooltipHeight_label)
+        reviewTooltipHeight_holder.addWidget(self.reviewTooltip_height)
+        reviewTooltipHeight_holder.addWidget(reviewerTooltipHeight_px)
+        reviewTooltipHeight_holder.addStretch()
+        reviewTooltipWidth_label = QLabel("Tooltip Width:")
+        reviewTooltipWidth_label.setToolTip("{0}Changes width of the tooltip.{1}".format(begin, end))
+        reviewTooltipWidth_label.setFixedWidth(180)
+        self.reviewTooltip_width = QSpinBox()
+        self.reviewTooltip_width.setFixedWidth(180)
+        self.reviewTooltip_width.setMinimum(50)
+        self.reviewTooltip_width.setMaximum(1200)
+        reviewerTooltipWidth_px = QLabel("px")
+        reviewTooltipWidth_holder = QHBoxLayout()
+        reviewTooltipWidth_holder.addWidget(reviewTooltipWidth_label)
+        reviewTooltipWidth_holder.addWidget(self.reviewTooltip_width)
+        reviewTooltipWidth_holder.addWidget(reviewerTooltipWidth_px)
+        reviewTooltipWidth_holder.addStretch()
+
+        def tooltipStyle_signal():
+            tooltipStyle_index = self.reviewTooltip_style.currentIndex()
+            self.reviewTooltip_height.setDisabled(True)
+            self.reviewTooltip_width.setDisabled(True)
+            if tooltipStyle_index == 1:
+                self.reviewTooltip_height.setEnabled(True)
+                self.reviewTooltip_width.setEnabled(True)
+        tooltipStyle_signal()
+        self.reviewTooltip_style.currentIndexChanged.connect(tooltipStyle_signal)
+
         reviewTooltipTimer_label = QLabel("Tooltip Show Duration:")
         reviewTooltipTimer_label.setToolTip("{0}Changes length of the period that tooltip is shown.<hr>the unit is millisecond, 1000ms = 1s{1} (I know everybody knows this, put it here just in case :|)".format(begin, end))
         reviewTooltipTimer_label.setFixedWidth(180)
@@ -851,6 +890,8 @@ class SettingsMenu(QDialog):
 
         tab2line2 = QVBoxLayout()
         tab2line2.addLayout(reviewTooltipStyle_holder)
+        tab2line2.addLayout(reviewTooltipHeight_holder)
+        tab2line2.addLayout(reviewTooltipWidth_holder)
         tab2line2.addLayout(reviewTooltipTimer_holder)
         tab2line2.addLayout(reviewTooltipTextColor_holder)
         tab2box2 = QGroupBox()
@@ -2147,6 +2188,8 @@ class SettingsMenu(QDialog):
         else:
             self.reviewTooltip_off.setChecked(True)
         self.reviewTooltip_style.setCurrentIndex(C_reviewTooltip_style)
+        self.reviewTooltip_height.setValue(int(C_reviewTooltip_height))
+        self.reviewTooltip_width.setValue(int(C_reviewTooltip_width))
         self.reviewTooltip_timer.setValue(int(C_reviewTooltip_timer))
         self.changeButtonColor(self.reviewTooltipTextColor_button, C_reviewTooltipText_color)
         self.reviewTooltipPositionX.setValue(int(C_reviewTooltip_position[0]))
@@ -2342,7 +2385,8 @@ class SettingsMenu(QDialog):
     def onLoadSettings(self):
         addon_path = dirname(__file__)
         # Open a file browser to choose the settings file (returns a tuple) the first item in the tuple is the settings file location
-        fileName_tuple = QFileDialog.getOpenFileName(self, 'Open file', r'{}\user_files'.format(addon_path))
+        user_files_path = os.path.join(addon_path, "user_files")
+        fileName_tuple = QFileDialog.getOpenFileName(self, 'Open file', user_files_path)
         # If user cancels the operation and no file is chosen, then return without doing anything
         if not fileName_tuple[0]:
             return
@@ -2519,6 +2563,8 @@ class SettingsMenu(QDialog):
         "Color_ Easy": self.easy_color,
         "Color_ Easy on hover": self.easyHover_color,
         "Tooltip": self.reviewTooltip_on.isChecked(),
+        "Tooltip Height": self.reviewTooltip_height.value(),
+        "Tooltip Width": self.reviewTooltip_width.value(),
         "Tooltip Timer": self.reviewTooltip_timer.value(),
         "Tooltip Text Color": self.reviewTooltipText_color,
         "Tooltip Style": self.reviewTooltip_style.currentIndex(),
@@ -2692,6 +2738,8 @@ class SettingsMenu(QDialog):
         "Color_ Easy": self.easy_color,
         "Color_ Easy on hover": self.easyHover_color,
         "Tooltip": self.reviewTooltip_on.isChecked(),
+        "Tooltip Height": self.reviewTooltip_height.value(),
+        "Tooltip Width": self.reviewTooltip_width.value(),
         "Tooltip Timer": self.reviewTooltip_timer.value(),
         "Tooltip Text Color": self.reviewTooltipText_color,
         "Tooltip Style": self.reviewTooltip_style.currentIndex(),

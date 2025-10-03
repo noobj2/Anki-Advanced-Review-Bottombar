@@ -83,7 +83,7 @@ def _shortcutKeys_wrap(self, _old):
     original = _old(self)
     sched_ver = mw.col.sched.version
 
-    # Decide aciton based on skip method
+    # Decide action based on skip method
     if skipMethod == 2:
         original.append((skip_shortcut, lambda: suspendSkipped()))
         original.append((showSkipped_shortcut, lambda: try_unsuspendSkipped()))
